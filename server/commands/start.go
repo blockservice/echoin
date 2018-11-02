@@ -20,13 +20,13 @@ import (
 	"github.com/tendermint/tendermint/libs/cli"
 	cmn "github.com/tendermint/tendermint/libs/common"
 
-	"github.com/CyberMiles/travis/app"
-	"github.com/CyberMiles/travis/modules/stake"
-	"github.com/CyberMiles/travis/sdk/dbm"
-	"github.com/CyberMiles/travis/server"
-	"github.com/CyberMiles/travis/types"
-	"github.com/CyberMiles/travis/utils"
-	"github.com/CyberMiles/travis/version"
+	"github.com/blockservice/echoin/app"
+	"github.com/blockservice/echoin/modules/stake"
+	"github.com/blockservice/echoin/sdk/dbm"
+	"github.com/blockservice/echoin/server"
+	"github.com/blockservice/echoin/types"
+	"github.com/blockservice/echoin/utils"
+	"github.com/blockservice/echoin/version"
 )
 
 const (
@@ -40,7 +40,7 @@ func GetStartCmd() *cobra.Command {
 		Short: "Start this full node",
 		RunE:  startCmd(),
 	}
-	startCmd.PersistentFlags().Bool(SubFlag, false, "start travis as sub process")
+	startCmd.PersistentFlags().Bool(SubFlag, false, "start echoin as sub process")
 	return startCmd
 }
 
@@ -51,7 +51,7 @@ const EyesCacheSize = 10000
 func startCmd() func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
 		rootDir := viper.GetString(cli.HomeFlag)
-		// start travis as sub process
+		// start echoin as sub process
 		/*
 			if !viper.GetBool(SubFlag) {
 				return startSubProcess(rootDir)
@@ -148,7 +148,7 @@ func createBaseApp(rootDir string, storeApp *app.StoreApp, ethApp *app.Ethermint
 	}
 
 	chainID := app.GetChainID()
-	logger.Info("Starting Travis", "chain_id", chainID)
+	logger.Info("Starting Echoin", "chain_id", chainID)
 
 	return app, nil
 }
@@ -174,7 +174,7 @@ func startSubProcess(rootDir string) error {
 	args := os.Args[1:]
 	args = append(args, arg)
 
-	cmd := types.NewTravisCmd(rootDir, path.Base(os.Args[0]), args...)
+	cmd := types.NewEchoinCmd(rootDir, path.Base(os.Args[0]), args...)
 	m := types.NewMonitor(cmd)
 	startRPC(m)
 	cmd.Start()
@@ -201,7 +201,7 @@ func startRPC(m *types.Monitor) error {
 	return nil
 }
 
-func startRoutine(c *types.TravisCmd) {
+func startRoutine(c *types.EchoinCmd) {
 	for {
 		select {
 		case cmdInfo := <-c.DownloadChan:

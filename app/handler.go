@@ -7,12 +7,12 @@ import (
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/CyberMiles/travis/modules/governance"
-	"github.com/CyberMiles/travis/modules/stake"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/sdk/errors"
-	"github.com/CyberMiles/travis/sdk/state"
-	"github.com/CyberMiles/travis/types"
+	"github.com/blockservice/echoin/modules/governance"
+	"github.com/blockservice/echoin/modules/stake"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/sdk/errors"
+	"github.com/blockservice/echoin/sdk/state"
+	"github.com/blockservice/echoin/types"
 )
 
 func (app BaseApp) checkHandler(ctx types.Context, store state.SimpleDB, tx *ethTypes.Transaction) abci.ResponseCheckTx {
@@ -23,21 +23,21 @@ func (app BaseApp) checkHandler(ctx types.Context, store state.SimpleDB, tx *eth
 	ctx.WithSigners(from)
 	ctx.SetNonce(nonce)
 
-	var travisTx sdk.Tx
-	if err := json.Unmarshal(tx.Data(), &travisTx); err != nil {
+	var echoinTx sdk.Tx
+	if err := json.Unmarshal(tx.Data(), &echoinTx); err != nil {
 		return errors.CheckResult(err)
 	}
 
-	name, err := lookupRoute(travisTx)
+	name, err := lookupRoute(echoinTx)
 	if err != nil {
 		return errors.CheckResult(err)
 	}
 
 	var res sdk.CheckResult
 	if name == "stake" {
-		res, err = stake.CheckTx(ctx, store, travisTx)
+		res, err = stake.CheckTx(ctx, store, echoinTx)
 	} else if name == "governance" {
-		res, err = governance.CheckTx(ctx, store, travisTx)
+		res, err = governance.CheckTx(ctx, store, echoinTx)
 	}
 
 	if err != nil {
@@ -52,8 +52,8 @@ func (app BaseApp) checkHandler(ctx types.Context, store state.SimpleDB, tx *eth
 func (app BaseApp) deliverHandler(ctx types.Context, store state.SimpleDB, tx *ethTypes.Transaction) abci.ResponseDeliverTx {
 	hash := tx.Hash().Bytes()
 
-	var travisTx sdk.Tx
-	if err := json.Unmarshal(tx.Data(), &travisTx); err != nil {
+	var echoinTx sdk.Tx
+	if err := json.Unmarshal(tx.Data(), &echoinTx); err != nil {
 		return errors.DeliverResult(err)
 	}
 
@@ -70,7 +70,7 @@ func (app BaseApp) deliverHandler(ctx types.Context, store state.SimpleDB, tx *e
 	ctx.WithSigners(from)
 	ctx.SetNonce(tx.Nonce())
 
-	name, err := lookupRoute(travisTx)
+	name, err := lookupRoute(echoinTx)
 	if err != nil {
 		return errors.DeliverResult(err)
 	}
@@ -78,11 +78,11 @@ func (app BaseApp) deliverHandler(ctx types.Context, store state.SimpleDB, tx *e
 	var res sdk.DeliverResult
 	switch name {
 	case "stake":
-		res, err = stake.DeliverTx(ctx, store, travisTx, hash)
+		res, err = stake.DeliverTx(ctx, store, echoinTx, hash)
 	case "governance":
-		res, err = governance.DeliverTx(ctx, store, travisTx, hash)
+		res, err = governance.DeliverTx(ctx, store, echoinTx, hash)
 	default:
-		return errors.DeliverResult(errors.ErrUnknownTxType(travisTx.Unwrap()))
+		return errors.DeliverResult(errors.ErrUnknownTxType(echoinTx.Unwrap()))
 	}
 
 	if err != nil {

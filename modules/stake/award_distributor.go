@@ -2,10 +2,10 @@ package stake
 
 import (
 	"fmt"
-	"github.com/CyberMiles/travis/commons"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/sdk/state"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/commons"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/sdk/state"
+	"github.com/blockservice/echoin/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/tendermint/tendermint/libs/log"
 	"math"

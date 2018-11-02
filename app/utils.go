@@ -14,8 +14,8 @@ import (
 	"github.com/ethereum/go-ethereum/rlp"
 	abciTypes "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/CyberMiles/travis/errors"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/errors"
+	"github.com/blockservice/echoin/utils"
 )
 
 // format of query data

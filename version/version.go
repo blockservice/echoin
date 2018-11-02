@@ -10,7 +10,7 @@ const Patch = "2"
 const Label = "beta"
 
 var (
-	// Version is the current version of Travis
+	// Version is the current version of Echoin
 	Version string
 
 	// GitCommit is set with --ldflags "-X main.gitCommit=$(git rev-parse --short HEAD)"

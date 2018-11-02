@@ -6,7 +6,7 @@ The CyberMiles blockchain is fully backward compatible with the Ethereum protoco
 all Ethereum transactions are supported on the CyberMiles blockchain. For developers, we recommend you use the
 `web3-cmt.js <https://github.com/CyberMiles/web3-cmt.js/>`_ library interact with the blockchain. The ``web3-cmt.js`` library is a customized version of the 
 Ethereum `web3.js <https://github.com/ethereum/web3.js/>`_ library, with the ``eth`` module renamed to the ``cmt`` module. 
-The ``web3-cmt.js`` library is integrated into the ``travis`` client console by default.
+The ``web3-cmt.js`` library is integrated into the ``echoin`` client console by default.
 
 ..
   // send a transfer transaction
@@ -32,10 +32,10 @@ Staking transactions
 -------- 
 
 A key characteristic of the CyberMiles blockchain is the DPoS consensus mechanism. You can read more about the 
-`CyberMiles DPoS protocol <https://www.cybermiles.io/validator>`_. With the staking transactions, CMT holders
+`CyberMiles DPoS protocol <https://www.echoin.io/validator>`_. With the staking transactions, CMT holders
 can declare candidacy for validators, stake and vote for candidates, and unstake as needed. Learn more about the
-`staking transactions for validators <https://cybermiles.github.io/web3-cmt.js/api/#web3-cmt-stake-validator>`_ and the 
-`staking transactions for delegators <https://cybermiles.github.io/web3-cmt.js/api/#web3-cmt-stake-delegator>`_.
+`staking transactions for validators <https://echoin.github.io/web3-cmt.js/api/#web3-cmt-stake-validator>`_ and the 
+`staking transactions for delegators <https://echoin.github.io/web3-cmt.js/api/#web3-cmt-stake-delegator>`_.
 
 
 Governance transactions
@@ -45,7 +45,7 @@ With the DPoS consensus mechanism, the CyberMiles validators can make changes to
 key parameters, deploy new `libENI libraries <https://www.litylang.org/performance/>`_, 
 create `trusted contracts <https://www.litylang.org/trusted/>`_, and make other policy changes. Anyone on the blockchain
 can propose governance changes, but only the current validators can vote. Learn more about the
-`governance transactions <https://cybermiles.github.io/web3-cmt.js/api/#web3-cmt-governance>`_.
+`governance transactions <https://echoin.github.io/web3-cmt.js/api/#web3-cmt-governance>`_.
 
 
 

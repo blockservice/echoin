@@ -15,7 +15,7 @@ package main
 
 import (
   "fmt"
-  b58 "github.com/CyberMiles/travis/sdk/go-wire/data/base58"
+  b58 "github.com/blockservice/echoin/sdk/go-wire/data/base58"
 )
 
 func main() {
@@ -40,7 +40,7 @@ package main
 
 import (
   "fmt"
-  b58 "github.com/CyberMiles/travis/sdk/go-wire/data/base58"
+  b58 "github.com/blockservice/echoin/sdk/go-wire/data/base58"
 )
 
 const BogusAlphabet = "ZYXWVUTSRQPNMLKJHGFEDCBAzyxwvutsrqponmkjihgfedcba987654321"

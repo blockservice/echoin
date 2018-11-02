@@ -1,4 +1,4 @@
-package: github.com/CyberMiles/travis
+package: github.com/blockservice/echoin
 import:
 - package: github.com/prometheus/client_golang
 #  version: v0.8.0

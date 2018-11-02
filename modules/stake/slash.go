@@ -3,15 +3,15 @@ package stake
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/CyberMiles/travis/sdk/state"
+	"github.com/blockservice/echoin/sdk/state"
 	"github.com/tendermint/go-amino"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/types"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/types"
+	"github.com/blockservice/echoin/utils"
 )
 
 var cdc = amino.NewCodec()

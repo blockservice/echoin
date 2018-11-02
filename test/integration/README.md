@@ -1,4 +1,4 @@
-# Travis Integration Test
+# Echoin Integration Test
 
 ## Requirement
 

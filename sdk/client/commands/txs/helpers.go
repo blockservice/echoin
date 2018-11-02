@@ -18,8 +18,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/sdk/client/commands"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/sdk/client/commands"
 	"github.com/ethereum/go-ethereum/accounts"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -28,8 +28,8 @@ import (
 	"github.com/ethereum/go-ethereum/rlp"
 	ctypes "github.com/tendermint/tendermint/rpc/core/types"
 
-	"github.com/CyberMiles/travis/commons"
-	ttypes "github.com/CyberMiles/travis/types"
+	"github.com/blockservice/echoin/commons"
+	ttypes "github.com/blockservice/echoin/types"
 )
 
 // Validatable represents anything that can be Validated

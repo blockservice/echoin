@@ -27,8 +27,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/CyberMiles/travis/console/jsre"
-	"github.com/CyberMiles/travis/console/web3ext"
+	"github.com/blockservice/echoin/console/jsre"
+	"github.com/blockservice/echoin/console/web3ext"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/mattn/go-colorable"
 	"github.com/peterh/liner"
@@ -252,7 +252,7 @@ func (c *Console) AutoCompleteInput(line string, pos int) (string, []string, str
 // console's available modules.
 func (c *Console) Welcome() {
 	// Print some generic Geth metadata
-	fmt.Fprintf(c.printer, "Welcome to the Travis JavaScript console!\n\n")
+	fmt.Fprintf(c.printer, "Welcome to the Echoin JavaScript console!\n\n")
 	c.jsre.Run(`
 		console.log("instance: " + web3.version.node);
 		console.log("coinbase: " + cmt.coinbase);

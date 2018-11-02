@@ -9,21 +9,21 @@ import (
 	"github.com/ethereum/go-ethereum/consensus/ethash"
 	"github.com/ethereum/go-ethereum/core"
 	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/types"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethdb"
+	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/params"
 	abciTypes "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/CyberMiles/travis/commons"
-	"github.com/CyberMiles/travis/errors"
-	gov "github.com/CyberMiles/travis/modules/governance"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/utils"
-	emtTypes "github.com/CyberMiles/travis/vm/types"
+	"github.com/blockservice/echoin/commons"
+	"github.com/blockservice/echoin/errors"
+	gov "github.com/blockservice/echoin/modules/governance"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/utils"
+	emtTypes "github.com/blockservice/echoin/vm/types"
 )
 
 //----------------------------------------------------------------------
@@ -118,7 +118,7 @@ func (es *EthState) resetWorkState(receiver common.Address) error {
 		header:          ethHeader,
 		parent:          currentBlock,
 		state:           state,
-		travisTxIndex:   0,
+		echoinTxIndex:   0,
 		txIndex:         0,
 		totalUsedGas:    new(uint64),
 		totalUsedGasFee: big.NewInt(0),
@@ -172,7 +172,7 @@ type workState struct {
 	header        *ethTypes.Header
 	parent        *ethTypes.Block
 	state         *state.StateDB
-	travisTxIndex int //coped StateChangeObject index in the queue
+	echoinTxIndex int //coped StateChangeObject index in the queue
 
 	txIndex      int
 	transactions []*ethTypes.Transaction
@@ -198,7 +198,7 @@ func (ws *workState) deliverTx(blockchain *core.BlockChain, config *eth.Config,
 	tx *ethTypes.Transaction) abciTypes.ResponseDeliverTx {
 
 	ws.handleStateChangeQueue()
-	ws.travisTxIndex = len(utils.StateChangeQueue)
+	ws.echoinTxIndex = len(utils.StateChangeQueue)
 
 	ws.state.Prepare(tx.Hash(), blockHash, ws.txIndex)
 	receipt, usedGas, err := core.ApplyTransaction(
@@ -298,14 +298,14 @@ func (ws *workState) commit(blockchain *core.BlockChain, db ethdb.Database, rece
 				utils.RetiringProposalId = pid
 			} else {
 				switch gov.CheckProposal(pid, nil) {
-					case "approved":
-						// process will be killed at next block
-						utils.RetiringProposalId = pid
-						gov.ProposalReactor{proposal.Id, currentHeight, "Approved"}.React("success", "")
-					case "rejected":
-						gov.ProposalReactor{proposal.Id, currentHeight, "Rejected"}.React("success", "")
-					default:
-						gov.ProposalReactor{proposal.Id, currentHeight, "Expired"}.React("success", "")
+				case "approved":
+					// process will be killed at next block
+					utils.RetiringProposalId = pid
+					gov.ProposalReactor{proposal.Id, currentHeight, "Approved"}.React("success", "")
+				case "rejected":
+					gov.ProposalReactor{proposal.Id, currentHeight, "Rejected"}.React("success", "")
+				default:
+					gov.ProposalReactor{proposal.Id, currentHeight, "Expired"}.React("success", "")
 				}
 			}
 		case gov.UPGRADE_PROGRAM_PROPOSAL:
@@ -384,8 +384,8 @@ func (ws *workState) commit(blockchain *core.BlockChain, db ethdb.Database, rece
 
 func (ws *workState) handleStateChangeQueue() {
 	// Iterate to add/sub balance from state
-	// ws.travisTxIndex used for recording handled index of queue
-	for i := ws.travisTxIndex; i < len(utils.StateChangeQueue); i++ {
+	// ws.echoinTxIndex used for recording handled index of queue
+	for i := ws.echoinTxIndex; i < len(utils.StateChangeQueue); i++ {
 		scObj := utils.StateChangeQueue[i]
 		if bytes.Compare(scObj.From.Bytes(), utils.MintAccount.Bytes()) == 0 {
 			if bytes.Compare(scObj.To.Bytes(), utils.MintAccount.Bytes()) != 0 {
@@ -435,8 +435,8 @@ func newBlockHeader(receiver common.Address, prevBlock *ethTypes.Block) *ethType
 	return &ethTypes.Header{
 		Number:     prevBlock.Number().Add(prevBlock.Number(), big.NewInt(1)),
 		ParentHash: prevBlock.Hash(),
-		GasLimit: calcGasLimit(prevBlock),
-		Coinbase: receiver,
+		GasLimit:   calcGasLimit(prevBlock),
+		Coinbase:   receiver,
 	}
 }
 

@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/CyberMiles/travis/sdk"
+	"github.com/blockservice/echoin/sdk"
 )
 
 type Params struct {

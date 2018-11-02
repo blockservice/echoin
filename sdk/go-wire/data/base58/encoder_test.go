@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	data "github.com/CyberMiles/travis/sdk/go-wire/data"
-	"github.com/CyberMiles/travis/sdk/go-wire/data/base58"
+	data "github.com/blockservice/echoin/sdk/go-wire/data"
+	"github.com/blockservice/echoin/sdk/go-wire/data/base58"
 )
 
 func TestEncoders(t *testing.T) {

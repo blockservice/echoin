@@ -4,7 +4,7 @@
 
 _October 15th, 2018_
 
-The Mainnet version is released. This version fixed all the bugs found in Travis v0.1.0 and Travis v0.1.1-beta.
+The Mainnet version is released. This version fixed all the bugs found in Echoin v0.1.0 and Echoin v0.1.1-beta.
 
 ## v0.1.0-rc.7
 
@@ -32,7 +32,7 @@ _August 31st, 2018_
 
 ### FEATURES
 
-- Continue with the development of DPOS 1.4. Ranking and block rewards of Validator is directly correlated to their participation, contribution, loyalty and governance. For detailed algorithm, please refer to the DPOS document on https://www.cybermiles.io/validator/.
+- Continue with the development of DPOS 1.4. Ranking and block rewards of Validator is directly correlated to their participation, contribution, loyalty and governance. For detailed algorithm, please refer to the DPOS document on https://www.echoin.io/validator/.
 - Improve governance mechanism to incentivise worthy delegators. With an interface of setCompRate, Validator can reward an individual delegator by setting a higher compensation rate for him/her. 
 
 ### IMPROVEMENTS
@@ -66,7 +66,7 @@ _August 17th, 2018_
   
 ### FIXES
 - Fix an error in punishing a Validator committed Byzantine failures.
-- Fix an error caused by travis tx in synchronising the new Validators.
+- Fix an error caused by echoin tx in synchronising the new Validators.
 
 ## v0.1.0-rc.4
 
@@ -75,7 +75,7 @@ _August 3rd, 2018_
 ### FEATURES
 - Upgrade on Lity and CVM: Support registration or upgrade of libENI in Governance.
 - Enhancement in DPoS Protocol: Replace Ranking Power with Voting Power. On top of stakes, ranking and compensation of Validator will be determined by participation, diversity, loyalty and growth of community. 
-For detailed algorithm, please refer to our DPoS Protocol: https://www.cybermiles.io/validator/
+For detailed algorithm, please refer to our DPoS Protocol: https://www.echoin.io/validator/
 
 ### IMPROVEMENTS
 - Modify Governance mechanism: Support setting an expiration date on a Governance proposal, either with timestamp or block height. 
@@ -101,7 +101,7 @@ For more information, visit https://www.litylang.org/
 ### IMPROVEMENTS
 1. Compatible with Ethereum: Upgrade go-ethereum to version 1.8.12 
 2. Improve security: Staking in CMT cube requires signing by address. 
-3. Complete the Governance and Staking mechanism Documentation: http://travis.readthedocs.io/
+3. Complete the Governance and Staking mechanism Documentation: http://echoin.readthedocs.io/
 
 ### FIXES
 Fix some small bugs.

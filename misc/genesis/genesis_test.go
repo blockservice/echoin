@@ -17,13 +17,11 @@ func ExampleDefaultGenesisBlock() {
 		totalBalance.Add(totalBalance, alloc.Balance)
 	}
 
-
-
 	fmt.Println(totalAlloc)
 	fmt.Println(totalBalance.String())
 	fmt.Println(string(genBlock.ExtraData))
 	// Output:
 	// 22035
 	// 1000000000000000000000000000
-	// CyberMiles for E-commerce
+	// Echoin for E-commerce
 }

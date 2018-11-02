@@ -1,7 +1,7 @@
 
 
 # data
-`import "github.com/CyberMiles/travis/sdk/go-wire/data"`
+`import "github.com/blockservice/echoin/sdk/go-wire/data"`
 
 * [Overview](#pkg-overview)
 * [Index](#pkg-index)
@@ -84,7 +84,7 @@ efficient storage in our go app, and a common format for rpc / humans.
 	j, err := json.MarshalIndent(orig, "", "\t")
 	err = json.Unmarshal(j, &jparsed)
 
-See <a href="https://github.com/CyberMiles/travis/sdk/go-wire/data/blob/master/common_test.go">https://github.com/CyberMiles/travis/sdk/go-wire/data/blob/master/common_test.go</a> to see
+See <a href="https://github.com/blockservice/echoin/sdk/go-wire/data/blob/master/common_test.go">https://github.com/blockservice/echoin/sdk/go-wire/data/blob/master/common_test.go</a> to see
 how to set up your code to use this.
 
 
@@ -105,7 +105,7 @@ how to set up your code to use this.
 
 
 #### <a name="pkg-files">Package files</a>
-[binary.go](/src/github.com/CyberMiles/travis/sdk/go-wire/data/binary.go) [bytes.go](/src/github.com/CyberMiles/travis/sdk/go-wire/data/bytes.go) [docs.go](/src/github.com/CyberMiles/travis/sdk/go-wire/data/docs.go) [json.go](/src/github.com/CyberMiles/travis/sdk/go-wire/data/json.go) [wrapper.go](/src/github.com/CyberMiles/travis/sdk/go-wire/data/wrapper.go) 
+[binary.go](/src/github.com/blockservice/echoin/sdk/go-wire/data/binary.go) [bytes.go](/src/github.com/blockservice/echoin/sdk/go-wire/data/bytes.go) [docs.go](/src/github.com/blockservice/echoin/sdk/go-wire/data/docs.go) [json.go](/src/github.com/blockservice/echoin/sdk/go-wire/data/json.go) [wrapper.go](/src/github.com/blockservice/echoin/sdk/go-wire/data/wrapper.go) 
 
 
 

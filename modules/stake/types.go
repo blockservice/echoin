@@ -7,9 +7,9 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/types"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/types"
+	"github.com/blockservice/echoin/utils"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 	"golang.org/x/crypto/ripemd160"
 	"math"

@@ -26,7 +26,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/CyberMiles/travis/console/jsre/deps"
+	"github.com/blockservice/echoin/console/jsre/deps"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/robertkrimen/otto"
 )

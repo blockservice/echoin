@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"runtime"
+
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/rlp"
-	"runtime"
 )
 
 func makeExtraData(extra []byte) []byte {
@@ -28,11 +29,11 @@ func makeExtraData(extra []byte) []byte {
 
 func main() {
 	//data := hexutil.MustDecode("0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa")
-	//fmt.Println(string(hexutil.Encode("Powered by Cybermiles")))
+	//fmt.Println(string(hexutil.Encode("Powered by Echoin")))
 	fmt.Println(hexutil.Encode(makeExtraData(nil)))
-	fmt.Println(hexutil.Encode(makeExtraData([]byte("CyberMiles Foundation Limited"))))
+	fmt.Println(hexutil.Encode(makeExtraData([]byte("Echoin Foundation Limited"))))
 	fmt.Println(string(hexutil.MustDecode("0x43796265724d696c657320466f756e646174696f6e204c696d69746564")))
 
-	fmt.Println(hexutil.Encode(makeExtraData([]byte("CyberMiles for E-commerce"))))
+	fmt.Println(hexutil.Encode(makeExtraData([]byte("Echoin for E-commerce"))))
 	fmt.Println(string(hexutil.MustDecode("0x43796265724d696c657320666f7220452d636f6d6d65726365")))
 }

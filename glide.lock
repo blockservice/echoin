@@ -1,5 +1,5 @@
-hash: 98497c40b26fd3326e5f48728ea7947cf7ab0c53a559654ce5b33a39cef35cf4
-updated: 2018-07-19T18:36:59.515676304+08:00
+hash: b1eecd4270660de056eaa85a888847ed37475433434afbbb795e613c3effc70b
+updated: 2018-11-02T14:12:43.534962366+08:00
 imports:
 - name: github.com/aristanetworks/goarista
   version: 59944ff78bc1de686b0aba1444dfd380f48f03d4
@@ -29,6 +29,10 @@ imports:
   version: 37f05ff46ffa7a825d1b24cf2b62d4a4c1a9d2e8
   subpackages:
   - sys/windows
+- name: github.com/ethereum/evmc
+  version: adbe01caf8b1774d1512cee3f5e6b8fadf739329
+  subpackages:
+  - bindings/go/evmc
 - name: github.com/ethereum/go-ethereum
   version: cee13888bae1d0a3e94c80a00001742741c3ca24
   repo: https://github.com/CyberMiles/go-ethereum.git
@@ -55,6 +59,8 @@ imports:
   - core/state
   - core/types
   - core/vm
+  - core/vm/eni
+  - core/vm/umbrella
   - crypto
   - crypto/bn256
   - crypto/bn256/cloudflare
@@ -140,12 +146,8 @@ imports:
   subpackages:
   - proto
   - protoc-gen-go/descriptor
-  - ptypes
-  - ptypes/any
-  - ptypes/duration
-  - ptypes/timestamp
 - name: github.com/golang/snappy
-  version: 2e65f85255dbc3072edf28d6b5b8efc472979f5a
+  version: d9eb7a3d35ec988b8585d4a0068e462c27d28380
 - name: github.com/gorilla/websocket
   version: 5ed622c449da6d44c3c8329331ff47a9e5844f71
 - name: github.com/hashicorp/golang-lru
@@ -294,8 +296,8 @@ imports:
 - name: github.com/tendermint/iavl
   version: 35f66e53d9b01e83b30de68b931f54b2477a94c9
 - name: github.com/tendermint/tendermint
-  repo: https://github.com/CyberMiles/tendermint.git
   version: b97b46975ef8e830352c8c7f6248a436f185858a
+  repo: https://github.com/CyberMiles/tendermint.git
   subpackages:
   - abci/client
   - abci/example/code
@@ -307,7 +309,10 @@ imports:
   - consensus
   - consensus/types
   - crypto
+  - crypto/ed25519
+  - crypto/encoding/amino
   - crypto/merkle
+  - crypto/secp256k1
   - crypto/tmhash
   - evidence
   - libs/autofile
@@ -355,8 +360,6 @@ imports:
   - curve25519
   - nacl/box
   - nacl/secretbox
-  - openpgp/armor
-  - openpgp/errors
   - pbkdf2
   - poly1305
   - ripemd160
@@ -369,13 +372,7 @@ imports:
   - html
   - html/atom
   - html/charset
-  - http2
-  - http2/hpack
-  - idna
-  - internal/timeseries
-  - lex/httplex
   - netutil
-  - trace
   - websocket
 - name: golang.org/x/sync
   version: 1d60e4601c6fd243af51cc01ddf169918a5407ca
@@ -403,41 +400,10 @@ imports:
   - internal/utf8internal
   - language
   - runes
-  - secure/bidirule
   - transform
-  - unicode/bidi
   - unicode/norm
-- name: google.golang.org/genproto
-  version: ff3583edef7de132f219f0efc00e097cabcc0ec0
-  subpackages:
-  - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: 168a6198bcb0ef175f7dacec0b8691fc141dc9b8
-  subpackages:
-  - balancer
-  - balancer/base
-  - balancer/roundrobin
-  - codes
-  - connectivity
-  - credentials
-  - encoding
-  - encoding/proto
-  - grpclog
-  - internal
-  - internal/backoff
-  - internal/channelz
-  - internal/grpcrand
-  - keepalive
-  - metadata
-  - naming
-  - peer
-  - resolver
-  - resolver/dns
-  - resolver/passthrough
-  - stats
-  - status
-  - tap
-  - transport
+  version: d177c8fe46c2550133199f71714c23ff0df8d38a
 - name: gopkg.in/fatih/set.v0
   version: 2c768e3c5489976167bfc42b5c7c92ca783f4389
 - name: gopkg.in/karalabe/cookiejar.v2
@@ -466,3 +432,9 @@ testImports:
   subpackages:
   - assert
   - require
+- name: github.com/tendermint/tmlibs
+  version: 56f44670ebd5a4e99e55f3f7d6f4d360ef5f1973
+  subpackages:
+  - common
+  - db
+  - log

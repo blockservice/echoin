@@ -10,7 +10,7 @@ import (
 	"math/big"
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/CyberMiles/travis/misc/genesis"
+	"github.com/blockservice/echoin/misc/genesis"
 	"encoding/csv"
 	"os"
 	"io"

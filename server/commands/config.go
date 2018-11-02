@@ -9,7 +9,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/utils"
 	"github.com/ethereum/go-ethereum/node"
 	tmcfg "github.com/tendermint/tendermint/config"
 	cmn "github.com/tendermint/tendermint/libs/common"
@@ -22,14 +22,14 @@ const (
 	configFile = "config.toml"
 )
 
-type TravisConfig struct {
+type EchoinConfig struct {
 	BaseConfig BaseConfig      `mapstructure:",squash"`
 	TMConfig   tmcfg.Config    `mapstructure:",squash"`
 	EMConfig   EthermintConfig `mapstructure:"vm"`
 }
 
-func DefaultConfig() *TravisConfig {
-	return &TravisConfig{
+func DefaultConfig() *EchoinConfig {
+	return &EchoinConfig{
 		BaseConfig: DefaultBaseConfig(),
 		TMConfig:   *tmcfg.DefaultConfig(),
 		EMConfig:   DefaultEthermintConfig(),
@@ -91,7 +91,7 @@ func DefaultEthermintConfig() EthermintConfig {
 
 // copied from tendermint/commands/root.go
 // to call our revised EnsureRoot
-func ParseConfig() (*TravisConfig, error) {
+func ParseConfig() (*EchoinConfig, error) {
 	conf := DefaultConfig()
 	// set chainid as per --env
 	switch viper.GetString(FlagENV) {
@@ -118,7 +118,7 @@ func ParseConfig() (*TravisConfig, error) {
 
 // copied from tendermint/config/toml.go
 // modified to override some defaults and append vm configs
-func ensureRoot(conf *TravisConfig) {
+func ensureRoot(conf *EchoinConfig) {
 	rootDir := conf.TMConfig.RootDir
 
 	if err := cmn.EnsureDir(rootDir, 0700); err != nil {
@@ -146,7 +146,7 @@ func ensureRoot(conf *TravisConfig) {
 	}
 }
 
-func AppendVMConfig(configFilePath string, conf *TravisConfig) {
+func AppendVMConfig(configFilePath string, conf *EchoinConfig) {
 	var configTemplate *template.Template
 	var err error
 	if configTemplate, err = template.New("vmConfigTemplate").Parse(defaultVmTemplate); err != nil {

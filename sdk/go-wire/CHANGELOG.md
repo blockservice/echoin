@@ -37,7 +37,7 @@ BUG FIXES:
 
 FEATURES:
 
-- `github.com/tendermint/go-data` -> `github.com/CyberMiles/travis/sdk/go-wire/data`
+- `github.com/tendermint/go-data` -> `github.com/blockservice/echoin/sdk/go-wire/data`
 
 IMPROVEMENTS:
 

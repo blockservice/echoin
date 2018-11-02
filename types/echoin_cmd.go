@@ -14,8 +14,8 @@ import (
 	"time"
 )
 
-// TravisCmd ...
-type TravisCmd struct {
+// EchoinCmd ...
+type EchoinCmd struct {
 	Root     string
 	Path     string
 	Name     string
@@ -24,7 +24,7 @@ type TravisCmd struct {
 	NextArgs []string
 	// Env  []string
 	*sync.Mutex
-	DownloadChan chan *CmdInfo   //
+	DownloadChan chan *CmdInfo //
 	UpgradeChan  chan *CmdInfo //
 	KillChan     chan string   //
 	started      bool          // cmd.Start called, no error
@@ -34,9 +34,9 @@ type TravisCmd struct {
 	cmd          *exec.Cmd
 }
 
-// NewTravisCmd create a new travis CMD
-func NewTravisCmd(root string, name string, arg ...string) *TravisCmd {
-	return &TravisCmd{
+// NewEchoinCmd create a new echoin CMD
+func NewEchoinCmd(root string, name string, arg ...string) *EchoinCmd {
+	return &EchoinCmd{
 		Root:         root,
 		Path:         filepath.Join(root, "bin"),
 		Name:         name,
@@ -48,8 +48,8 @@ func NewTravisCmd(root string, name string, arg ...string) *TravisCmd {
 	}
 }
 
-// Start stop the sub travis process
-func (c *TravisCmd) Start() error {
+// Start stop the sub echoin process
+func (c *EchoinCmd) Start() error {
 	var stdoutBuf, stderrBuf bytes.Buffer
 	fullName := filepath.Join(c.Path, c.Name)
 	cmd := exec.Command(fullName, c.Args...)
@@ -93,8 +93,8 @@ func (c *TravisCmd) Start() error {
 	return nil
 }
 
-// Stop the sub travis process
-func (c *TravisCmd) Stop() error {
+// Stop the sub echoin process
+func (c *EchoinCmd) Stop() error {
 	pro, err := os.FindProcess(c.cmd.Process.Pid)
 	if err != nil {
 		fmt.Printf("can not find rpocess:%d\n", c.cmd.Process.Pid)
@@ -113,8 +113,8 @@ func (c *TravisCmd) Stop() error {
 	return nil
 }
 
-// Restart restart the travis
-func (c *TravisCmd) Restart() error {
+// Restart restart the echoin
+func (c *EchoinCmd) Restart() error {
 	c.Lock()
 	defer c.Unlock()
 	// stop the old
@@ -125,8 +125,8 @@ func (c *TravisCmd) Restart() error {
 	return nil
 }
 
-// Upgrade upgrade to new version travis
-func (c *TravisCmd) Upgrade(cmdInfo *CmdInfo) error {
+// Upgrade upgrade to new version echoin
+func (c *EchoinCmd) Upgrade(cmdInfo *CmdInfo) error {
 	c.Lock()
 	defer c.Unlock()
 	// TODO: need sleep a while to wait something finish ?
@@ -138,7 +138,7 @@ func (c *TravisCmd) Upgrade(cmdInfo *CmdInfo) error {
 	}
 
 	if !c.downloaded || c.NextName == "" {
-		return errors.New("no new version travis get ready")
+		return errors.New("no new version echoin get ready")
 	}
 
 	// using the new version
@@ -148,8 +148,8 @@ func (c *TravisCmd) Upgrade(cmdInfo *CmdInfo) error {
 	return nil
 }
 
-// Download download the new version travis as specified
-func (c *TravisCmd) Download(cmdInfo *CmdInfo) error {
+// Download download the new version echoin as specified
+func (c *EchoinCmd) Download(cmdInfo *CmdInfo) error {
 	c.Lock()
 	defer c.Unlock()
 
@@ -159,7 +159,7 @@ func (c *TravisCmd) Download(cmdInfo *CmdInfo) error {
 	}
 
 	// TODO: automatically download comming soon ...
-	//if err := exec.Command("cp", "-f", filepath.Join(c.Path, "travis"), filepath.Join(c.Path, name)).Run(); err != nil {
+	//if err := exec.Command("cp", "-f", filepath.Join(c.Path, "echoin"), filepath.Join(c.Path, name)).Run(); err != nil {
 	//	return err
 	//}
 	log.Println("download does not happen automatically, please copy it manually")
@@ -172,12 +172,12 @@ func (c *TravisCmd) Download(cmdInfo *CmdInfo) error {
 }
 
 // Cmd ...
-func (c *TravisCmd) Cmd() *exec.Cmd {
+func (c *EchoinCmd) Cmd() *exec.Cmd {
 	return c.cmd
 }
 
-// Kill kill the travis command
-func (c *TravisCmd) Kill() error {
+// Kill kill the echoin command
+func (c *EchoinCmd) Kill() error {
 	c.Lock()
 	defer c.Unlock()
 	// need sleep a while to wait something finish
@@ -188,4 +188,3 @@ func (c *TravisCmd) Kill() error {
 	}
 	return p.Signal(syscall.SIGTERM)
 }
-

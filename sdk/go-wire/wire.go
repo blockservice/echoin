@@ -7,7 +7,7 @@ import (
 	"io"
 	"reflect"
 
-	cmn "github.com/CyberMiles/travis/sdk/go-wire/common"
+	cmn "github.com/blockservice/echoin/sdk/go-wire/common"
 )
 
 var (

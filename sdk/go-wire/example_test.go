@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/CyberMiles/travis/sdk/go-wire"
+	"github.com/blockservice/echoin/sdk/go-wire"
 )
 
 func Example_RegisterInterface() {

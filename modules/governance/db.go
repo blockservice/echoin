@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"database/sql"
-	"github.com/CyberMiles/travis/sdk/dbm"
+	"github.com/blockservice/echoin/sdk/dbm"
 	"github.com/ethereum/go-ethereum/common"
 )
 

@@ -3,8 +3,8 @@ package stake
 import (
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/types"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/types"
 )
 
 // Tx
@@ -188,7 +188,7 @@ func NewTxDelegate(validatorAddress common.Address, amount, cubeBatch, sig strin
 	}.Wrap()
 }
 
-// Wrap - Wrap a Tx as a Travis Tx
+// Wrap - Wrap a Tx as a Echoin Tx
 func (tx TxDelegate) Wrap() sdk.Tx { return sdk.Tx{tx} }
 
 type TxWithdraw struct {
@@ -207,7 +207,7 @@ func NewTxWithdraw(validatorAddress common.Address, amount string) sdk.Tx {
 	}.Wrap()
 }
 
-// Wrap - Wrap a Tx as a Travis Tx
+// Wrap - Wrap a Tx as a Echoin Tx
 func (tx TxWithdraw) Wrap() sdk.Tx { return sdk.Tx{tx} }
 
 type TxSetCompRate struct {
@@ -226,7 +226,7 @@ func NewTxSetCompRate(delegatorAddress common.Address, compRate sdk.Rat) sdk.Tx 
 	}.Wrap()
 }
 
-// Wrap - Wrap a Tx as a Travis Tx
+// Wrap - Wrap a Tx as a Echoin Tx
 func (tx TxSetCompRate) Wrap() sdk.Tx { return sdk.Tx{tx} }
 
 type TxUpdateCandidacyAccount struct {
@@ -243,7 +243,7 @@ func NewTxUpdateCandidacyAccount(newCandidateAddress common.Address) sdk.Tx {
 	}.Wrap()
 }
 
-// Wrap - Wrap a Tx as a Travis Tx
+// Wrap - Wrap a Tx as a Echoin Tx
 func (tx TxUpdateCandidacyAccount) Wrap() sdk.Tx { return sdk.Tx{tx} }
 
 type TxAcceptCandidacyAccountUpdate struct {
@@ -260,5 +260,5 @@ func NewTxAcceptCandidacyAccountUpdate(accountUpdateRequestId int64) sdk.Tx {
 	}.Wrap()
 }
 
-// Wrap - Wrap a Tx as a Travis Tx
+// Wrap - Wrap a Tx as a Echoin Tx
 func (tx TxAcceptCandidacyAccountUpdate) Wrap() sdk.Tx { return sdk.Tx{tx} }

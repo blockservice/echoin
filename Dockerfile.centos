@@ -1,10 +1,10 @@
 # build docker image
-# > docker build -t cybermiles/travis:centos -f Dockerfile.centos .
+# > docker build -t blockservice/echoin:centos -f Dockerfile.centos .
 # initialize:
-# > docker run --rm -v $HOME/.travis:/travis cybermiles/travis:centos node init --home /travis
+# > docker run --rm -v $HOME/.echoin:/echoin blockservice/echoin:centos node init --home /echoin
 # node start:
-# > docker run --rm -v $HOME/.travis:/travis -p 26657:26657 -p 8545:8545 cybermiles/travis:centos node start --home /travis
-FROM cybermiles/travis-build:centos
+# > docker run --rm -v $HOME/.echoin:/echoin -p 26657:26657 -p 8545:8545 blockservice/echoin:centos node start --home /echoin
+FROM blockservice/echoin-build:centos
 
 # libeni
 WORKDIR /app/lib
@@ -16,14 +16,14 @@ RUN mkdir -p libeni \
   && tar zxvf libeni/*.tgz -C libeni \
   && cp libeni/*/lib/* .
 
-# travis
-WORKDIR /go/src/github.com/CyberMiles/travis
-# copy travis source code from local
+# echoin
+WORKDIR /go/src/github.com/blockservice/echoin
+# copy echoin source code from local
 ADD . .
 
-RUN ENI_LIB=$ENI_LIBRARY_PATH make build && cp build/travis /app/
+RUN ENI_LIB=$ENI_LIBRARY_PATH make build && cp build/echoin /app/
 
 WORKDIR /app
 EXPOSE 8545 26656 26657
 
-ENTRYPOINT ["./travis"]
+ENTRYPOINT ["./echoin"]

@@ -2,7 +2,7 @@ package types
 
 import (
 	"bytes"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/utils"
 	"math/rand"
 	"sort"
 

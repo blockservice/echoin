@@ -3,16 +3,16 @@ package main
 import (
 	"github.com/spf13/cobra"
 
-	stakecmd "github.com/CyberMiles/travis/modules/stake/commands"
-	"github.com/CyberMiles/travis/sdk/client/commands"
-	"github.com/CyberMiles/travis/sdk/client/commands/query"
-	txcmd "github.com/CyberMiles/travis/sdk/client/commands/txs"
+	stakecmd "github.com/blockservice/echoin/modules/stake/commands"
+	"github.com/blockservice/echoin/sdk/client/commands"
+	"github.com/blockservice/echoin/sdk/client/commands/query"
+	txcmd "github.com/blockservice/echoin/sdk/client/commands/txs"
 )
 
 // clientCmd is the entry point for this binary
 var clientCmd = &cobra.Command{
 	Use:   "client",
-	Short: "Travis light client",
+	Short: "Echoin light client",
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
 	},

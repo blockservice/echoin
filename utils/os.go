@@ -10,7 +10,7 @@ import (
 var GOOSDIST string
 var GOOSVERS string
 
-var SUPPORT_OS = map[string][]string {
+var SUPPORT_OS = map[string][]string{
 	"ubuntu": {"16.04"},
 	"centos": {"^7.0"},
 }
@@ -60,5 +60,5 @@ func init() {
 			}
 		}
 	}
-	log.Fatal("Your os is not supported, for now we only support: \n", SUPPORT_OS)
+	//log.Fatal("Your os is not supported, for now we only support: \n", SUPPORT_OS)
 }

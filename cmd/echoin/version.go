@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/CyberMiles/travis/version"
+	"github.com/blockservice/echoin/version"
 )
 
 // versionCmd ...

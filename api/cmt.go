@@ -23,11 +23,11 @@ import (
 
 	tmcmn "github.com/tendermint/tendermint/libs/common"
 
-	"github.com/CyberMiles/travis/modules/governance"
-	"github.com/CyberMiles/travis/modules/stake"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/types"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/modules/governance"
+	"github.com/blockservice/echoin/modules/stake"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/types"
+	"github.com/blockservice/echoin/utils"
 )
 
 // CmtRPCService offers cmt related RPC methods
@@ -45,7 +45,7 @@ func NewCmtRPCService(b *Backend, nonceLock *AddrLocker) *CmtRPCService {
 	}
 }
 
-func (s *CmtRPCService) makeTravisTxArgs(tx sdk.Tx, address common.Address, nonce *hexutil.Uint64) (*SendTxArgs, error) {
+func (s *CmtRPCService) makeEchoinTxArgs(tx sdk.Tx, address common.Address, nonce *hexutil.Uint64) (*SendTxArgs, error) {
 	data, err := tx.MarshalJSON()
 	if err != nil {
 		return nil, err
@@ -149,9 +149,9 @@ func newRPCTransaction(res *ctypes.ResultTx) (*RPCTransaction, error) {
 	from, _ := ethTypes.Sender(signer, tx)
 	v, r, s := tx.RawSignatureValues()
 
-	var travisTx sdk.Tx
+	var echoinTx sdk.Tx
 	if !utils.IsEthTx(tx) {
-		if err := json.Unmarshal(tx.Data(), &travisTx); err != nil {
+		if err := json.Unmarshal(tx.Data(), &echoinTx); err != nil {
 			return nil, err
 		}
 	}
@@ -164,7 +164,7 @@ func newRPCTransaction(res *ctypes.ResultTx) (*RPCTransaction, error) {
 		Hash:             tx.Hash(),
 		CmtHash:          res.Hash,
 		Input:            hexutil.Bytes(tx.Data()),
-		CmtInput:         travisTx,
+		CmtInput:         echoinTx,
 		Nonce:            hexutil.Uint64(tx.Nonce()),
 		To:               tx.To(),
 		TransactionIndex: hexutil.Uint(res.Index),
@@ -252,7 +252,7 @@ func (s *CmtRPCService) DeclareCandidacy(args DeclareCandidacyArgs) (*ctypes.Res
 	}
 	tx := stake.NewTxDeclareCandidacy(pubKey, args.MaxAmount.ToInt().String(), args.CompRate, args.Description)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +268,7 @@ type WithdrawCandidacyArgs struct {
 func (s *CmtRPCService) WithdrawCandidacy(args WithdrawCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxWithdrawCandidacy()
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -302,7 +302,7 @@ func (s *CmtRPCService) UpdateCandidacy(args UpdateCandidacyArgs) (*ctypes.Resul
 
 	tx := stake.NewTxUpdateCandidacy(pubKey, maxAmount, args.CompRate, args.Description)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +318,7 @@ type ActivateCandidacyArgs struct {
 func (s *CmtRPCService) ActivateCandidacy(args ActivateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxActivateCandidacy()
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +334,7 @@ type DeactivateCandidacyArgs struct {
 func (s *CmtRPCService) DeactivateCandidacy(args DeactivateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxDeactivateCandidacy()
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +352,7 @@ type SetCompRateArgs struct {
 func (s *CmtRPCService) SetCompRate(args SetCompRateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxSetCompRate(args.DelegatorAddress, args.CompRate)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -369,7 +369,7 @@ type UpdateCandidacyAccountArgs struct {
 func (s *CmtRPCService) UpdateCandidacyAccount(args UpdateCandidacyAccountArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxUpdateCandidacyAccount(args.NewCandidateAddress)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -386,7 +386,7 @@ type AcceptCandidacyAccountUpdateArgs struct {
 func (s *CmtRPCService) AcceptCandidacyAccountUpdate(args AcceptCandidacyAccountUpdateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxAcceptCandidacyAccountUpdate(args.AccountUpdateRequestId)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -404,7 +404,7 @@ type VerifyCandidacyArgs struct {
 func (s *CmtRPCService) VerifyCandidacy(args VerifyCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxVerifyCandidacy(args.CandidateAddress, args.Verified)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -424,7 +424,7 @@ type DelegateArgs struct {
 func (s *CmtRPCService) Delegate(args DelegateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxDelegate(args.ValidatorAddress, args.Amount.ToInt().String(), args.CubeBatch, args.Sig)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -442,7 +442,7 @@ type WithdrawArgs struct {
 func (s *CmtRPCService) Withdraw(args WithdrawArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxWithdraw(args.ValidatorAddress, args.Amount.ToInt().String())
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +521,7 @@ func (s *CmtRPCService) ProposeTransferFund(args GovernanceTransferFundProposalA
 		args.Amount.ToInt().String(), args.Reason,
 		args.ExpireTimestamp, args.ExpireBlockHeight)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -543,7 +543,7 @@ func (s *CmtRPCService) ProposeChangeParam(args GovernanceChangeParamProposalArg
 	tx := governance.NewTxChangeParamPropose(args.Name, args.Value, args.Reason,
 		args.ExpireTimestamp, args.ExpireBlockHeight)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -567,7 +567,7 @@ func (s *CmtRPCService) ProposeDeployLibEni(args GovernanceDeployLibEniProposalA
 	tx := governance.NewTxDeployLibEniPropose(args.Name, args.Version, args.FileUrl, args.Md5, args.Reason,
 		args.DeployTimestamp, args.DeployBlockHeight)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -586,7 +586,7 @@ type GovernanceRetireProgramProposalArgs struct {
 func (s *CmtRPCService) ProposeRetireProgram(args GovernanceRetireProgramProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxRetireProgramPropose(args.PreservedValidators, args.Reason, args.RetiredBlockHeight)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -609,7 +609,7 @@ func (s *CmtRPCService) ProposeUpgradeProgram(args GovernanceUpgradeProgramPropo
 	tx := governance.NewTxUpgradeProgramPropose(args.Name,
 		args.Version, args.FileUrl, args.Md5, args.Reason, args.UpgradeBlockHeight)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.From, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +627,7 @@ type GovernanceVoteArgs struct {
 func (s *CmtRPCService) Vote(args GovernanceVoteArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxVote(args.ProposalId, args.Answer)
 
-	txArgs, err := s.makeTravisTxArgs(tx, args.Voter, args.Nonce)
+	txArgs, err := s.makeEchoinTxArgs(tx, args.Voter, args.Nonce)
 	if err != nil {
 		return nil, err
 	}

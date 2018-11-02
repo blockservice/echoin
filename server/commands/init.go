@@ -9,10 +9,12 @@ import (
 	"github.com/spf13/viper"
 
 	"database/sql"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/types"
-	"github.com/CyberMiles/travis/utils"
-	emtUtils "github.com/CyberMiles/travis/vm/cmd/utils"
+	"os/exec"
+
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/types"
+	"github.com/blockservice/echoin/utils"
+	emtUtils "github.com/blockservice/echoin/vm/cmd/utils"
 	ethUtils "github.com/ethereum/go-ethereum/cmd/utils"
 	"github.com/ethereum/go-ethereum/core"
 	"github.com/ethereum/go-ethereum/ethdb"
@@ -22,7 +24,6 @@ import (
 	cmn "github.com/tendermint/tendermint/libs/common"
 	"github.com/tendermint/tendermint/p2p"
 	pv "github.com/tendermint/tendermint/privval"
-	"os/exec"
 )
 
 const (
@@ -49,8 +50,8 @@ func GetInitCmd() *cobra.Command {
 
 func initFiles(cmd *cobra.Command, args []string) error {
 	initTendermint()
-	initCyberMilesDb()
-	// initTravisCmd()
+	initEchoinDb()
+	// initEchoinCmd()
 	return initEthermint()
 }
 
@@ -161,14 +162,14 @@ func initEthermint() error {
 	return nil
 }
 
-func initCyberMilesDb() {
+func initEchoinDb() {
 	rootDir := viper.GetString(cli.HomeFlag)
 	stakeDbPath := filepath.Join(rootDir, "data", utils.DB_FILE_NAME)
 
 	if _, err := os.OpenFile(stakeDbPath, os.O_RDONLY, 0444); err != nil {
 		db, err := sql.Open("sqlite3", stakeDbPath)
 		if err != nil {
-			ethUtils.Fatalf("Initializing cybermiles database: %s", err.Error())
+			ethUtils.Fatalf("Initializing echoin database: %s", err.Error())
 		}
 		defer db.Close()
 
@@ -216,15 +217,15 @@ func initCyberMilesDb() {
 		_, err = db.Exec(sqlStmt)
 		if err != nil {
 			//os.Remove(stakeDbPath)
-			ethUtils.Fatalf("Create travis database tables: %s", err.Error())
+			ethUtils.Fatalf("Create echoin database tables: %s", err.Error())
 		}
-		log.Info("Successfully init travis database and create tables!")
+		log.Info("Successfully init echoin database and create tables!")
 	} else {
-		log.Warn("The travis database already exists!")
+		log.Warn("The echoin database already exists!")
 	}
 }
 
-func initTravisCmd() {
+func initEchoinCmd() {
 	rootDir := viper.GetString(cli.HomeFlag)
 	binPath := filepath.Join(rootDir, "bin")
 	if err := cmn.EnsureDir(binPath, 0700); err != nil {

@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	data "github.com/CyberMiles/travis/sdk/go-wire/data"
+	data "github.com/blockservice/echoin/sdk/go-wire/data"
 )
 
 func TestMarshal(t *testing.T) {

@@ -19,10 +19,10 @@ import (
 	pv "github.com/tendermint/tendermint/privval"
 	"github.com/tendermint/tendermint/proxy"
 
-	"github.com/CyberMiles/travis/api"
-	"github.com/CyberMiles/travis/app"
-	emtUtils "github.com/CyberMiles/travis/vm/cmd/utils"
-	"github.com/CyberMiles/travis/vm/ethereum"
+	"github.com/blockservice/echoin/api"
+	"github.com/blockservice/echoin/app"
+	emtUtils "github.com/blockservice/echoin/vm/cmd/utils"
+	"github.com/blockservice/echoin/vm/ethereum"
 )
 
 type Services struct {

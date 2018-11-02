@@ -3,7 +3,7 @@ package txs
 import (
 	"github.com/spf13/pflag"
 
-	"github.com/CyberMiles/travis/sdk"
+	"github.com/blockservice/echoin/sdk"
 )
 
 var (

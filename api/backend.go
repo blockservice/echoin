@@ -18,8 +18,8 @@ import (
 	rpcClient "github.com/tendermint/tendermint/rpc/client"
 	ctypes "github.com/tendermint/tendermint/rpc/core/types"
 
-	"github.com/CyberMiles/travis/vm/ethereum"
-	emtTypes "github.com/CyberMiles/travis/vm/types"
+	"github.com/blockservice/echoin/vm/ethereum"
+	emtTypes "github.com/blockservice/echoin/vm/types"
 	"github.com/ethereum/go-ethereum/params"
 )
 
@@ -45,7 +45,7 @@ type Backend struct {
 	// local client for in-proc app to execute the rpc functions without the overhead of http
 	localClient *rpcClient.Local
 
-	// travis chain id
+	// echoin chain id
 	chainID string
 
 	// moved from txpool.pendingState

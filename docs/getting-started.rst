@@ -16,29 +16,29 @@ The easiest way to get started is to use our pre-build Docker images. Please mak
 Initialize
 ``````````
 
-Let’s initialize a docker image for the Travis build first.
+Let’s initialize a docker image for the Echoin build first.
 
 .. code:: bash
 
-  docker run --rm -v ~/volumes/local:/travis cybermiles/travis node init --home /travis
+  docker run --rm -v ~/volumes/local:/echoin blockservice/echoin node init --home /echoin
 
 The node’s data directory is ``~/volumes/local`` on the local computer. 
 
 Run
 ```
 
-Now you can start the CyberMiles Travis node in docker.
+Now you can start the CyberMiles Echoin node in docker.
 
 .. code:: bash
 
-  docker run --name travis -v ~/volumes/local:/travis -t -p 26657:26657 -p 8545:8545 cybermiles/travis node start --home /travis
+  docker run --name echoin -v ~/volumes/local:/echoin -t -p 26657:26657 -p 8545:8545 blockservice/echoin node start --home /echoin
 
-At this point, you can Ctrl-C to exit to the terminal and travis will remain running in the background. 
-You can check the CyberMiles Travis node’s logs at anytime via the following docker command.
+At this point, you can Ctrl-C to exit to the terminal and echoin will remain running in the background. 
+You can check the CyberMiles Echoin node’s logs at anytime via the following docker command.
 
 .. code:: bash
 
-  docker logs -f travis
+  docker logs -f echoin
 
 You should see blocks like the following in the log.
 
@@ -50,28 +50,28 @@ You should see blocks like the following in the log.
 Connect
 ```````
 
-You can connect to the local CyberMiles node by attaching an instance of the Travis client.
+You can connect to the local CyberMiles node by attaching an instance of the Echoin client.
 
 .. code:: bash
 
-  # Get the IP address of the travis node
-  docker inspect -f '{{ .NetworkSettings.IPAddress }}' travis
+  # Get the IP address of the echoin node
+  docker inspect -f '{{ .NetworkSettings.IPAddress }}' echoin
   172.17.0.2
 
   # Use the IP address from above to connect
-  docker run --rm -it cybermiles/travis attach http://172.17.0.2:8545
+  docker run --rm -it blockservice/echoin attach http://172.17.0.2:8545
 
 It opens the web3-cmt JavaScript console to interact with the virtual machine. The example below shows how to unlock the
 coinbase account so that you have coins to spend.
 
 .. code:: bash
 
-  Welcome to the Travis JavaScript console!
+  Welcome to the Echoin JavaScript console!
 
   instance: vm/v1.6.7-stable/linux-amd64/go1.9.3
   coinbase: 0x7eff122b94897ea5b0e2a9abf47b86337fafebdc
   at block: 231 (Sat, 14 Jul 2018 07:34:25 UTC)
-   datadir: /travis
+   datadir: /echoin
    modules: admin:1.0 cmt:1.0 eth:1.0 net:1.0 personal:1.0 rpc:1.0 web3:1.0
   
   > personal.unlockAccount('0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', '1234')
@@ -86,7 +86,7 @@ Currently, we only support source builds for CentOS 7 and Ubuntu 16.04 linux dis
 Prerequisite
 ````````````
 
-You must have GO language version 1.10+ installed in order to build and run a Travis node. 
+You must have GO language version 1.10+ installed in order to build and run a Echoin node. 
 The easiest way to get GO 1.10 is through the GVM. Below are the commands on a Linux server.
 
 .. code:: bash
@@ -105,31 +105,31 @@ The easiest way to get GO 1.10 is through the GVM. Below are the commands on a L
 Build
 `````
 
-First we need to checkout the correct branch of Travis from Github:
+First we need to checkout the correct branch of Echoin from Github:
 
 .. code:: bash
 
-  go get github.com/CyberMiles/travis (ignore if an error occur)
-  cd $GOPATH/src/github.com/CyberMiles/travis
+  go get github.com/blockservice/echoin (ignore if an error occur)
+  cd $GOPATH/src/github.com/blockservice/echoin
   git checkout master
 
-Next, we need to build libENI and put it into the default Travis data directory ``~/.travis/``.
+Next, we need to build libENI and put it into the default Echoin data directory ``~/.echoin/``.
 
 .. code:: bash
 
-  sudo rm -rf ~/.travis
+  sudo rm -rf ~/.echoin
   wget -O $HOME/libeni.tgz https://github.com/CyberMiles/libeni/releases/download/v1.3.4/libeni-1.3.4_ubuntu-16.04.tgz
   tar zxvf $HOME/libeni.tgz -C $HOME
-  mkdir -p $HOME/.travis/eni
-  cp -r $HOME/libeni-1.3.4/lib $HOME/.travis/eni/lib
+  mkdir -p $HOME/.echoin/eni
+  cp -r $HOME/libeni-1.3.4/lib $HOME/.echoin/eni/lib
 
 Currently libENI can only run on Ubuntu 16.04 and CentOS 7. If your operating system is CentOS, please change the downloading url. You can find it here: `https://github.com/CyberMiles/libeni/releases <https://github.com/CyberMiles/libeni/releases>`_
 
-Now, we can build and install Travis binary. It will populate additional configuration files into ``~/.travis/``
+Now, we can build and install Echoin binary. It will populate additional configuration files into ``~/.echoin/``
 
 .. code:: bash
 
-  cd $GOPATH/src/github.com/CyberMiles/travis
+  cd $GOPATH/src/github.com/blockservice/echoin
   make all
 
 If the system cannot find glide at the last step, make sure that you have ``$GOPATH/bin`` under the ``$PATH`` variable.
@@ -137,33 +137,33 @@ If the system cannot find glide at the last step, make sure that you have ``$GOP
 Run
 ```
 
-Let's start a  Travis node locally using the ``~/.travis/`` data directory.
+Let's start a  Echoin node locally using the ``~/.echoin/`` data directory.
 
 .. code:: bash
 
-  travis node init
-  travis node start
+  echoin node init
+  echoin node start
 
 Connect
 ```````
 
-You can connect to the local CyberMiles node by attaching an instance of the Travis client.
+You can connect to the local CyberMiles node by attaching an instance of the Echoin client.
 
 .. code:: bash
 
-  travis attach http://localhost:8545
+  echoin attach http://localhost:8545
 
 It opens the web3-cmt JavaScript console to interact with the virtual machine. The example below shows how to unlock the
 coinbase account so that you have coins to spend.
 
 .. code:: bash
 
-  Welcome to the Travis JavaScript console!
+  Welcome to the Echoin JavaScript console!
 
   instance: vm/v1.6.7-stable/linux-amd64/go1.9.3
   coinbase: 0x7eff122b94897ea5b0e2a9abf47b86337fafebdc
   at block: 231 (Sat, 14 Jul 2018 07:34:25 UTC)
-   datadir: /travis
+   datadir: /echoin
    modules: admin:1.0 cmt:1.0 eth:1.0 net:1.0 personal:1.0 rpc:1.0 web3:1.0
   
   > personal.unlockAccount('0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', '1234')
@@ -180,7 +180,7 @@ You can now send a transaction between accounts like the following.
   personal.unlockAccount("from_address")
   cmt.sendTransaction({"from": "from_address", "to": "to_address", "value": web3.toWei(0.001, "cmt")})
 
-Next, you can paste the following script into the Travis client console, at the > prompt.
+Next, you can paste the following script into the Echoin client console, at the > prompt.
 
 .. code:: bash
 

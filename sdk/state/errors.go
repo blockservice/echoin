@@ -4,7 +4,7 @@ package state
 import (
 	"fmt"
 
-	"github.com/CyberMiles/travis/sdk/errors"
+	"github.com/blockservice/echoin/sdk/errors"
 )
 
 var (

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/CyberMiles/travis/modules/stake"
+	"github.com/blockservice/echoin/modules/stake"
 	"github.com/ethereum/go-ethereum/common"
 	um "github.com/ethereum/go-ethereum/core/vm/umbrella"
 )

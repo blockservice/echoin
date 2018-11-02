@@ -19,7 +19,7 @@ func SimulateGenesisBlock() *core.Genesis {
 			HomesteadBlock: big.NewInt(0),
 			EIP155Block:    big.NewInt(0),
 			EIP158Block:    big.NewInt(0),
-			ByzantiumBlock:    big.NewInt(0),
+			ByzantiumBlock: big.NewInt(0),
 		},
 		Nonce:      uint64(0xdeadbeefdeadbeef),
 		ExtraData:  hexutil.MustDecode("0x"),
@@ -43,9 +43,9 @@ func DefaultGenesisBlock() *core.Genesis {
 	// this will be overridden
 	config.ChainID = big.NewInt(0)
 	genesis := &core.Genesis{
-		Config:     config,
-		Nonce:      66,
-		//CyberMiles for E-commerce
+		Config: config,
+		Nonce:  66,
+		//Echoin for E-commerce
 		ExtraData:  hexutil.MustDecode("0x43796265724d696c657320666f7220452d636f6d6d65726365"),
 		GasLimit:   uint64(0x1e8480000),
 		Difficulty: big.NewInt(17179869184),
@@ -59,11 +59,11 @@ func DefaultGenesisBlock() *core.Genesis {
 func DevGenesisBlock() *core.Genesis {
 	return &core.Genesis{
 		Config: &params.ChainConfig{
-			ChainID:       big.NewInt(15),
+			ChainID:        big.NewInt(15),
 			HomesteadBlock: big.NewInt(0),
 			EIP155Block:    big.NewInt(0),
 			EIP158Block:    big.NewInt(0),
-			ByzantiumBlock:    big.NewInt(0),
+			ByzantiumBlock: big.NewInt(0),
 		},
 		Nonce:      uint64(0xdeadbeefdeadbeef),
 		ExtraData:  hexutil.MustDecode("0x"),

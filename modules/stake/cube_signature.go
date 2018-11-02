@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"encoding/pem"
 	"fmt"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 	"strings"

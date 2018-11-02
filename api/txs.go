@@ -15,7 +15,7 @@ import (
 	rpcClient "github.com/tendermint/tendermint/rpc/client"
 	ctypes "github.com/tendermint/tendermint/rpc/core/types"
 
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/utils"
 )
 
 const defaultGas = 90000

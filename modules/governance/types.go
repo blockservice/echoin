@@ -2,7 +2,7 @@ package governance
 
 import (
 	"encoding/json"
-	"github.com/CyberMiles/travis/types"
+	"github.com/blockservice/echoin/types"
 	"github.com/ethereum/go-ethereum/common"
 	"golang.org/x/crypto/ripemd160"
 )

@@ -2,7 +2,7 @@ package types
 
 import (
 	"encoding/json"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/utils"
 	"reflect"
 )
 

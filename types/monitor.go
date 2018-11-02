@@ -6,19 +6,19 @@ import (
 
 // CmdInfo ...
 type CmdInfo struct {
-	Name string
-	Version  string
+	Name         string
+	Version      string
 	DownloadURLs []string
-	MD5 string
+	MD5          string
 }
 
 // Monitor ...
 type Monitor struct {
-	cmd *TravisCmd
+	cmd *EchoinCmd
 }
 
 // NewMonitor ...
-func NewMonitor(cmd *TravisCmd) *Monitor {
+func NewMonitor(cmd *EchoinCmd) *Monitor {
 	return &Monitor{cmd: cmd}
 }
 
@@ -58,7 +58,7 @@ func (r *Monitor) Kill(info *CmdInfo, reply *MonitorResponse) error {
 	return nil
 }
 
-// ReleaseName get the travis release name
-func (c *CmdInfo)ReleaseName() string {
+// ReleaseName get the echoin release name
+func (c *CmdInfo) ReleaseName() string {
 	return c.Name + "_" + c.Version
 }

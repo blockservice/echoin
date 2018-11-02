@@ -129,8 +129,8 @@ func TestGetByteSlice(t *testing.T) {
 }
 
 // Issues:
-// + https://github.com/CyberMiles/travis/sdk/go-wire/issues/25
-// + https://github.com/CyberMiles/travis/sdk/go-wire/issues/37
+// + https://github.com/blockservice/echoin/sdk/go-wire/issues/25
+// + https://github.com/blockservice/echoin/sdk/go-wire/issues/37
 func TestFuzzBinaryLengthOverflowsCaught(t *testing.T) {
 	n, err := int(0), error(nil)
 	var x []byte

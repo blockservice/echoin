@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"encoding/json"
-	"github.com/CyberMiles/travis/sdk/errors"
+	"github.com/blockservice/echoin/sdk/errors"
 )
 
 const maxTxSize = 10240

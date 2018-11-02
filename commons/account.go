@@ -2,16 +2,17 @@ package commons
 
 import (
 	"fmt"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/utils"
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/state"
 	"math"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/utils"
+	"github.com/ethereum/go-ethereum/accounts"
+	"github.com/ethereum/go-ethereum/accounts/keystore"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/state"
 )
 
 const (
@@ -20,7 +21,7 @@ const (
 )
 
 var (
-	emHome = os.ExpandEnv("$HOME/.travis")
+	emHome = os.ExpandEnv("$HOME/.echoin")
 )
 
 func MakeAccountManager() (*accounts.Manager, string, error) {

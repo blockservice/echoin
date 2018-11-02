@@ -2,12 +2,12 @@ package stake
 
 import (
 	"fmt"
-	"github.com/CyberMiles/travis/commons"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/sdk/errors"
-	"github.com/CyberMiles/travis/sdk/state"
-	"github.com/CyberMiles/travis/types"
-	"github.com/CyberMiles/travis/utils"
+	"github.com/blockservice/echoin/commons"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/sdk/errors"
+	"github.com/blockservice/echoin/sdk/state"
+	"github.com/blockservice/echoin/types"
+	"github.com/blockservice/echoin/utils"
 	"github.com/ethereum/go-ethereum/common"
 	ethstat "github.com/ethereum/go-ethereum/core/state"
 	"math/big"

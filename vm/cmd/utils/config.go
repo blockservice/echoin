@@ -12,8 +12,8 @@ import (
 	"github.com/ethereum/go-ethereum/node"
 	"github.com/ethereum/go-ethereum/params"
 
-	"github.com/CyberMiles/travis/api"
-	"github.com/CyberMiles/travis/vm/ethereum"
+	"github.com/blockservice/echoin/api"
+	"github.com/blockservice/echoin/vm/ethereum"
 )
 
 const (
@@ -80,7 +80,7 @@ func DefaultNodeConfig() node.Config {
 	cfg.Version = params.Version
 	cfg.HTTPModules = append(cfg.HTTPModules, "eth")
 	cfg.WSModules = append(cfg.WSModules, "eth")
-	cfg.IPCPath = "cybermiles.ipc"
+	cfg.IPCPath = "echoin.ipc"
 
 	emHome := os.Getenv(emHome)
 	if emHome != "" {

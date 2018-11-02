@@ -14,7 +14,7 @@ docs:
 all: install test
 
 install: 
-	go install github.com/CyberMiles/travis/sdk/go-wire/cmd/...
+	go install github.com/blockservice/echoin/sdk/go-wire/cmd/...
 
 test:
 	go test `glide novendor`

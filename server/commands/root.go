@@ -14,7 +14,7 @@ import (
 	tmflags "github.com/tendermint/tendermint/libs/cli/flags"
 	"github.com/tendermint/tendermint/libs/log"
 
-	emtUtils "github.com/CyberMiles/travis/vm/cmd/utils"
+	emtUtils "github.com/blockservice/echoin/vm/cmd/utils"
 )
 
 //nolint
@@ -112,7 +112,7 @@ var (
 func setupEmtContext() error {
 	// create a new context to invoke ethermint
 	a := cli.NewApp()
-	a.Name = "travis"
+	a.Name = "echoin"
 	a.Flags = []cli.Flag{}
 	a.Flags = append(a.Flags, nodeFlags...)
 	a.Flags = append(a.Flags, rpcFlags...)

@@ -7,15 +7,15 @@ import (
 
 	"github.com/tendermint/tendermint/libs/cli"
 
-	"github.com/CyberMiles/travis/sdk/client/commands/auto"
-	basecmd "github.com/CyberMiles/travis/server/commands"
+	"github.com/blockservice/echoin/sdk/client/commands/auto"
+	basecmd "github.com/blockservice/echoin/server/commands"
 )
 
-// TravisCmd is the entry point for this binary
+// EchoinCmd is the entry point for this binary
 var (
-	TravisCmd = &cobra.Command{
-		Use:   "travis",
-		Short: "The Travis Network",
+	EchoinCmd = &cobra.Command{
+		Use:   "echoin",
+		Short: "The Echoin Network",
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},
@@ -32,7 +32,7 @@ func main() {
 	prepareNodeCommands()
 	prepareClientCommands()
 
-	TravisCmd.AddCommand(
+	EchoinCmd.AddCommand(
 		nodeCmd,
 		clientCmd,
 		attachCmd,
@@ -43,7 +43,7 @@ func main() {
 	)
 
 	// prepare and add flags
-	basecmd.SetUpRoot(TravisCmd)
-	executor := cli.PrepareMainCmd(TravisCmd, "CM", os.ExpandEnv("$HOME/.travis"))
+	basecmd.SetUpRoot(EchoinCmd)
+	executor := cli.PrepareMainCmd(EchoinCmd, "CM", os.ExpandEnv("$HOME/.echoin"))
 	executor.Execute()
 }

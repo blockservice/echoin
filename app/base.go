@@ -7,16 +7,16 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/CyberMiles/travis/modules/governance"
-	"github.com/CyberMiles/travis/modules/stake"
-	"github.com/CyberMiles/travis/sdk"
-	"github.com/CyberMiles/travis/sdk/dbm"
-	"github.com/CyberMiles/travis/sdk/errors"
-	"github.com/CyberMiles/travis/sdk/state"
-	"github.com/CyberMiles/travis/server"
-	ttypes "github.com/CyberMiles/travis/types"
-	"github.com/CyberMiles/travis/utils"
-	"github.com/CyberMiles/travis/version"
+	"github.com/blockservice/echoin/modules/governance"
+	"github.com/blockservice/echoin/modules/stake"
+	"github.com/blockservice/echoin/sdk"
+	"github.com/blockservice/echoin/sdk/dbm"
+	"github.com/blockservice/echoin/sdk/errors"
+	"github.com/blockservice/echoin/sdk/state"
+	"github.com/blockservice/echoin/server"
+	ttypes "github.com/blockservice/echoin/types"
+	"github.com/blockservice/echoin/utils"
+	"github.com/blockservice/echoin/version"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -119,10 +119,10 @@ func (app *BaseApp) Info(req abci.RequestInfo) abci.ResponseInfo {
 		}
 	}
 
-	travisInfoRes := app.StoreApp.Info(req)
+	echoinInfoRes := app.StoreApp.Info(req)
 
-	travisInfoRes.LastBlockAppHash = finalAppHash(ethInfoRes.LastBlockAppHash, travisInfoRes.LastBlockAppHash, app.StoreApp.GetDbHash(), travisInfoRes.LastBlockHeight, nil)
-	return travisInfoRes
+	echoinInfoRes.LastBlockAppHash = finalAppHash(ethInfoRes.LastBlockAppHash, echoinInfoRes.LastBlockAppHash, app.StoreApp.GetDbHash(), echoinInfoRes.LastBlockHeight, nil)
+	return echoinInfoRes
 }
 
 // DeliverTx - ABCI
@@ -387,12 +387,12 @@ func (app *BaseApp) Commit() (res abci.ResponseCommit) {
 	return
 }
 
-func finalAppHash(ethCommitHash []byte, travisCommitHash []byte, dbHash []byte, workingHeight int64, store *state.SimpleDB) []byte {
+func finalAppHash(ethCommitHash []byte, echoinCommitHash []byte, dbHash []byte, workingHeight int64, store *state.SimpleDB) []byte {
 
 	hasher := ripemd160.New()
 	buf := new(bytes.Buffer)
 	buf.Write(ethCommitHash)
-	buf.Write(travisCommitHash)
+	buf.Write(echoinCommitHash)
 	buf.Write(dbHash)
 	hasher.Write(buf.Bytes())
 	hash := hasher.Sum(nil)

@@ -4,7 +4,7 @@ import (
 	"io"
 	"math"
 
-	cmn "github.com/CyberMiles/travis/sdk/go-wire/common"
+	cmn "github.com/blockservice/echoin/sdk/go-wire/common"
 )
 
 func WriteByteSlice(bz []byte, w io.Writer, n *int, err *error) {

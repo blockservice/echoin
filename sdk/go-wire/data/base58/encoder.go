@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/pkg/errors"
-	data "github.com/CyberMiles/travis/sdk/go-wire/data"
+	data "github.com/blockservice/echoin/sdk/go-wire/data"
 )
 
 var (

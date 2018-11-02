@@ -66,16 +66,16 @@ Developer mode
   * 3.coding in HTML5 and import web3-cmt functions.
   * 4.test dApp and contact CMT Community.
  
- `MetaMask for CMT <https://www.cybermiles.io/metamask/>`_
+ `MetaMask for CMT <https://www.echoin.io/metamask/>`_
 -----------------------------------------------------------------------------------------------------------
 
- `Remix for CMT <https://remix.cybermiles.io>`_
+ `Remix for CMT <https://remix.echoin.io>`_
 -----------------------------------------------------------------------------------------------------------
 
  `web3-cmt.js <https://github.com/CyberMiles/web3-cmt.js>`_
 -----------------------------------------------------------------------------------------------------------
 
- `dApp SDK Example <https://cube-api.cybermiles.io/static/html/cw/cmtwallet-dappsdk-example.html>`_
+ `dApp SDK Example <https://cube-api.echoin.io/static/html/cw/cmtwallet-dappsdk-example.html>`_
 -----------------------------------------------------------------------------------------------------------
 
 Smart Contract source code in SDK Example

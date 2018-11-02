@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/cmd/utils"
 	"github.com/ethereum/go-ethereum/rpc"
 
-	"github.com/CyberMiles/travis/console"
+	"github.com/blockservice/echoin/console"
 )
 
 var (

@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cast"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
 
-	"github.com/CyberMiles/travis/sdk/client"
-	"github.com/CyberMiles/travis/types"
+	"github.com/blockservice/echoin/sdk/client"
+	"github.com/blockservice/echoin/types"
 )
 
 func (s *CmtRPCService) getParsedFromJson(path string, key []byte, ptr interface{}, height uint64) (int64, error) {

@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/big"
 
-	"github.com/CyberMiles/travis/sdk"
+	"github.com/blockservice/echoin/sdk"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 )
@@ -14,7 +14,7 @@ const (
 	HalfYear            = 180
 	YearlyBlockNumber   = 365 * 24 * 3600 / CommitSeconds
 	BasicMintableAmount = "1000000000000000000000000000"
-	DB_FILE_NAME        = "cybermiles.db"
+	DB_FILE_NAME        = "echoin.db"
 )
 
 const (

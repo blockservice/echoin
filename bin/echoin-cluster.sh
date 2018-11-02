@@ -4,7 +4,7 @@ INST_COUNT=$1
 CLEAR=$2
 CLS='--clear'
 
-BASE_DIR=~/.travis
+BASE_DIR=~/.echoin
 
 TRPCPORT=26657
 TP2PPORT=26656
@@ -53,17 +53,17 @@ modifyConf()
 	sed -i "s/seeds = \"\"/seeds = \"$seeds\"/g" ./config.toml
 }
 
-# kill running travis first
-rc=`ps aux | grep "[t]ravis node start" | wc -l`
+# kill running echoin first
+rc=`ps aux | grep "[e]choin node start" | wc -l`
 if [ $rc -ne 0 ] ; then
-	ps aux | grep "[t]ravis node start" | awk '{print $2}' | xargs kill
+	ps aux | grep "[e]choin node start" | awk '{print $2}' | xargs kill
 fi
 
 while true
 do
-	c=`ps aux | grep "[t]ravis node start" | awk '{print $2}' | wc -l`
+	c=`ps aux | grep "[e]choin node start" | awk '{print $2}' | wc -l`
 	if [ $c -ne 0 ]; then
-		echo 'stopping old travis nodes'
+		echo 'stopping old echoin nodes'
 		sleep 1
 	else
 		break
@@ -85,7 +85,7 @@ do
 
 	dir=$BASE_DIR$seq
 
-	# make .travis* directory if not exist
+	# make .echoin* directory if not exist
 	if [ ! -d "$dir" ]; then
 		mkdir $dir
 		newnode=1
@@ -97,11 +97,11 @@ do
 
 	if [ $CLEAR == "$CLS" ] || [ $newnode -eq 1 ] ; then
 		rm -rf !(eni)
-		travis node init --home .
+		echoin node init --home .
 		if [ $i -ne 1 ]; then
 			modifyConf $dir $seq
 		else
-			v_node_id=`travis node show_node_id --home .`
+			v_node_id=`echoin node show_node_id --home .`
 			seeds="$v_node_id@127.0.0.1:$TP2PPORT"
 		fi
 	fi
@@ -109,8 +109,8 @@ do
 	cd $dir
 
 	if [ $INST_COUNT -eq 1 ]; then
-		travis node start --home .
+		echoin node start --home .
 	else
-		travis node start --home . > travis.log 2>&1 &
+		echoin node start --home . > echoin.log 2>&1 &
 	fi
 done

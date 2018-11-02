@@ -26,7 +26,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/CyberMiles/travis/console/jsre"
+	"github.com/blockservice/echoin/console/jsre"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core"
 	"github.com/ethereum/go-ethereum/eth"

@@ -5,7 +5,7 @@
 package sdk
 
 import (
-	"github.com/CyberMiles/travis/sdk/go-wire/data"
+	"github.com/blockservice/echoin/sdk/go-wire/data"
 )
 
 // Auto-generated adapters for happily unmarshaling interfaces

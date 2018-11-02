@@ -1,8 +1,8 @@
 ======
-Travis JSON-RPC
+Echoin JSON-RPC
 ======
 
-As travis is compatible with Ethereum so most methods especially the ones for normal transaction are the same with Ethereum. Please refer to Ethereum `JSON-RPC <https://github.com/ethereum/wiki/wiki/JSON-RPC>`_ for more information.
+As echoin is compatible with Ethereum so most methods especially the ones for normal transaction are the same with Ethereum. Please refer to Ethereum `JSON-RPC <https://github.com/ethereum/wiki/wiki/JSON-RPC>`_ for more information.
 
 CMT methods
 ===========
@@ -782,9 +782,9 @@ Returns a list of all current validators and validator candidates.
 					"created_at": 0,
 					"description": {
 						"name": "Seed Validator",
-						"website": "https://www.cybermiles.io/seed-validator/",
+						"website": "https://www.echoin.io/seed-validator/",
 						"location": "HK",
-						"email": "developer@cybermiles.io",
+						"email": "developer@echoin.io",
 						"profile": "To be replaced by an external validator."
 					},
 					"verified": "Y",

@@ -15,7 +15,7 @@ import (
 //
 // In addition to these implementation, you can also find
 // BTCEncoder and FlickrEncoder that use base58 variants in
-// github.com/CyberMiles/travis/sdk/go-wire/data/base58
+// github.com/blockservice/echoin/sdk/go-wire/data/base58
 var (
 	Encoder       ByteEncoder = hexEncoder{}
 	HexEncoder                = hexEncoder{}

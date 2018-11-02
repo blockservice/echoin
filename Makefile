@@ -1,26 +1,27 @@
 GOTOOLS = github.com/Masterminds/glide
-ENI_LIB?=$(HOME)/.travis/eni/lib
-CGO_LDFLAGS = -L$(ENI_LIB) -Wl,-rpath,$(ENI_LIB)
+#ENI_LIB?=$(HOME)/.echoin/eni/lib
+#CGO_LDFLAGS = -L$(ENI_LIB) -Wl,-rpath,$(ENI_LIB)
 CGO_LDFLAGS_ALLOW = "-I.*"
 UNAME = $(shell uname)
 
-all: get_vendor_deps install print_cybermiles_logo
+all: get_vendor_deps install print_echoin_logo
 
 get_vendor_deps: tools
 	glide install
 	@# cannot use ctx (type *"gopkg.in/urfave/cli.v1".Context) as type
-	@# *"github.com/CyberMiles/travis/vendor/github.com/ethereum/go-ethereum/vendor/gopkg.in/urfave/cli.v1".Context ...
+	@# *"github.com/blockservice/echoin/vendor/github.com/ethereum/go-ethereum/vendor/gopkg.in/urfave/cli.v1".Context ...
 	@rm -rf vendor/github.com/ethereum/go-ethereum/vendor/gopkg.in/urfave
 
 install:
-	@echo "\n--> Installing the Travis TestNet\n"
+	@echo "\n--> Installing the Echoin TestNet\n"
 ifeq ($(UNAME), Linux)
-	CGO_LDFLAGS="$(CGO_LDFLAGS)" CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go install ./cmd/travis
+	#CGO_LDFLAGS="$(CGO_LDFLAGS)" CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go install ./cmd/echoin
+	CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go install ./cmd/echoin
 endif
 ifeq ($(UNAME), Darwin)
-	CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go install ./cmd/travis
+	CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go install ./cmd/echoin
 endif
-	@echo "\n\nTravis, the TestNet for CyberMiles (CMT) has successfully installed!"
+	@echo "\n\nEchoin, the TestNet has successfully installed!"
 
 tools:
 	@echo "--> Installing tools"
@@ -29,13 +30,13 @@ tools:
 
 build: get_vendor_deps
 ifeq ($(UNAME), Linux)
-	CGO_LDFLAGS="$(CGO_LDFLAGS)" CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go build -o build/travis ./cmd/travis
+	CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go build -o build/echoin ./cmd/echoin
 endif
 ifeq ($(UNAME), Darwin)
-	CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go build -o build/travis ./cmd/travis
+	CGO_LDFLAGS_ALLOW="$(CGO_LDFLAGS_ALLOW)" go build -o build/echoin ./cmd/echoin
 endif
 
-NAME := cybermiles/travis
+NAME := blockservice/echoin
 LATEST := ${NAME}:latest
 #GIT_COMMIT := $(shell git rev-parse --short=8 HEAD)
 #IMAGE := ${NAME}:${GIT_COMMIT}
@@ -56,23 +57,25 @@ dist:
 	docker run --rm -e "BUILD_TAG=${BUILD_TAG}" -v "${CURDIR}/scripts":/scripts --entrypoint /bin/sh -t ${NAME}:centos /scripts/dist.centos.sh
 	rm -rf build/dist && mkdir -p build/dist && mv -f scripts/*.zip build/dist/
 
-print_cybermiles_logo:
+print_echoin_logo:
 	@echo "\n\n"
-	@echo "    cmtt         tt                        cmt       tit ii  ll                 "
-	@echo "  ttcmttt        tt                        tttt      ttt ii  ll                 "
-	@echo " tt              tt                        cmtc     ittt     ll                 "
-	@echo "it               tt                        mt t     titt ii  ll                 "
-	@echo "tt      tt   cmt tt cmt     ,ttt    cm cmt mt tt   tt tt ii  ll    cmtt    cmtt "
-	@echo "tt      itt   ti ttcmtttt  ttitttt  cmtcmt mt tt   tt tt ii  ll  ttttitt  tttiti"
-	@echo "tt       tt  tt  tt    tt  tt   tt  tt     mt  ti  tt tt ii  ll  tt   tt  ti    "
-	@echo "tt        t; tt  tt    tt  ttcmttt  tt     mt  tt it  tt ii  ll  ttcmttt  itttt "
-	@echo "it,       tt t   tt    tt  ttcmtii  ti     mt   t tt  tt ii  ll  ttcmtii    tttt"
-	@echo " cmt      tttt   tti   tt  tt       ti     mt   cmt   tt ii  ll  tt           tt"
-	@echo "  ttcmttt  ttt   ttcmttt   ttcmttt  ti     mt   itt   tt ii  ll  tttttt   tcmttt"
-	@echo "    iiii   tt    cmtcmt       iii   ii     mt    ii   ii ii  ll   ttii    iiii  "
-	@echo "           ti                                                                   "
-	@echo "          tt                                                                    "
-	@echo "        ttt                                                                     "
+	@echo "                                         hhhhhhh                                iiii                    " 
+	@echo "                                         h:::::h                               i::::i                   "
+	@echo "                                         h:::::h                                iiii                    "
+	@echo "                                         h:::::h                                                        "
+	@echo "     eeeeeeeeeeee        cccccccccccccccch::::h hhhhh          ooooooooooo   iiiiiiinnnn  nnnnnnnn      "
+	@echo "   ee::::::::::::ee    cc:::::::::::::::ch::::hh:::::hhh     oo:::::::::::oo i:::::in:::nn::::::::nn    "
+	@echo "  e::::::eeeee:::::ee c:::::::::::::::::ch::::::::::::::hh  o:::::::::::::::o i::::in::::::::::::::nn   "
+	@echo " e::::::e     e:::::ec:::::::cccccc:::::ch:::::::hhh::::::h o:::::ooooo:::::o i::::inn:::::::::::::::n  "
+	@echo " e:::::::eeeee::::::ec::::::c     ccccccch::::::h   h::::::ho::::o     o::::o i::::i  n:::::nnnn:::::n  "
+	@echo " e:::::::::::::::::e c:::::c             h:::::h     h:::::ho::::o     o::::o i::::i  n::::n    n::::n  "
+	@echo " e::::::eeeeeeeeeee  c:::::c             h:::::h     h:::::ho::::o     o::::o i::::i  n::::n    n::::n  "
+	@echo " e:::::::e           c::::::c     ccccccch:::::h     h:::::ho::::o     o::::o i::::i  n::::n    n::::n  "
+	@echo " e::::::::e          c:::::::cccccc:::::ch:::::h     h:::::ho:::::ooooo:::::oi::::::i n::::n    n::::n  "
+	@echo "  e::::::::eeeeeeee   c:::::::::::::::::ch:::::h     h:::::ho:::::::::::::::oi::::::i n::::n    n::::n  " 
+	@echo "   ee:::::::::::::e    cc:::::::::::::::ch:::::h     h:::::h oo:::::::::::oo i::::::i n::::n    n::::n  "
+	@echo "     eeeeeeeeeeeeee      cccccccccccccccchhhhhhh     hhhhhhh   ooooooooooo   iiiiiiii nnnnnn    nnnnnn  "
 	@echo "\n\n"
-	@echo "Please visit the following URL for technical testnet instructions < https://github.com/CyberMiles/travis/blob/master/README.md >.\n"
-	@echo "Visit our website < https://www.cybermiles.io/ >, to learn more about CyberMiles.\n"
+	@echo "Please visit the following URL for technical testnet instructions < https://github.com/blockservice/echoin/master/docs >.\n"
+	@echo "Visit our website < https://www.echoin.io/ >, to learn more about echoin.\n"
+

@@ -12,7 +12,7 @@ import (
 	"github.com/tendermint/tendermint/lite"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
 
-	"github.com/CyberMiles/travis/sdk/client"
+	"github.com/blockservice/echoin/sdk/client"
 )
 
 var (
@@ -30,7 +30,7 @@ const (
 func AddBasicFlags(cmd *cobra.Command) {
 	cmd.PersistentFlags().String(ChainFlag, "", "Chain ID of tendermint node")
 	cmd.PersistentFlags().String(NodeFlag, "", "<host>:<port> to tendermint rpc interface for this chain")
-	cmd.PersistentFlags().String(CliHomeFlag, os.ExpandEnv("$HOME/.travis-cli"), "directory for cli")
+	cmd.PersistentFlags().String(CliHomeFlag, os.ExpandEnv("$HOME/.echoin-cli"), "directory for cli")
 }
 
 // GetChainID reads ChainID from the flags

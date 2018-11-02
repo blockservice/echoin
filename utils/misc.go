@@ -3,7 +3,7 @@ package utils
 import (
 	"bytes"
 	"fmt"
-	"github.com/CyberMiles/travis/sdk"
+	"github.com/blockservice/echoin/sdk"
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 	"strconv"

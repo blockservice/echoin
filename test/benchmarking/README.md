@@ -1,4 +1,4 @@
-# Travis Benchmarking
+# Echoin Benchmarking
 
 ## Requirement
 * node `^8.0.0`

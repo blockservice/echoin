@@ -3,7 +3,7 @@ package data_test
 import (
 	"strings"
 
-	data "github.com/CyberMiles/travis/sdk/go-wire/data"
+	data "github.com/blockservice/echoin/sdk/go-wire/data"
 )
 
 /** These are some sample types to test parsing **/

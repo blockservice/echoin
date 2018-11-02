@@ -1,4 +1,4 @@
-package: github.com/CyberMiles/travis/sdk/go-wire
+package: github.com/blockservice/echoin/sdk/go-wire
 import:
 - package: github.com/clipperhouse/typewriter
 - package: github.com/pkg/errors

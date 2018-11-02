@@ -2,16 +2,16 @@
 Deploy a TestNet Node
 ======================
 
-In this document, we will discuss how to connect to the CyberMiles Travis TestNet. We will cover binary, Docker and "build from source" scenarios. If you are new to CyberMiles, deploying a Docker node is probably easier.
+In this document, we will discuss how to connect to the CyberMiles Echoin TestNet. We will cover binary, Docker and "build from source" scenarios. If you are new to CyberMiles, deploying a Docker node is probably easier.
 
-While we highly recommend you to run your own Travis node, you can also ask for direct access to one of the nodes maintained by the CyberMiles Foundation. Send an email to travis@cybermiles.io to apply for access credentials. You still need the ``travis`` client either from Docker or source to access the node.
+While we highly recommend you to run your own Echoin node, you can also ask for direct access to one of the nodes maintained by the CyberMiles Foundation. Send an email to echoin@echoin.io to apply for access credentials. You still need the ``echoin`` client either from Docker or source to access the node.
 
 Binary
 ======
 
 Make sure your os is Ubuntu 16.04 or CentOS 7
 
-Download pre-built binaries from `release page <https://github.com/CyberMiles/travis/releases/tag/vTestnet>`_
+Download pre-built binaries from `release page <https://github.com/blockservice/echoin/releases/tag/vTestnet>`_
 -----------------------------------------------------------------------------------------------------------
 
 ::
@@ -20,54 +20,54 @@ Download pre-built binaries from `release page <https://github.com/CyberMiles/tr
   cd $HOME/release
   
   # if your os is Ubuntu
-  wget https://github.com/CyberMiles/travis/releases/download/vTestnet/travis_vTestnet_ubuntu-16.04.zip
-  unzip travis_vTestnet_ubuntu-16.04.zip
+  wget https://github.com/blockservice/echoin/releases/download/vTestnet/echoin_vTestnet_ubuntu-16.04.zip
+  unzip echoin_vTestnet_ubuntu-16.04.zip
 
   # or if your os is CentOS
-  wget https://github.com/CyberMiles/travis/releases/download/vTestnet/travis_vTestnet_centos-7.zip
-  unzip travis_vTestnet_centos-7.zip
+  wget https://github.com/blockservice/echoin/releases/download/vTestnet/echoin_vTestnet_centos-7.zip
+  unzip echoin_vTestnet_centos-7.zip
 
-Getting Travis TestNet Config
+Getting Echoin TestNet Config
 -----------------------------
 
 ::
 
-  rm -rf $HOME/.travis
+  rm -rf $HOME/.echoin
   cd $HOME/release
-  ./travis node init --env testnet
-  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/travis/init/config/config.toml > $HOME/.travis/config/config.toml
-  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/travis/init/config/genesis.json > $HOME/.travis/config/genesis.json
+  ./echoin node init --env testnet
+  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/echoin/init/config/config.toml > $HOME/.echoin/config/config.toml
+  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/echoin/init/config/genesis.json > $HOME/.echoin/config/genesis.json
 
 
 Change your name from default name ``local``
 
 ::
 
-  cd $HOME/.travis
-  vim $HOME/.travis/config/config.toml
+  cd $HOME/.echoin
+  vim $HOME/.echoin/config/config.toml
 
   # here you can change your name
   moniker = "<your_custom_name>"
 
-Copy libeni into the default Travis data directory
+Copy libeni into the default Echoin data directory
 --------------------------------------------------
 
 ::
 
-  mkdir -p $HOME/.travis/eni
-  cp -r $HOME/release/lib/. $HOME/.travis/eni/lib
+  mkdir -p $HOME/.echoin/eni
+  cp -r $HOME/release/lib/. $HOME/.echoin/eni/lib
   
   # set env variables for eni lib
-  export ENI_LIBRARY_PATH=$HOME/.travis/eni/lib
-  export LD_LIBRARY_PATH=$HOME/.travis/eni/lib
+  export ENI_LIBRARY_PATH=$HOME/.echoin/eni/lib
+  export LD_LIBRARY_PATH=$HOME/.echoin/eni/lib
 
-Start the Node and Join Travis TestNet
+Start the Node and Join Echoin TestNet
 --------------------------------------
 
 ::
 
   cd $HOME/release
-  ./travis node start
+  ./echoin node start
 
 
 Docker
@@ -79,40 +79,40 @@ Please `setup docker <https://docs.docker.com/engine/installation/>`_.
 
 Docker Image
 ------------
-Docker image for Travis is stored on `Docker Hub <https://hub.docker.com/r/cybermiles/travis/tags/>`_. TestNet environment is using the `'vTestnet' <https://github.com/CyberMiles/travis/releases/tag/vTestnet>`_ release which can be pulled automatically from Travis:
+Docker image for Echoin is stored on `Docker Hub <https://hub.docker.com/r/blockservice/echoin/tags/>`_. TestNet environment is using the `'vTestnet' <https://github.com/blockservice/echoin/releases/tag/vTestnet>`_ release which can be pulled automatically from Echoin:
 
 ::
 
-  docker pull cybermiles/travis:vTestnet
+  docker pull blockservice/echoin:vTestnet
 
-Note: Configuration and data will be stored at /travis directory in the container. The directory will also be exposed as a volume. The ports 8545, 26656 and 26657 will be exposed for connection.
+Note: Configuration and data will be stored at /echoin directory in the container. The directory will also be exposed as a volume. The ports 8545, 26656 and 26657 will be exposed for connection.
 
-Getting Travis TestNet Config
+Getting Echoin TestNet Config
 -----------------------------
 
 ::
 
-  rm -rf $HOME/.travis
-  docker run --rm -v $HOME/.travis:/travis -t cybermiles/travis:vTestnet node init --env testnet --home /travis
-  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/travis/init/config/config.toml > $HOME/.travis/config/config.toml
-  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/travis/init/config/genesis.json > $HOME/.travis/config/genesis.json
+  rm -rf $HOME/.echoin
+  docker run --rm -v $HOME/.echoin:/echoin -t blockservice/echoin:vTestnet node init --env testnet --home /echoin
+  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/echoin/init/config/config.toml > $HOME/.echoin/config/config.toml
+  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/echoin/init/config/genesis.json > $HOME/.echoin/config/genesis.json
 
-Start the Node and Join Travis TestNet
+Start the Node and Join Echoin TestNet
 --------------------------------------
 First change your name from default name ``local``
 
 ::
 
-  vim ~/.travis/config/config.toml
+  vim ~/.echoin/config/config.toml
 
   # here you can change your name
   moniker = "<your_custom_name>"
 
-Run the docker Travis application:
+Run the docker Echoin application:
 
 ::
 
-  docker run --name travis -v $HOME/.travis:/travis -p 26657:26657 -p 8545:8545 -t cybermiles/travis:vTestnet node start --home /travis
+  docker run --name echoin -v $HOME/.echoin:/echoin -p 26657:26657 -p 8545:8545 -t blockservice/echoin:vTestnet node start --home /echoin
 
 Now your node is syncing with TestNet, the output will look like the following. Wait until it completely syncs.
 
@@ -127,9 +127,9 @@ To access the TestNet type the following in a seperte terminal console to get yo
 
 ::
 
-  docker inspect -f '{{ .NetworkSettings.IPAddress }}' travis
+  docker inspect -f '{{ .NetworkSettings.IPAddress }}' echoin
   172.17.0.2
-  docker run --rm -it cybermiles/travis:vTestnet attach http://172.17.0.2:8545
+  docker run --rm -it blockservice/echoin:vTestnet attach http://172.17.0.2:8545
 
 Now, you should see the web3-cmt JavaScript console, you can now jump to the "Test transactions" section to send test transactions.
 
@@ -138,25 +138,25 @@ Build from source
 
 Prerequisite
 ------------
-Please `install Travis via source builds <http://travis.readthedocs.io/en/latest/getting-started.html#build-from-source>`_. (STOP before you connect to a local node)
+Please `install Echoin via source builds <http://echoin.readthedocs.io/en/latest/getting-started.html#build-from-source>`_. (STOP before you connect to a local node)
 
-Getting Travis TestNet Config
+Getting Echoin TestNet Config
 -----------------------------
 
 ::
 
-  rm -rf $HOME/.travis
-  travis node init --env testnet
-  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/travis/init/config/config.toml > $HOME/.travis/config/config.toml
-  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/travis/init/config/genesis.json > $HOME/.travis/config/genesis.json
+  rm -rf $HOME/.echoin
+  echoin node init --env testnet
+  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/echoin/init/config/config.toml > $HOME/.echoin/config/config.toml
+  curl https://raw.githubusercontent.com/CyberMiles/testnet/master/echoin/init/config/genesis.json > $HOME/.echoin/config/genesis.json
 
-Start the Node and Join Travis TestNet
+Start the Node and Join Echoin TestNet
 --------------------------------------
-Run the Travis application:
+Run the Echoin application:
 
 ::
 
-  travis node start --home ~/.travis
+  echoin node start --home ~/.echoin
 
 Now your node is syncing with TestNet, the output will look like the following. Wait until it completely syncs.
 
@@ -167,23 +167,23 @@ Now your node is syncing with TestNet, the output will look like the following. 
   I[07-20|03:13:26.443] Executed block                               module=state height=3364 validTxs=0 invalidTxs=0
   I[07-20|03:13:26.443] Updates to validators                        module=state updates="[{\"address\":\"\",\"pub_key\":\"VPsUJ1Eb73tYPFhNjo/8YIWY9oxbnXyW+BDQsTSci2s=\",\"power\":27065},{\"address\":\"\",\"pub_key\":\"8k17vhQf+IcrmxBiftyccq6AAHAwcVmEr8GCHdTUnv4=\",\"power\":27048},{\"address\":\"\",\"pub_key\":\"PoDmSVZ/qUOEuiM38CtZvm2XuNmExR0JkXMM9P9UhLU=\",\"power\":27048},{\"address\":\"\",\"pub_key\":\"2Tl5oI35/+tljgDKzypt44rD1vjVHaWJFTBdVLsmcL4=\",\"power\":27048}]"
 
-To access the TestNet, type the following in a seperte terminal console (make sure that the seperate console also has travis environment):
+To access the TestNet, type the following in a seperte terminal console (make sure that the seperate console also has echoin environment):
 
 ::
 
-  travis attach http://localhost:8545
+  echoin attach http://localhost:8545
 
 You should now the see the web3-cmt JavaScript console and can now test some transactions.
 
 Test transactions
 =================
 
-In this section, we will use the ``travis`` client's web3-cmt JavaScript console to send some transactions and verify that the system is set up properly. You can't test transactions untill you are completely in sync with the TestNet. It might take hours to sync.
+In this section, we will use the ``echoin`` client's web3-cmt JavaScript console to send some transactions and verify that the system is set up properly. You can't test transactions untill you are completely in sync with the TestNet. It might take hours to sync.
 
 Create and fund a test account
 -------------------------------
 
-Once you attach the ``travis`` to the node as above, create two accounts on the TestNet.
+Once you attach the ``echoin`` to the node as above, create two accounts on the TestNet.
 
 ::
 
@@ -191,9 +191,9 @@ Once you attach the ``travis`` to the node as above, create two accounts on the 
   > personal.newAccount()
   ...
 
-Now you have created TWO accounts ``0x1234FROM`` and ``0x1234DEST`` on the Travis TestNet. It is time to get some test CMTs. Please go visit the website below, and ask for 1000 TestNet CMTs for account ``0x1234FROM``. We will also send 1000 TEST tokens, issued by the TEST smart contract, to the account.
+Now you have created TWO accounts ``0x1234FROM`` and ``0x1234DEST`` on the Echoin TestNet. It is time to get some test CMTs. Please go visit the website below, and ask for 1000 TestNet CMTs for account ``0x1234FROM``. We will also send 1000 TEST tokens, issued by the TEST smart contract, to the account.
 
-http://travis-faucet.cybermiles.io
+http://echoin-faucet.echoin.io
  
 
 Test transactions
@@ -229,14 +229,14 @@ After 10 seconds, you can check the balance of the receiving account as follows.
 Fee free transactions
 ---------------------
 
-On CyberMiles blockchain, we have made most transactions (except for heavy users or spammers) fee-free. You can try it like this in ``travis`` client console.
+On CyberMiles blockchain, we have made most transactions (except for heavy users or spammers) fee-free. You can try it like this in ``echoin`` client console.
 
 ::
 
   > cmt.sendTransaction({from:"0x1234FROM", to:"0x1234DEST",value:1000,gasPrice:0})
   ...
 
-To try a fee-free smart contract-based token transaction, use the following in the ``travis`` client console.
+To try a fee-free smart contract-based token transaction, use the following in the ``echoin`` client console.
 
 ::
 
