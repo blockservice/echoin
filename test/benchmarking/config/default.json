@@ -1,7 +1,7 @@
 {
   "provider": "http://localhost:8545",
   "wallet": {
-    "address": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc",
+    "address": "0x2c2411acf7d145c41e55e464ce615e1efd0d0321",
     "crypto": {
       "cipher": "aes-128-ctr",
       "ciphertext": "19de8a919e2f4cbdde2b7352ebd0be8ead2c87db35fc8e4c9acaf74aaaa57dad",

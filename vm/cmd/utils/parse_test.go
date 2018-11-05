@@ -31,10 +31,10 @@ var genesis1 = &core.Genesis{
 	Difficulty: big.NewInt(0x40),
 	GasLimit:   0x8000000,
 	Alloc: core.GenesisAlloc{
-		ethCommon.HexToAddress("0x7eff122b94897ea5b0e2a9abf47b86337fafebdc"): {
+		ethCommon.HexToAddress("0x2c2411acf7d145c41e55e464ce615e1efd0d0321"): {
 			Balance: bigString("10000000000000000000000000000000000"),
 		},
-		ethCommon.HexToAddress("0xc6713982649D9284ff56c32655a9ECcCDA78422A"): {
+		ethCommon.HexToAddress("0x169bb731627c3ed65a6c9cf1a63a5fb03b2043b7"): {
 			Balance: bigString("10000000000000000000000000000000000"),
 		},
 	},
