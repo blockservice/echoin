@@ -19,9 +19,9 @@ const (
 
 const (
 	Staging      = 20
-	TestNet      = 19
-	MainNet      = 18
-	PrivateChain = 1234
+	TestNet      = 378
+	MainNet      = 380
+	PrivateChain = 379
 )
 
 const (

@@ -1,10 +1,10 @@
 {
     "alloc": {
-        "77beb894fc9b0ed41231e51f128a347043960a9d": {
-            "balance": "0x1ed09bead87c0378d8e6400000000"
+        "2c2411acf7d145c41e55e464ce615e1efd0d0321": {
+            "balance": "0x19d971e4fe8401e74000000"
         },
-        "7eff122b94897ea5b0e2a9abf47b86337fafebdc": {
-            "balance": "0x1ed09bead87c0378d8e6400000000"
+        "169bb731627c3ed65a6c9cf1a63a5fb03b2043b7": {
+            "balance": "0x19d971e4fe8401e74000000"
         }
     },
     "coinbase": "0x0000000000000000000000000000000000000000",

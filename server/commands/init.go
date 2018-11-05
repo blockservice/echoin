@@ -42,7 +42,7 @@ func GetInitCmd() *cobra.Command {
 		Short: "Initialize",
 		RunE:  initFiles,
 	}
-	initCmd.Flags().String(FlagChainID, "local", "Chain ID")
+	initCmd.Flags().String(FlagChainID, "echoin-network", "Chain ID")
 	initCmd.Flags().String(FlagENV, defaultEnv, "Environment (mainnet|staging|testnet|private)")
 	initCmd.Flags().String(FlagVMGenesis, "", "VM genesis file")
 	return initCmd
@@ -94,7 +94,7 @@ func initTendermint() {
 			PubKey:    types.PubKey{privValidator.GetPubKey()},
 			Power:     "1",
 			Shares:    1000000,
-			Address:   "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc",
+			Address:   "0x2c2411acf7d145c41e55e464ce615e1efd0d0321",
 			CompRate:  sdk.NewRat(2, 10),
 			MaxAmount: 10000000,
 		}}
@@ -238,22 +238,34 @@ func initEchoinCmd() {
 }
 
 var keystoreFilesMap = map[string]string{
-	// https://github.com/tendermint/ethermint/blob/edc95f9d47ba1fb7c8161182533b5f5d5c5d619b/setup/keystore/UTC--2016-10-21T22-30-03.071787745Z--7eff122b94897ea5b0e2a9abf47b86337fafebdc
-	// OR
-	// $GOPATH/src/github.com/ethermint/setup/keystore/UTC--2016-10-21T22-30-03.071787745Z--7eff122b94897ea5b0e2a9abf47b86337fafebdc
-	"UTC--2016-10-21T22-30-03.071787745Z--7eff122b94897ea5b0e2a9abf47b86337fafebdc": `
+	"UTC--2018-11-05T03-35-02.343649957Z--2c2411acf7d145c41e55e464ce615e1efd0d0321": `
 {
-  "address":"7eff122b94897ea5b0e2a9abf47b86337fafebdc",
-  "id":"f86a62b4-0621-4616-99af-c4b7f38fcc48","version":3,
+  "address":"2c2411acf7d145c41e55e464ce615e1efd0d0321",
+  "id":"29bc8192-3c84-4c50-9795-c489cda1f680",
+  "version":3,
   "crypto":{
-    "cipher":"aes-128-ctr","ciphertext":"19de8a919e2f4cbdde2b7352ebd0be8ead2c87db35fc8e4c9acaf74aaaa57dad",
-    "cipherparams":{"iv":"ba2bd370d6c9d5845e92fbc6f951c792"},
-    "kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"c7cc2380a96adc9eb31d20bd8d8a7827199e8b16889582c0b9089da6a9f58e84"},
-    "mac":"ff2c0caf051ca15d8c43b6f321ec10bd99bd654ddcf12dd1a28f730cc3c13730"
-  }
+	  "cipher":"aes-128-ctr",
+	  "ciphertext":"52a1935b79f0f8413d9bbefa1df090e9c47eeb36163df6f3f71c41a881326b3a",
+	  "cipherparams":{"iv":"5a9c676926ae25efb89320844f1ac5f4"},
+	  "kdf":"scrypt",
+	  "kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"9ebdd17f0b8ca8e26068764784057d1b8b89ca01de7f3049fd87834993ecafb8"},
+	  "mac":"585ead6048b8c885ced7a871abfec972fadd06c72b3828cc007af3f7729316f4"
+	}
 }
 `,
-	"UTC--2018-04-09T09-48-47.241470000Z--77beb894fc9b0ed41231e51f128a347043960a9d": `
-{"address":"77beb894fc9b0ed41231e51f128a347043960a9d","crypto":{"cipher":"aes-128-ctr","ciphertext":"a559667b38ab5b38aeadd22aef5b0582ef28bc86e9899d058ec41a5f8193ffd6","cipherparams":{"iv":"0efe57fb91b2eaf3f7c630037c531b13"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"21201b8cb9ad02be8744c44f82a6668d30eb9c2811b6038d9727bbd1034015aa"},"mac":"9f9e1e1877f55f22f8ca3fb36b0667caf02db3bc98717e62b40df18bdb33e766"},"id":"745b91e0-e760-4fa9-97b2-22a76745a25f","version":3}
+	"UTC--2018-11-05T03-35-14.079584660Z--169bb731627c3ed65a6c9cf1a63a5fb03b2043b7": `
+{
+	"address":"169bb731627c3ed65a6c9cf1a63a5fb03b2043b7",
+	"crypto":{
+		"cipher":"aes-128-ctr",
+		"ciphertext":"37575082cb51f0725f8d55ff9983f62cba445389dc72dae50360aaf48dcca4f2",
+		"cipherparams":{"iv":"722f2e5cb1d8f331c69856d8955b9a49"},
+		"kdf":"scrypt",
+		"kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"4644cb5b6eccd56ff2578656b80a3bceda831a64c98c2c8da0658840b7e43c52"},
+		"mac":"612632defad1faaa4192a4936c56422553cf4191ae50b270704faf538fc13455"
+	},
+	"id":"80cc1b5f-7b1e-473d-915f-062524dfd2e6",
+	"version":3
+}
 `,
 }
