@@ -1,5 +1,5 @@
 hash: b1eecd4270660de056eaa85a888847ed37475433434afbbb795e613c3effc70b
-updated: 2018-11-02T14:12:43.534962366+08:00
+updated: 2018-11-06T12:55:44.335720565+08:00
 imports:
 - name: github.com/aristanetworks/goarista
   version: 59944ff78bc1de686b0aba1444dfd380f48f03d4
@@ -146,6 +146,10 @@ imports:
   subpackages:
   - proto
   - protoc-gen-go/descriptor
+  - ptypes
+  - ptypes/any
+  - ptypes/duration
+  - ptypes/timestamp
 - name: github.com/golang/snappy
   version: d9eb7a3d35ec988b8585d4a0068e462c27d28380
 - name: github.com/gorilla/websocket
@@ -372,7 +376,13 @@ imports:
   - html
   - html/atom
   - html/charset
+  - http2
+  - http2/hpack
+  - idna
+  - internal/timeseries
+  - lex/httplex
   - netutil
+  - trace
   - websocket
 - name: golang.org/x/sync
   version: 1d60e4601c6fd243af51cc01ddf169918a5407ca
@@ -400,10 +410,41 @@ imports:
   - internal/utf8internal
   - language
   - runes
+  - secure/bidirule
   - transform
+  - unicode/bidi
   - unicode/norm
+- name: google.golang.org/genproto
+  version: ff3583edef7de132f219f0efc00e097cabcc0ec0
+  subpackages:
+  - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: d177c8fe46c2550133199f71714c23ff0df8d38a
+  version: 168a6198bcb0ef175f7dacec0b8691fc141dc9b8
+  subpackages:
+  - balancer
+  - balancer/base
+  - balancer/roundrobin
+  - codes
+  - connectivity
+  - credentials
+  - encoding
+  - encoding/proto
+  - grpclog
+  - internal
+  - internal/backoff
+  - internal/channelz
+  - internal/grpcrand
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - resolver
+  - resolver/dns
+  - resolver/passthrough
+  - stats
+  - status
+  - tap
+  - transport
 - name: gopkg.in/fatih/set.v0
   version: 2c768e3c5489976167bfc42b5c7c92ca783f4389
 - name: gopkg.in/karalabe/cookiejar.v2
