@@ -7,9 +7,9 @@ to change the system state on the fly.
 
 Send governance transaction using JSON-RPC.
 
-cmt_propose
+ec_propose
 ````````````````````````
-Propose to transfer fund. Compse a proposal to transfer "amount" of CMTs from "transferFrom" to "transferTo".
+Propose to transfer fund. Compse a proposal to transfer "amount" of ECs from "transferFrom" to "transferTo".
 
 **Parameters**
 
@@ -40,7 +40,7 @@ JSON - In the deliver_tx section of the result, there is a data field that stand
 .. code:: bash
 
 // Request
-curl -X POST --data '{ "jsonrpc":"2.0", "method":"cmt_propose", "params": [{ "from": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "transferFrom": "0x77beb894fc9b0ed41231e51f128a347043960a9d", "transferTo": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "amount": "0x1", "reason": "***" }], "id": 1 }'
+curl -X POST --data '{ "jsonrpc":"2.0", "method":"ec_propose", "params": [{ "from": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "transferFrom": "0x77beb894fc9b0ed41231e51f128a347043960a9d", "transferTo": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "amount": "0x1", "reason": "***" }], "id": 1 }'
 
 // Response
 {
@@ -63,7 +63,7 @@ curl -X POST --data '{ "jsonrpc":"2.0", "method":"cmt_propose", "params": [{ "fr
     }
 }
 
-cmt_proposeChangeParam
+ec_proposeChangeParam
 ````````````````````````
 
 Compose a proposal to change value of system parameter.
@@ -95,7 +95,7 @@ JSON - In the deliver_tx section of the result there is a data field that stands
 .. code:: bash
 
 // Request
-curl -X POST --data '{ "jsonrpc":"2.0", "method":"cmt_proposeChangeParam", "params": [{ "from": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "name": "inflation_rate", "value": "8", "reason": "***" }], "id": 1 }'
+curl -X POST --data '{ "jsonrpc":"2.0", "method":"ec_proposeChangeParam", "params": [{ "from": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "name": "inflation_rate", "value": "8", "reason": "***" }], "id": 1 }'
 
 // Response
 {
@@ -118,7 +118,7 @@ curl -X POST --data '{ "jsonrpc":"2.0", "method":"cmt_proposeChangeParam", "para
     }
 }
 
-cmt_vote
+ec_vote
 ````````````````````````
 Vote on the proposal.
 
@@ -148,7 +148,7 @@ JSON
 .. code:: bash
 
 // Request
-curl -X POST --data '{ "jsonrpc":"2.0", "method":"cmt_vote", "params": [{ "proposalId": "CwKl9oFI5STw9wviReF3CQ24joZ+tpWF/vdIqr2rH/c=", "from": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "answer": "Y" }], "id": 1 }'
+curl -X POST --data '{ "jsonrpc":"2.0", "method":"ec_vote", "params": [{ "proposalId": "CwKl9oFI5STw9wviReF3CQ24joZ+tpWF/vdIqr2rH/c=", "from": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "answer": "Y" }], "id": 1 }'
 
 // Response
 {

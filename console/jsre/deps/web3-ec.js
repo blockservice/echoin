@@ -15120,7 +15120,7 @@ var Stake = require("./stake.js")
 var Governance = require("./governance.js")
 
 // inherit and extend Eth
-var Cmt = function(web3) {
+var Ec = function(web3) {
   Eth.call(this, web3)
 
   var self = this
@@ -15145,13 +15145,13 @@ var Cmt = function(web3) {
   this.governance = new Governance(this)
 }
 
-Cmt.prototype = Object.create(Eth.prototype)
-Cmt.prototype.constructor = Cmt
+Ec.prototype = Object.create(Eth.prototype)
+Ec.prototype.constructor = Ec
 
 var methods = function() {
   var sendRawTx = new Method({
     name: "sendRawTx",
-    call: "cmt_sendRawTx",
+    call: "ec_sendRawTx",
     params: 1,
     inputFormatter: [null]
   })
@@ -15174,26 +15174,26 @@ var methods = function() {
     inputFormatter: [null]
   })
 
-  var getCmtBlock = new Method({
-    name: "getCmtBlock",
-    call: "cmt_getBlockByNumber",
+  var getEcBlock = new Method({
+    name: "getEcBlock",
+    call: "ec_getBlockByNumber",
     params: 1
   })
-  var getCmtTransaction = new Method({
-    name: "getCmtTransaction",
-    call: "cmt_getTransactionByHash",
+  var getEcTransaction = new Method({
+    name: "getEcTransaction",
+    call: "ec_getTransactionByHash",
     params: 1,
     outputFormatter: formatters.outputTransactionFormatter
   })
-  var getCmtTransactionFromBlock = new Method({
-    name: "getCmtTransactionFromBlock",
-    call: "cmt_getTransactionFromBlock",
+  var getEcTransactionFromBlock = new Method({
+    name: "getEcTransactionFromBlock",
+    call: "ec_getTransactionFromBlock",
     params: 2,
     outputFormatter: formatters.outputTransactionFormatter
   })
   var decodeRawTxs = new Method({
     name: "decodeRawTxs",
-    call: "cmt_decodeRawTxs",
+    call: "ec_decodeRawTxs",
     params: 1
   })
 
@@ -15202,9 +15202,9 @@ var methods = function() {
     sendTransaction,
     sendTx,
     sendRawTransaction,
-    getCmtBlock,
-    getCmtTransaction,
-    getCmtTransactionFromBlock,
+    getEcBlock,
+    getEcTransaction,
+    getEcTransactionFromBlock,
     decodeRawTxs
   ]
 }
@@ -15213,7 +15213,7 @@ var properties = function() {
   return [
     new Property({
       name: "syncing",
-      getter: "cmt_syncing"
+      getter: "ec_syncing"
     })
   ]
 }
@@ -15224,13 +15224,13 @@ var props = properties().map(function(p) {
   return p.name
 })
 Object.defineProperty = function(obj, prop, descriptor) {
-  if (obj instanceof Cmt && props.indexOf(prop) > -1) {
+  if (obj instanceof Ec && props.indexOf(prop) > -1) {
     descriptor.configurable = true
   }
   return _defineProperty(obj, prop, descriptor)
 }
 
-module.exports = Cmt
+module.exports = Ec
 
 },{"../formatters":93,"./governance.js":97,"./stake.js":99,"web3/lib/utils/utils":62,"web3/lib/web3/method":78,"web3/lib/web3/methods/eth":80,"web3/lib/web3/property":87}],96:[function(require,module,exports){
 var utils = require("web3/lib/utils/utils")
@@ -15256,20 +15256,20 @@ var Delegator = function(web3) {
 var methods = function() {
   var accept = new Method({
     name: "accept",
-    call: "cmt_delegate",
+    call: "ec_delegate",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var withdraw = new Method({
     name: "withdraw",
-    call: "cmt_withdraw",
+    call: "ec_withdraw",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
 
   var query = new Method({
     name: "query",
-    call: "cmt_queryDelegator",
+    call: "ec_queryDelegator",
     params: 2,
     inputFormatter: [
       formatters.inputAddressFormatter,
@@ -15313,48 +15313,48 @@ var Governance = function(web3) {
 var methods = function() {
   var proposeRecoverFund = new Method({
     name: "proposeRecoverFund",
-    call: "cmt_proposeTransferFund",
+    call: "ec_proposeTransferFund",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var proposeChangeParam = new Method({
     name: "proposeChangeParam",
-    call: "cmt_proposeChangeParam",
+    call: "ec_proposeChangeParam",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var proposeDeployLibEni = new Method({
     name: "proposeDeployLibEni",
-    call: "cmt_proposeDeployLibEni",
+    call: "ec_proposeDeployLibEni",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var proposeRetireProgram = new Method({
     name: "proposeRetireProgram",
-    call: "cmt_proposeRetireProgram",
+    call: "ec_proposeRetireProgram",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var proposeUpgradeProgram = new Method({
     name: "proposeUpgradeProgram",
-    call: "cmt_proposeUpgradeProgram",
+    call: "ec_proposeUpgradeProgram",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var vote = new Method({
     name: "vote",
-    call: "cmt_vote",
+    call: "ec_vote",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var listProposals = new Method({
     name: "listProposals",
-    call: "cmt_queryProposals",
+    call: "ec_queryProposals",
     params: 0
   })
   var getParams = new Method({
     name: "getParams",
-    call: "cmt_queryParams",
+    call: "ec_queryParams",
     params: 1,
     inputFormatter: [formatters.inputDefaultHeightFormatter]
   })
@@ -15470,74 +15470,74 @@ var Validator = function(web3) {
 var methods = function() {
   var declare = new Method({
     name: "declare",
-    call: "cmt_declareCandidacy",
+    call: "ec_declareCandidacy",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var withdraw = new Method({
     name: "withdraw",
-    call: "cmt_withdrawCandidacy",
+    call: "ec_withdrawCandidacy",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var update = new Method({
     name: "update",
-    call: "cmt_updateCandidacy",
+    call: "ec_updateCandidacy",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var verify = new Method({
     name: "verify",
-    call: "cmt_verifyCandidacy",
+    call: "ec_verifyCandidacy",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var activate = new Method({
     name: "activate",
-    call: "cmt_activateCandidacy",
+    call: "ec_activateCandidacy",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var deactivate = new Method({
     name: "deactivate",
-    call: "cmt_deactivateCandidacy",
+    call: "ec_deactivateCandidacy",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var updateAccount = new Method({
     name: "updateAccount",
-    call: "cmt_updateCandidacyAccount",
+    call: "ec_updateCandidacyAccount",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var acceptAccountUpdate = new Method({
     name: "acceptAccountUpdate",
-    call: "cmt_acceptCandidacyAccountUpdate",
+    call: "ec_acceptCandidacyAccountUpdate",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
   var setCompRate = new Method({
     name: "setCompRate",
-    call: "cmt_setCompRate",
+    call: "ec_setCompRate",
     params: 1,
     inputFormatter: [formatters.inputStakeTxFormatter]
   })
 
   var list = new Method({
     name: "list",
-    call: "cmt_queryValidators",
+    call: "ec_queryValidators",
     params: 1,
     inputFormatter: [formatters.inputDefaultHeightFormatter]
   })
   var query = new Method({
     name: "query",
-    call: "cmt_queryValidator",
+    call: "ec_queryValidator",
     params: 2,
     inputFormatter: [formatters.inputAddressFormatter, formatters.inputDefaultHeightFormatter]
   })
   var queryAwardInfos = new Method({
     name: "queryAwardInfos",
-    call: "cmt_queryAwardInfos",
+    call: "ec_queryAwardInfos",
     params: 1,
     inputFormatter: [formatters.inputDefaultHeightFormatter]
   })
@@ -15572,7 +15572,7 @@ var utils = require("web3/lib/utils/utils")
  * @namespace web3
  */
 
-// override web3.fromWei/toWei, add cmt units
+// override web3.fromWei/toWei, add ec units
 var unitMap = {
   noether: "0",
   wei: "1",
@@ -15601,15 +15601,15 @@ var unitMap = {
   mether: "1000000000000000000000000",
   gether: "1000000000000000000000000000",
   tether: "1000000000000000000000000000000",
-  cmt: "1000000000000000000",
-  kcmt: "1000000000000000000000",
-  mcmt: "1000000000000000000000000",
-  gcmt: "1000000000000000000000000000",
-  tcmt: "1000000000000000000000000000000"
+  ec: "1000000000000000000",
+  kec: "1000000000000000000000",
+  mec: "1000000000000000000000000",
+  gec: "1000000000000000000000000000",
+  tec: "1000000000000000000000000000000"
 }
 
 var getValueOfUnit = function(unit) {
-  unit = unit ? unit.toLowerCase() : "cmt"
+  unit = unit ? unit.toLowerCase() : "ec"
   var unitValue = unitMap[unit]
   if (unitValue === undefined) {
     throw new Error(
@@ -15621,15 +15621,15 @@ var getValueOfUnit = function(unit) {
 }
 
 /**
- * Converts a number of wei into ethereum or cmt units.
+ * Converts a number of wei into ethereum or ec units.
  *
  * Possible units besides common ethereum units are:
  * <ul>
- *  <li>cmt</li>
- *  <li>kcmt</li>
- *  <li>mcmt</li>
- *  <li>gcmt</li>
- *  <li>tcmt</li>
+ *  <li>ec</li>
+ *  <li>kec</li>
+ *  <li>mec</li>
+ *  <li>gec</li>
+ *  <li>tec</li>
  * </ul>
  * @method
  * @memberof web3
@@ -15638,7 +15638,7 @@ var getValueOfUnit = function(unit) {
  * @param {String} unit One of the above units or common ethereum units.
  * @return {String|BigNumber} Either a number string, or a BigNumber instance, depending on the given number parameter.
  * @example
- * var value = web3.fromWei("21000000000000", "cmt")
+ * var value = web3.fromWei("21000000000000", "ec")
  * console.log(value) // "0.000021"
  */
 var fromWei = function(number, unit) {
@@ -15648,15 +15648,15 @@ var fromWei = function(number, unit) {
 }
 
 /**
- * Converts an ethereum or cmt unit into wei.
+ * Converts an ethereum or ec unit into wei.
  *
  * Possible units besides common ethereum units are:
  * <ul>
- *  <li>cmt</li>
- *  <li>kcmt</li>
- *  <li>mcmt</li>
- *  <li>gcmt</li>
- *  <li>tcmt</li>
+ *  <li>ec</li>
+ *  <li>kec</li>
+ *  <li>mec</li>
+ *  <li>gec</li>
+ *  <li>tec</li>
  * </ul>
  * @method
  * @memberof web3
@@ -15665,7 +15665,7 @@ var fromWei = function(number, unit) {
  * @param {String} unit One of the above units or common ethereum units.
  * @return {String|BigNumber} Either a number string, or a BigNumber instance, depending on the given number parameter.
  * @example
- * var value = web3.toWei("1", "cmt")
+ * var value = web3.toWei("1", "ec")
  * console.log(value) // "1000000000000000000"
  */
 var toWei = function(number, unit) {
@@ -15688,7 +15688,7 @@ module.exports={
 var Web3 = require("web3")
 
 var version = require("./version.json")
-var Cmt = require("./methods/cmt.js")
+var Ec = require("./methods/ec.js")
 var Net = require("./methods/net.js")
 var HttpProvider = require("./httpprovider")
 var utils = require("./utils")
@@ -15696,8 +15696,8 @@ var utils = require("./utils")
 var MyWeb3 = function(provider) {
   Web3.call(this, provider)
 
-  this.cmt = new Cmt(this)
-  this.cmt.version = version.version
+  this.ec = new Ec(this)
+  this.ec.version = version.version
 
   this.net = new Net(this)
 
@@ -15715,7 +15715,7 @@ MyWeb3.prototype.fromWei = utils.fromWei
 
 module.exports = MyWeb3
 
-},{"./httpprovider":94,"./methods/cmt.js":95,"./methods/net.js":98,"./utils":101,"./version.json":102,"web3":42}],"bignumber.js":[function(require,module,exports){
+},{"./httpprovider":94,"./methods/ec.js":95,"./methods/net.js":98,"./utils":101,"./version.json":102,"web3":42}],"bignumber.js":[function(require,module,exports){
 /*! bignumber.js v4.1.0 https://github.com/MikeMcl/bignumber.js/LICENCE */
 
 ;(function (globalObj) {
@@ -18451,7 +18451,7 @@ module.exports = MyWeb3
     }
 })(this);
 
-},{}],"web3-cmt":[function(require,module,exports){
+},{}],"web3-ec":[function(require,module,exports){
 var Web3 = require("./web3/web3")
 
 // dont override global variable
@@ -18461,5 +18461,5 @@ if (typeof window !== "undefined" && typeof window.Web3 === "undefined") {
 
 module.exports = Web3
 
-},{"./web3/web3":103}]},{},["web3-cmt"])
-//# sourceMappingURL=web3-cmt.js.map
+},{"./web3/web3":103}]},{},["web3-ec"])
+//# sourceMappingURL=web3-ec.js.map

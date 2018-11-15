@@ -47,7 +47,7 @@ exports.generateTransaction = txObject => {
 exports.sendRawTransactions = (web3, transactions, cb) => {
   async.parallelLimit(
     transactions.map(tx => {
-      return web3.cmt.sendRawTransaction.bind(null, tx)
+      return web3.ec.sendRawTransaction.bind(null, tx)
     }),
     concurrency,
     err => {
@@ -63,7 +63,7 @@ exports.sendRawTransactions = (web3, transactions, cb) => {
 exports.sendRawTransactionsSeries = (web3, transactions, cb) => {
   async.series(
     transactions.map(tx => {
-      return web3.cmt.sendRawTransaction.bind(null, tx)
+      return web3.ec.sendRawTransaction.bind(null, tx)
     }),
     err => {
       if (err) {
@@ -78,7 +78,7 @@ exports.sendRawTransactionsSeries = (web3, transactions, cb) => {
 exports.sendTransactions = (web3, transactions, cb) => {
   async.parallelLimit(
     transactions.map(tx => {
-      return web3.cmt.sendTransaction.bind(null, tx)
+      return web3.ec.sendTransaction.bind(null, tx)
     }),
     concurrency,
     err => {
@@ -116,15 +116,15 @@ exports.waitProcessedInterval = (
   cb
 ) => {
   let interval = setInterval(() => {
-    let blocksGone = web3.cmt.blockNumber - startingBlock
+    let blocksGone = web3.ec.blockNumber - startingBlock
     if (blocksGone > blockTimeout) {
       clearInterval(interval)
       cb(new Error(`Pending full after ${blockTimeout} blocks`))
       return
     }
 
-    let balance = web3.cmt.getBalance(fromAddr)
-    let processed = web3.cmt.getTransactionCount(fromAddr) - initialNonce
+    let balance = web3.ec.getBalance(fromAddr)
+    let processed = web3.ec.getTransactionCount(fromAddr) - initialNonce
     console.log(
       `Blocks Passed ${blocksGone}, current balance: ${balance.toString()}, processed transactions: ${processed}`
     )
@@ -143,7 +143,7 @@ exports.waitMultipleProcessed = (
   cb
 ) => {
   let interval = setInterval(() => {
-    let blocksGone = web3.cmt.blockNumber - startingBlock
+    let blocksGone = web3.ec.blockNumber - startingBlock
     if (blocksGone > blockTimeout) {
       clearInterval(interval)
       cb(new Error(`Pending full after ${blockTimeout} blocks`))
@@ -151,7 +151,7 @@ exports.waitMultipleProcessed = (
     }
     async.parallel(
       accounts.map(addr => {
-        return web3.cmt.getTransactionCount.bind(null, addr)
+        return web3.ec.getTransactionCount.bind(null, addr)
       }),
       (err, counts) => {
         let processed = counts.reduce((sum, c) => {
@@ -184,7 +184,7 @@ exports.getTokenBalance = function(web3, addr) {
   let contractAddress = config.get("contractAddress")
   let fs = require("fs")
   let abi = JSON.parse(fs.readFileSync("TestToken.json").toString())["abi"]
-  let tokenContract = web3.cmt.contract(abi)
+  let tokenContract = web3.ec.contract(abi)
   let tokenInstance = tokenContract.at(contractAddress)
 
   return tokenInstance.balanceOf(addr)

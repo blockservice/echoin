@@ -2,6 +2,9 @@ package stake
 
 import (
 	"fmt"
+	"math/big"
+	"strconv"
+
 	"github.com/blockservice/echoin/commons"
 	"github.com/blockservice/echoin/sdk"
 	"github.com/blockservice/echoin/sdk/errors"
@@ -10,8 +13,6 @@ import (
 	"github.com/blockservice/echoin/utils"
 	"github.com/ethereum/go-ethereum/common"
 	ethstat "github.com/ethereum/go-ethereum/core/state"
-	"math/big"
-	"strconv"
 )
 
 // DelegatedProofOfStake - interface to enforce delegation stake
@@ -235,7 +236,7 @@ func (c check) declareCandidacy(tx TxDeclareCandidacy, gasFee sdk.Int) error {
 		return fmt.Errorf("pubkey has been declared")
 	}
 
-	// check to see if the associated account has 10%(ssr, short for self-staking ratio, configurable) of the max staked CMT amount
+	// check to see if the associated account has 10%(ssr, short for self-staking ratio, configurable) of the max staked EC amount
 	maxAmount, ok := sdk.NewIntFromString(tx.MaxAmount)
 	if !ok || maxAmount.LTE(sdk.ZeroInt) {
 		return ErrBadAmount()
@@ -271,7 +272,7 @@ func (c check) updateCandidacy(tx TxUpdateCandidacy, gasFee sdk.Int) error {
 	}
 
 	totalCost := gasFee
-	// If the max amount of CMTs is updated, the 10% of self-staking will be re-computed,
+	// If the max amount of ECs is updated, the 10% of self-staking will be re-computed,
 	// and the different will be charged
 	if tx.MaxAmount != "" {
 		maxAmount, ok := sdk.NewIntFromString(tx.MaxAmount)
@@ -386,7 +387,7 @@ func (c check) delegate(tx TxDelegate) error {
 		return err
 	}
 
-	// check to see if the simpleValidator has reached its declared max amount CMTs to be staked.
+	// check to see if the simpleValidator has reached its declared max amount ECs to be staked.
 	if candidate.ParseShares().Add(amount).GT(candidate.ParseMaxShares()) {
 		return ErrReachMaxAmount()
 	}
@@ -528,7 +529,7 @@ func (d deliver) declareCandidacy(tx TxDeclareCandidacy, gasFee sdk.Int) error {
 		BlockHeight:  d.ctx.BlockHeight(),
 		State:        "Candidate",
 	}
-	// delegate a part of the max staked CMT amount
+	// delegate a part of the max staked EC amount
 	amount := tx.SelfStakingAmount(d.params.SelfStakingRatio)
 	totalCost := amount.Add(gasFee)
 
@@ -576,7 +577,7 @@ func (d deliver) declareGenesisCandidacy(tx TxDeclareCandidacy, val types.Genesi
 	}
 	SaveCandidate(candidate)
 
-	// delegate a part of the max staked CMT amount
+	// delegate a part of the max staked EC amount
 	amount := sdk.NewInt(val.Shares).Mul(sdk.E18Int).String()
 	txDelegate := TxDelegate{ValidatorAddress: d.sender, Amount: amount}
 	d.delegate(txDelegate)
@@ -597,7 +598,7 @@ func (d deliver) updateCandidacy(tx TxUpdateCandidacy, gasFee sdk.Int) error {
 	}
 
 	totalCost := gasFee
-	// If the max amount of CMTs is updated, the 10% of self-staking will be re-computed,
+	// If the max amount of ECs is updated, the 10% of self-staking will be re-computed,
 	// and the different will be charged
 	if tx.MaxAmount != "" {
 		maxAmount, _ := sdk.NewIntFromString(tx.MaxAmount)
@@ -673,7 +674,7 @@ func (d deliver) withdrawCandidacy(tx TxWithdrawCandidacy) error {
 	}
 
 	// All staked tokens will be distributed back to delegator addresses.
-	// Self-staked CMTs will be refunded back to the validator address.
+	// Self-staked ECs will be refunded back to the validator address.
 	delegations := GetDelegationsByCandidate(candidate.Id, "Y")
 	for _, delegation := range delegations {
 		txWithdraw := TxWithdraw{ValidatorAddress: validatorAddress, Amount: delegation.Shares().String()}

@@ -24,7 +24,7 @@ var (
 	errBadRemoveValidator                 = fmt.Errorf("Error removing validator")
 	errCandidateVerificationDisallowed    = fmt.Errorf("Verification disallowed")
 	errCandidateVerifiedAlready           = fmt.Errorf("Candidate has been verified already")
-	errReachMaxAmount                     = fmt.Errorf("Validator has reached its declared max amount CMTs to be staked")
+	errReachMaxAmount                     = fmt.Errorf("Validator has reached its declared max amount ECs to be staked")
 	errDelegationNotExists                = fmt.Errorf("No corresponding delegation exists")
 	errInvalidWithdrawalAmount            = fmt.Errorf("Invalid withdrawal amount")
 	errCandidateWithdrawalDisallowed      = fmt.Errorf("Candidate can't withdraw the self-staking funds")

@@ -21,7 +21,7 @@ describe("Lity Test", function() {
     let contractInstance
     it("new reverse contract", function(done) {
       contractInstance = Utils.newContract(
-        web3.cmt.defaultAccount,
+        web3.ec.defaultAccount,
         Globals.Reverse.abi,
         Globals.Reverse.bytecode,
         addr => {
@@ -32,7 +32,7 @@ describe("Lity Test", function() {
     })
     it("reverse hello", function() {
       test = contractInstance.reverse.call("hello", {
-        from: web3.cmt.defaultAccount
+        from: web3.ec.defaultAccount
       })
       expect(test).to.equal("olleh")
     })
@@ -41,7 +41,7 @@ describe("Lity Test", function() {
     let contractInstance
     it("new DogecoinVerifier contract", function(done) {
       contractInstance = Utils.newContract(
-        web3.cmt.defaultAccount,
+        web3.ec.defaultAccount,
         Globals.Dogecoin.abi,
         Globals.Dogecoin.bytecode,
         addr => {
@@ -79,12 +79,12 @@ describe("Lity Test", function() {
     describe("Propose to deploy reverse 0.9.0. ", function() {
       before(function() {
         // balance before
-        balance_old = web3.cmt.getBalance(web3.cmt.defaultAccount, "latest")
+        balance_old = web3.ec.getBalance(web3.ec.defaultAccount, "latest")
       })
       it("The proposal TX returns an error if bad version format. ", function() {
-        expireBlocks = web3.cmt.blockNumber + EXPIRE_BLOCKS
-        tx_result = web3.cmt.governance.proposeDeployLibEni({
-          from: web3.cmt.defaultAccount,
+        expireBlocks = web3.ec.blockNumber + EXPIRE_BLOCKS
+        tx_result = web3.ec.governance.proposeDeployLibEni({
+          from: web3.ec.defaultAccount,
           name: "reverse",
           version: "0.9.0",
           deployBlockHeight: expireBlocks,
@@ -94,9 +94,9 @@ describe("Lity Test", function() {
         Utils.expectTxFail(tx_result)
       })
       it("The proposal TX returns proposal id. ", function() {
-        expireBlocks = web3.cmt.blockNumber + EXPIRE_BLOCKS
-        tx_result = web3.cmt.governance.proposeDeployLibEni({
-          from: web3.cmt.defaultAccount,
+        expireBlocks = web3.ec.blockNumber + EXPIRE_BLOCKS
+        tx_result = web3.ec.governance.proposeDeployLibEni({
+          from: web3.ec.defaultAccount,
           name: "reverse",
           version: "v0.9.0",
           deployBlockHeight: expireBlocks,
@@ -108,7 +108,7 @@ describe("Lity Test", function() {
       })
       it("Verify gasfee. ", function() {
         // balance after
-        balance_new = web3.cmt.getBalance(web3.cmt.defaultAccount, "latest")
+        balance_new = web3.ec.getBalance(web3.ec.defaultAccount, "latest")
         let gasFee = Utils.gasFee("proposeDeployLibEni")
         expect(balance_new.minus(balance_old).toNumber()).to.eq(-gasFee.toNumber())
       })
@@ -118,7 +118,7 @@ describe("Lity Test", function() {
           Utils.vote(proposalId, Globals.Accounts[1], "Y")
           Utils.vote(proposalId, Globals.Accounts[2], "Y")
         } else {
-          Utils.vote(proposalId, web3.cmt.defaultAccount, "Y")
+          Utils.vote(proposalId, web3.ec.defaultAccount, "Y")
         }
         Utils.waitBlocks(done, 1)
       })
@@ -128,9 +128,9 @@ describe("Lity Test", function() {
         expect(p.Result).to.equal("Approved")
       })
       it("Returns an error if proposes another version of the same lib. ", function() {
-        expireBlocks = web3.cmt.blockNumber + EXPIRE_BLOCKS
-        tx_result = web3.cmt.governance.proposeDeployLibEni({
-          from: web3.cmt.defaultAccount,
+        expireBlocks = web3.ec.blockNumber + EXPIRE_BLOCKS
+        tx_result = web3.ec.governance.proposeDeployLibEni({
+          from: web3.ec.defaultAccount,
           name: "reverse",
           version: "v1.0.0",
           deployBlockHeight: expireBlocks,
@@ -140,7 +140,7 @@ describe("Lity Test", function() {
         Utils.expectTxFail(tx_result)
       })
       it("Wait for serveral blocks.", function(done) {
-        Utils.waitBlocks(done, expireBlocks - web3.cmt.blockNumber + 1)
+        Utils.waitBlocks(done, expireBlocks - web3.ec.blockNumber + 1)
       })
       it("The library has been deployed. ", function() {
         // check proposal
@@ -150,9 +150,9 @@ describe("Lity Test", function() {
     })
     describe("Propose to upgrade reverse. ", function() {
       it("The proposal TX returns an error if version <= 0.9.0. ", function() {
-        expireBlocks = web3.cmt.blockNumber + EXPIRE_BLOCKS
-        tx_result = web3.cmt.governance.proposeDeployLibEni({
-          from: web3.cmt.defaultAccount,
+        expireBlocks = web3.ec.blockNumber + EXPIRE_BLOCKS
+        tx_result = web3.ec.governance.proposeDeployLibEni({
+          from: web3.ec.defaultAccount,
           name: "reverse",
           version: "0.8.0",
           deployBlockHeight: expireBlocks,
@@ -162,9 +162,9 @@ describe("Lity Test", function() {
         Utils.expectTxFail(tx_result)
       })
       it("The proposal TX returns proposal id if version > 0.9.0. ", function() {
-        expireBlocks = web3.cmt.blockNumber + EXPIRE_BLOCKS
-        tx_result = web3.cmt.governance.proposeDeployLibEni({
-          from: web3.cmt.defaultAccount,
+        expireBlocks = web3.ec.blockNumber + EXPIRE_BLOCKS
+        tx_result = web3.ec.governance.proposeDeployLibEni({
+          from: web3.ec.defaultAccount,
           name: "reverse",
           version: "v1.1.0",
           deployBlockHeight: expireBlocks,
@@ -180,7 +180,7 @@ describe("Lity Test", function() {
           Utils.vote(proposalId, Globals.Accounts[1], "Y")
           Utils.vote(proposalId, Globals.Accounts[2], "Y")
         } else {
-          Utils.vote(proposalId, web3.cmt.defaultAccount, "Y")
+          Utils.vote(proposalId, web3.ec.defaultAccount, "Y")
         }
         Utils.waitBlocks(done, 1)
       })
@@ -190,7 +190,7 @@ describe("Lity Test", function() {
         expect(p.Result).to.equal("Approved")
       })
       it("Wait for serveral blocks.", function(done) {
-        Utils.waitBlocks(done, expireBlocks - web3.cmt.blockNumber + 1)
+        Utils.waitBlocks(done, expireBlocks - web3.ec.blockNumber + 1)
       })
       it("The library has been deployed. ", function() {
         // check proposal

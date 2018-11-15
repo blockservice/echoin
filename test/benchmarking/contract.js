@@ -1,4 +1,4 @@
-let Web3 = require("web3-cmt")
+let Web3 = require("web3-ec")
 let config = require("config")
 let Tx = require("ethereumjs-tx")
 let fs = require("fs")
@@ -14,7 +14,7 @@ let wallet = Wallet.fromV3(config.get("wallet"), config.get("password"))
 let deployAdrress = config.get("wallet").address
 var privateKey = wallet.getPrivateKey()
 
-let contract = web3.cmt.contract(abi)
+let contract = web3.ec.contract(abi)
 // Get contract data
 let contractData = contract.new.getData({
   data: bytecode
@@ -23,7 +23,7 @@ let gasPrice = web3.toWei(2, "gwei")
 let gasPriceHex = web3.toHex(gasPrice)
 let gasLimitHex = web3.toHex(4700000)
 
-let nonce = web3.cmt.getTransactionCount(deployAdrress)
+let nonce = web3.ec.getTransactionCount(deployAdrress)
 let nonceHex = web3.toHex(nonce)
 
 let rawTx = {
@@ -39,7 +39,7 @@ let tx = new Tx(rawTx)
 tx.sign(privateKey)
 let serializedTx = tx.serialize()
 
-web3.cmt.sendRawTransaction(
+web3.ec.sendRawTransaction(
   "0x" + serializedTx.toString("hex"),
   (err, hash) => {
     if (err) {
@@ -52,7 +52,7 @@ web3.cmt.sendRawTransaction(
 )
 
 function waitForTransactionReceipt(hash) {
-  let receipt = web3.cmt.getTransactionReceipt(hash)
+  let receipt = web3.ec.getTransactionReceipt(hash)
   // If no receipt, try again in 1s
   if (receipt == null) {
     setTimeout(() => {
@@ -65,7 +65,7 @@ function waitForTransactionReceipt(hash) {
         " transactionHash: " +
         receipt.transactionHash
     )
-    let tokenContract = web3.cmt.contract(abi).at(receipt.contractAddress)
+    let tokenContract = web3.ec.contract(abi).at(receipt.contractAddress)
     let decimal = tokenContract.decimals()
     let balance = tokenContract.balanceOf(deployAdrress)
     let tokenName = tokenContract.name()

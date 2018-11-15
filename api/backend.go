@@ -191,12 +191,12 @@ func (b *Backend) GasLimit() uint64 {
 func (b *Backend) APIs() []rpc.API {
 	nonceLock := new(AddrLocker)
 	apis := b.Ethereum().APIs()
-	// append cmt and stake api
+	// append ec and stake api
 	apis = append(apis, []rpc.API{
 		{
-			Namespace: "cmt",
+			Namespace: "ec",
 			Version:   "1.0",
-			Service:   NewCmtRPCService(b, nonceLock),
+			Service:   NewEcRPCService(b, nonceLock),
 			Public:    true,
 		},
 		{

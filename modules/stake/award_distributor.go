@@ -2,13 +2,14 @@ package stake
 
 import (
 	"fmt"
+	"math"
+
 	"github.com/blockservice/echoin/commons"
 	"github.com/blockservice/echoin/sdk"
 	"github.com/blockservice/echoin/sdk/state"
 	"github.com/blockservice/echoin/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/tendermint/tendermint/libs/log"
-	"math"
 )
 
 type simpleValidator struct {
@@ -175,7 +176,7 @@ func (ad *awardDistributor) buildValidators(rawValidators Validators) (normalize
 		// Get all delegators
 		delegations := GetDelegationsByCandidate(candidate.Id, "Y")
 		for _, delegation := range delegations {
-			// if the amount of staked CMTs is less than 1000, no awards will be distributed.
+			// if the amount of staked ECs is less than 1000, no awards will be distributed.
 			if delegation.VotingPower == 0 {
 				continue
 			}

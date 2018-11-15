@@ -61,7 +61,7 @@ You can connect to the local CyberMiles node by attaching an instance of the Ech
   # Use the IP address from above to connect
   docker run --rm -it blockservice/echoin attach http://172.17.0.2:8545
 
-It opens the web3-cmt JavaScript console to interact with the virtual machine. The example below shows how to unlock the
+It opens the web3-ec JavaScript console to interact with the virtual machine. The example below shows how to unlock the
 coinbase account so that you have coins to spend.
 
 .. code:: bash
@@ -72,7 +72,7 @@ coinbase account so that you have coins to spend.
   coinbase: 0x7eff122b94897ea5b0e2a9abf47b86337fafebdc
   at block: 231 (Sat, 14 Jul 2018 07:34:25 UTC)
    datadir: /echoin
-   modules: admin:1.0 cmt:1.0 eth:1.0 net:1.0 personal:1.0 rpc:1.0 web3:1.0
+   modules: admin:1.0 ec:1.0 eth:1.0 net:1.0 personal:1.0 rpc:1.0 web3:1.0
   
   > personal.unlockAccount('0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', '1234')
   true
@@ -153,7 +153,7 @@ You can connect to the local CyberMiles node by attaching an instance of the Ech
 
   echoin attach http://localhost:8545
 
-It opens the web3-cmt JavaScript console to interact with the virtual machine. The example below shows how to unlock the
+It opens the web3-ec JavaScript console to interact with the virtual machine. The example below shows how to unlock the
 coinbase account so that you have coins to spend.
 
 .. code:: bash
@@ -164,7 +164,7 @@ coinbase account so that you have coins to spend.
   coinbase: 0x7eff122b94897ea5b0e2a9abf47b86337fafebdc
   at block: 231 (Sat, 14 Jul 2018 07:34:25 UTC)
    datadir: /echoin
-   modules: admin:1.0 cmt:1.0 eth:1.0 net:1.0 personal:1.0 rpc:1.0 web3:1.0
+   modules: admin:1.0 ec:1.0 eth:1.0 net:1.0 personal:1.0 rpc:1.0 web3:1.0
   
   > personal.unlockAccount('0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', '1234')
   true
@@ -178,7 +178,7 @@ You can now send a transaction between accounts like the following.
 .. code:: bash
 
   personal.unlockAccount("from_address")
-  cmt.sendTransaction({"from": "from_address", "to": "to_address", "value": web3.toWei(0.001, "cmt")})
+  ec.sendTransaction({"from": "from_address", "to": "to_address", "value": web3.toWei(0.001, "ec")})
 
 Next, you can paste the following script into the Echoin client console, at the > prompt.
 
@@ -186,13 +186,13 @@ Next, you can paste the following script into the Echoin client console, at the 
 
   function checkAllBalances() {
     var totalBal = 0;
-    for (var acctNum in cmt.accounts) {
-        var acct = cmt.accounts[acctNum];
-        var acctBal = web3.fromWei(cmt.getBalance(acct), "cmt");
+    for (var acctNum in ec.accounts) {
+        var acct = ec.accounts[acctNum];
+        var acctBal = web3.fromWei(ec.getBalance(acct), "ec");
         totalBal += parseFloat(acctBal);
-        console.log("  cmt.accounts[" + acctNum + "]: \t" + acct + " \tbalance: " + acctBal + " CMT");
+        console.log("  ec.accounts[" + acctNum + "]: \t" + acct + " \tbalance: " + acctBal + " EC");
     }
-    console.log("  Total balance: " + totalBal + "CMT");
+    console.log("  Total balance: " + totalBal + "EC");
   };
   
 You can now run the script in the console, and see the results.
@@ -200,9 +200,9 @@ You can now run the script in the console, and see the results.
 .. code:: bash
 
   > checkAllBalances();
-  cmt.accounts[0]: 	0x6....................................230 	balance: 466.798526 CMT
-  cmt.accounts[1]: 	0x6....................................244 	balance: 1531 CMT
-  Total balance: 1997.798526CMT
+  ec.accounts[0]: 	0x6....................................230 	balance: 466.798526 EC
+  ec.accounts[1]: 	0x6....................................244 	balance: 1531 EC
+  Total balance: 1997.798526EC
   
  
  

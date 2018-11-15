@@ -20,7 +20,7 @@ describe("Transaction Test", function() {
     balance_old = Utils.getBalance()
   })
 
-  describe("Free CMT TX from A to B to C to D, and then back", function() {
+  describe("Free EC TX from A to B to C to D, and then back", function() {
     it("From A to B to C to D", function(done) {
       let arrHash = []
       for (i = 0; i < 3; ++i) {
@@ -78,7 +78,7 @@ describe("Transaction Test", function() {
     })
   })
 
-  describe("Fee CMT TX from A to B to C to D, and then back", function() {
+  describe("Fee EC TX from A to B to C to D, and then back", function() {
     it("From A to B to C to D", function(done) {
       let arrHash = []
       for (i = 0; i < 3; ++i) {
@@ -150,7 +150,7 @@ describe("Transaction Test", function() {
     })
   })
 
-  describe("Send free CMT TX from A to B 3 times within 10s", function() {
+  describe("Send free EC TX from A to B 3 times within 10s", function() {
     it("expect only the first one will succeed", function(done) {
       let arrHash = [],
         times = 3
@@ -183,7 +183,7 @@ describe("Transaction Test", function() {
     })
   })
 
-  describe("Send fee CMT TX from A to B 3 times within 10s", function() {
+  describe("Send fee EC TX from A to B 3 times within 10s", function() {
     it("expect all to succeed", function(done) {
       let arrHash = [],
         times = 3

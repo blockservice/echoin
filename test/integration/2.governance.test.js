@@ -5,30 +5,30 @@ const logger = require("./logger")
 const Utils = require("./global_hooks")
 const Globals = require("./global_vars")
 
-let V = web3.cmt.defaultAccount
+let V = web3.ec.defaultAccount
 describe("Governance Test", function() {
   let proposalId = ""
   let balance_old, balance_new, tx_result
   const EXPIRE_BLOCKS = 5
 
-  describe("Account #1 does not have 500 CMTs.", function() {
+  describe("Account #1 does not have 500 ECs.", function() {
     before(function() {
       balance = Utils.getBalance(1)
-      Utils.transfer(Globals.Accounts[1], web3.cmt.defaultAccount, balance)
+      Utils.transfer(Globals.Accounts[1], web3.ec.defaultAccount, balance)
     })
     after(function() {
-      Utils.transfer(web3.cmt.defaultAccount, Globals.Accounts[1], balance)
-      tx_result = web3.cmt.stake.validator.list()
+      Utils.transfer(web3.ec.defaultAccount, Globals.Accounts[1], balance)
+      tx_result = web3.ec.stake.validator.list()
       logger.debug(tx_result.data)
     })
 
-    describe("Validator V proposes to move 500 CMTs from account #1 to #2. ", function() {
+    describe("Validator V proposes to move 500 ECs from account #1 to #2. ", function() {
       it("The proposal TX returns an error. ", function() {
-        tx_result = web3.cmt.governance.proposeRecoverFund({
+        tx_result = web3.ec.governance.proposeRecoverFund({
           from: V,
           transferFrom: Globals.Accounts[1],
           transferTo: Globals.Accounts[2],
-          amount: web3.toWei(500, "cmt"),
+          amount: web3.toWei(500, "ec"),
           reason: "Governance test"
         })
         Utils.expectTxFail(tx_result)
@@ -36,14 +36,14 @@ describe("Governance Test", function() {
     })
   })
 
-  describe("Account #1 have enough CMTs. ", function() {
+  describe("Account #1 have enough ECs. ", function() {
     before(function(done) {
       let balance = Utils.getBalance(1)
-      if (web3.fromWei(balance, "cmt") < 500) {
+      if (web3.fromWei(balance, "ec") < 500) {
         let hash = Utils.transfer(
-          web3.cmt.defaultAccount,
+          web3.ec.defaultAccount,
           Globals.Accounts[1],
-          web3.toWei(500, "cmt")
+          web3.toWei(500, "ec")
         )
         Utils.waitInterval(hash, (err, res) => {
           expect(err).to.be.null
@@ -59,14 +59,14 @@ describe("Governance Test", function() {
     describe("Change System Parameters. ", function() {
       before(function() {
         // current system parameters
-        old_params = web3.cmt.governance.getParams()
+        old_params = web3.ec.governance.getParams()
         logger.debug(old_params)
         // balance before
         balance_old = Utils.getBalance()
       })
 
       it("Validators V propose to double max_slash_blocks. ", function() {
-        tx_result = web3.cmt.governance.proposeChangeParam({
+        tx_result = web3.ec.governance.proposeChangeParam({
           from: V,
           name: "max_slash_blocks",
           value: (old_params.data.max_slash_blocks * 2).toString()
@@ -75,7 +75,7 @@ describe("Governance Test", function() {
         proposalId = tx_result.deliver_tx.data
       })
       it("max_slash_blocks won't change before vote. ", function() {
-        new_params = web3.cmt.governance.getParams()
+        new_params = web3.ec.governance.getParams()
         expect(new_params.data.max_slash_blocks).to.equal(old_params.data.max_slash_blocks)
       })
       it("vote the proposal. ", function(done) {
@@ -85,7 +85,7 @@ describe("Governance Test", function() {
           Utils.vote(proposalId, Globals.Accounts[1], "Y")
           Utils.vote(proposalId, Globals.Accounts[2], "Y")
         } else {
-          Utils.vote(proposalId, web3.cmt.defaultAccount, "Y")
+          Utils.vote(proposalId, web3.ec.defaultAccount, "Y")
         }
         Utils.waitBlocks(done, 2)
       })
@@ -102,21 +102,21 @@ describe("Governance Test", function() {
         })
       })
       it("Verify the max_slash_blocks is doubled. ", function() {
-        new_params = web3.cmt.governance.getParams()
+        new_params = web3.ec.governance.getParams()
         logger.debug(new_params)
         expect(new_params.data.max_slash_blocks).to.equal(old_params.data.max_slash_blocks * 2)
         Globals.Params.max_slash_blocks = old_params.data.max_slash_blocks * 2
       })
     })
 
-    describe("Validator V proposes to move 500 CMTs from account #1 to #2. ", function() {
+    describe("Validator V proposes to move 500 ECs from account #1 to #2. ", function() {
       before(function() {
         // balance before
         balance_old = Utils.getBalance()
       })
-      it("Verify that 500 CMTs are removed from account #1 and show up as frozen amount for this account. ", function() {
-        let amount = web3.toWei(500, "cmt")
-        tx_result = web3.cmt.governance.proposeRecoverFund({
+      it("Verify that 500 ECs are removed from account #1 and show up as frozen amount for this account. ", function() {
+        let amount = web3.toWei(500, "ec")
+        tx_result = web3.ec.governance.proposeRecoverFund({
           from: V,
           transferFrom: Globals.Accounts[1],
           transferTo: Globals.Accounts[2],
@@ -161,30 +161,30 @@ describe("Governance Test", function() {
           }
           Utils.waitBlocks(done, 1)
         })
-        it("Verify that the 500 CMTs are transfered to account #2. ", function() {
+        it("Verify that the 500 ECs are transfered to account #2. ", function() {
           // check proposal
           let p = Utils.getProposal(proposalId)
           expect(p.Result).to.equal("Approved")
           // balance after
           balance_new = Utils.getBalance()
           expect(balance_new[1].minus(balance_old[1]).toNumber()).to.equal(
-            Number(web3.toWei(-500, "cmt"))
+            Number(web3.toWei(-500, "ec"))
           )
           expect(balance_new[2].minus(balance_old[2]).toNumber()).to.equal(
-            Number(web3.toWei(500, "cmt"))
+            Number(web3.toWei(500, "ec"))
           )
         })
       })
     })
 
-    describe("Validator V proposes to move 500 CMTs from account #1 to #2. ", function() {
+    describe("Validator V proposes to move 500 ECs from account #1 to #2. ", function() {
       before(function() {
         // balance before
         balance_old = Utils.getBalance()
       })
-      it("Verify that 500 CMTs are removed from account #1 and show up as frozen amount for this account. ", function() {
-        let amount = web3.toWei(500, "cmt")
-        tx_result = web3.cmt.governance.proposeRecoverFund({
+      it("Verify that 500 ECs are removed from account #1 and show up as frozen amount for this account. ", function() {
+        let amount = web3.toWei(500, "ec")
+        tx_result = web3.ec.governance.proposeRecoverFund({
           from: V,
           transferFrom: Globals.Accounts[1],
           transferTo: Globals.Accounts[2],
@@ -232,7 +232,7 @@ describe("Governance Test", function() {
           }
           Utils.waitBlocks(done, 1)
         })
-        it("Verify that the 500 CMTs are transfered back to account #1. ", function() {
+        it("Verify that the 500 ECs are transfered back to account #1. ", function() {
           // check proposal
           let p = Utils.getProposal(proposalId)
           expect(p.Result).to.equal("Rejected")
@@ -244,16 +244,16 @@ describe("Governance Test", function() {
       })
     })
 
-    describe("Validator V proposes to move 500 CMTs from account #1 to #2. And he specifies expireTimeStamp. ", function() {
+    describe("Validator V proposes to move 500 ECs from account #1 to #2. And he specifies expireTimeStamp. ", function() {
       before(function() {
         // balance before
         balance_old = Utils.getBalance()
       })
-      it("Verify that 500 CMTs are removed from account #1 and show up as frozen amount for this account. ", function() {
-        let amount = web3.toWei(500, "cmt")
-        let expire = web3.cmt.getBlock("latest").timestamp + EXPIRE_BLOCKS * 10
+      it("Verify that 500 ECs are removed from account #1 and show up as frozen amount for this account. ", function() {
+        let amount = web3.toWei(500, "ec")
+        let expire = web3.ec.getBlock("latest").timestamp + EXPIRE_BLOCKS * 10
 
-        tx_result = web3.cmt.governance.proposeRecoverFund({
+        tx_result = web3.ec.governance.proposeRecoverFund({
           from: V,
           transferFrom: Globals.Accounts[1],
           transferTo: Globals.Accounts[2],
@@ -295,7 +295,7 @@ describe("Governance Test", function() {
         Utils.waitBlocks(done, EXPIRE_BLOCKS)
       })
 
-      it("Verify that the 500 CMTs are transfered back to account #1. ", function() {
+      it("Verify that the 500 ECs are transfered back to account #1. ", function() {
         // check proposal
         let p = Utils.getProposal(proposalId)
         expect(p.Result).to.equal("Expired")
@@ -306,16 +306,16 @@ describe("Governance Test", function() {
       })
     })
 
-    describe("Validator V proposes to move 500 CMTs from account #1 to #2. And he specifies expireBlockHeight. ", function() {
+    describe("Validator V proposes to move 500 ECs from account #1 to #2. And he specifies expireBlockHeight. ", function() {
       before(function() {
         // balance before
         balance_old = Utils.getBalance()
       })
-      it("Verify that 500 CMTs are removed from account #1 and show up as frozen amount for this account. ", function() {
-        let amount = web3.toWei(500, "cmt")
-        let expire = web3.cmt.blockNumber + EXPIRE_BLOCKS
+      it("Verify that 500 ECs are removed from account #1 and show up as frozen amount for this account. ", function() {
+        let amount = web3.toWei(500, "ec")
+        let expire = web3.ec.blockNumber + EXPIRE_BLOCKS
 
-        tx_result = web3.cmt.governance.proposeRecoverFund({
+        tx_result = web3.ec.governance.proposeRecoverFund({
           from: V,
           transferFrom: Globals.Accounts[1],
           transferTo: Globals.Accounts[2],
@@ -357,7 +357,7 @@ describe("Governance Test", function() {
         Utils.waitBlocks(done, EXPIRE_BLOCKS)
       })
 
-      it("Verify that the 500 CMTs are transfered back to account #1. ", function() {
+      it("Verify that the 500 ECs are transfered back to account #1. ", function() {
         // check proposal
         let p = Utils.getProposal(proposalId)
         expect(p.Result).to.equal("Expired")

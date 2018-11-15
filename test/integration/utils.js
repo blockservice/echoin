@@ -14,7 +14,7 @@ const transfer = (f, t, v, gasPrice, nonce) => {
   if (nonce) payload.nonce = nonce
   let hash = null
   try {
-    hash = web3.cmt.sendTransaction(payload)
+    hash = web3.ec.sendTransaction(payload)
     logger.debug(`transfer ${v} wei from ${f} to ${t}, hash: ${hash}`)
     // check hash
     expect(hash).to.not.empty
@@ -28,16 +28,16 @@ const getBalance = (index = null) => {
   let balance = new Array(4)
   for (i = 0; i < 4; i++) {
     if (index === null || i == index) {
-      balance[i] = web3.cmt.getBalance(Globals.Accounts[i], "latest")
+      balance[i] = web3.ec.getBalance(Globals.Accounts[i], "latest")
     }
   }
-  balance[4] = web3.cmt.getBalance(web3.cmt.defaultAccount, "latest")
+  balance[4] = web3.ec.getBalance(web3.ec.defaultAccount, "latest")
   logger.debug(`balance in wei: --> ${balance}`)
   return index == null ? balance : balance[index]
 }
 
 const newContract = function(deployAddress, abi, bytecode, cb) {
-  let tokenContract = web3.cmt.contract(abi)
+  let tokenContract = web3.ec.contract(abi)
   let contractInstance = tokenContract.new(
     {
       from: deployAddress,
@@ -62,7 +62,7 @@ const newContract = function(deployAddress, abi, bytecode, cb) {
 }
 
 const tokenTransfer = function(f, t, v, gasPrice, nonce) {
-  let tokenContract = web3.cmt.contract(Globals.ETH.abi)
+  let tokenContract = web3.ec.contract(Globals.ETH.abi)
   let tokenInstance = tokenContract.at(Globals.ETH.contractAddress)
   let option = {
     from: f,
@@ -82,7 +82,7 @@ const tokenTransfer = function(f, t, v, gasPrice, nonce) {
 }
 
 const tokenKill = deployAdrress => {
-  let tokenContract = web3.cmt.contract(Globals.ETH.abi)
+  let tokenContract = web3.ec.contract(Globals.ETH.abi)
   let tokenInstance = tokenContract.at(Globals.ETH.contractAddress)
   let hash = tokenInstance.kill({ from: deployAdrress })
   logger.debug("token kill hash: ", hash)
@@ -90,7 +90,7 @@ const tokenKill = deployAdrress => {
 }
 
 const getTokenBalance = () => {
-  let tokenContract = web3.cmt.contract(Globals.ETH.abi)
+  let tokenContract = web3.ec.contract(Globals.ETH.abi)
   let tokenInstance = tokenContract.at(Globals.ETH.contractAddress)
 
   let balance = new Array(4)
@@ -112,7 +112,7 @@ const getDelegation = (acc_index, val_index, vals) => {
     voting_power: 0,
     comp_rate: 0
   }
-  result = web3.cmt.stake.delegator.query(Globals.Accounts[acc_index], 0)
+  result = web3.ec.stake.delegator.query(Globals.Accounts[acc_index], 0)
   if (result && result.data) {
     let data = result.data.find(
       d => d.validator_address.toLowerCase() == Globals.Accounts[val_index]
@@ -151,7 +151,7 @@ const vote = (proposalId, from, answer) => {
   expect(proposalId).to.not.be.empty
   if (proposalId === "") return
 
-  web3.cmt.governance.vote(
+  web3.ec.governance.vote(
     {
       from: from,
       proposalId: proposalId,
@@ -171,7 +171,7 @@ const getProposal = proposalId => {
   expect(proposalId).to.not.be.empty
   if (proposalId === "") return
 
-  let r = web3.cmt.governance.listProposals()
+  let r = web3.ec.governance.listProposals()
   expect(r.data.length).to.be.above(0)
   if (r.data.length > 0) {
     proposal = r.data.filter(d => d.Id == proposalId)
@@ -182,12 +182,12 @@ const getProposal = proposalId => {
 }
 
 const waitInterval = function(txhash, cb) {
-  let startingBlock = web3.cmt.blockNumber
+  let startingBlock = web3.ec.blockNumber
   let startingTime = Math.round(new Date().getTime() / 1000)
 
   logger.debug("Starting block:", startingBlock)
   let interval = setInterval(() => {
-    let blocksGone = web3.cmt.blockNumber - startingBlock
+    let blocksGone = web3.ec.blockNumber - startingBlock
     let timeGone = Math.round(new Date().getTime() / 1000) - startingTime
 
     if (blocksGone > Settings.BlockTimeout) {
@@ -201,7 +201,7 @@ const waitInterval = function(txhash, cb) {
       process.exit(1)
     }
 
-    let receipt = web3.cmt.getTransactionReceipt(txhash)
+    let receipt = web3.ec.getTransactionReceipt(txhash)
     logger.debug(`Blocks Passed ${blocksGone}, ${txhash} receipt: ${receipt}`)
 
     if (receipt != null && receipt.blockNumber > 0) {
@@ -229,11 +229,11 @@ const waitMultiple = function(arrTxhash, cb) {
 }
 
 const waitBlocks = (done, blocks = 1) => {
-  let startingBlock = web3.cmt.blockNumber
+  let startingBlock = web3.ec.blockNumber
   logger.debug("waiting start: ", startingBlock)
   let startingTime = Math.round(new Date().getTime() / 1000)
   let interval = setInterval(() => {
-    let blocksGone = web3.cmt.blockNumber - startingBlock
+    let blocksGone = web3.ec.blockNumber - startingBlock
     let timeGone = Math.round(new Date().getTime() / 1000) - startingTime
     logger.debug(`Blocks Passed ${blocksGone}`)
     if (blocksGone == blocks) {
@@ -303,7 +303,7 @@ const gasFee = txType => {
 
 const addFakeValidators = () => {
   if (Globals.TestMode == "single") {
-    let result = web3.cmt.stake.validator.list()
+    let result = web3.ec.stake.validator.list()
     let valsToAdd = 4 - result.data.length
 
     if (valsToAdd > 0) {
@@ -314,12 +314,12 @@ const addFakeValidators = () => {
         let payload = {
           from: acc,
           pubKey: Globals.PubKeys[idx],
-          maxAmount: web3.toWei(initAmount, "cmt"),
+          maxAmount: web3.toWei(initAmount, "ec"),
           compRate: compRate
         }
-        let r = web3.cmt.stake.validator.declare(payload)
+        let r = web3.ec.stake.validator.declare(payload)
         logger.debug(r)
-        logger.debug(`validator ${acc} added, max_amount: ${initAmount} cmt`)
+        logger.debug(`validator ${acc} added, max_amount: ${initAmount} ec`)
       })
     }
   }
@@ -327,13 +327,13 @@ const addFakeValidators = () => {
 
 const removeFakeValidators = () => {
   if (Globals.TestMode == "single") {
-    let result = web3.cmt.stake.validator.list()
+    let result = web3.ec.stake.validator.list()
     result.data.forEach((val, idx) => {
       // skip the first one
       if (idx == 0) return
       // remove all others
       let acc = val.owner_address
-      let r = web3.cmt.stake.validator.withdraw({ from: acc })
+      let r = web3.ec.stake.validator.withdraw({ from: acc })
       logger.debug(r)
       logger.debug(`validator ${acc} removed`)
     })
@@ -342,9 +342,9 @@ const removeFakeValidators = () => {
 
 const getBlockAward = () => {
   // const inflation_rate = eval(Globals.Params.inflation_rate)
-  // let cmts = web3.toWei(web3.toBigNumber(1000000000), "cmt")
+  // let ecs = web3.toWei(web3.toBigNumber(1000000000), "ec")
   // let blocksYr = (365 * 24 * 3600) / 10
-  // let blockAward = cmts.times(inflation_rate / 100).dividedToIntegerBy(blocksYr)
+  // let blockAward = ecs.times(inflation_rate / 100).dividedToIntegerBy(blocksYr)
   let blockAward = web3.toBigNumber("25367833587011669203")
   return blockAward
 }
@@ -352,7 +352,7 @@ const getBlockAward = () => {
 // n: number of delegators; s: delegator's current stake
 const calcVotingPower = (n, s, p) => {
   logger.debug("n,s,p:", n, s, p)
-  // no awards if less than 1000cmt
+  // no awards if less than 1000ec
   if (parseInt(s / 1e18) < Number(Globals.Params.min_staking_amount)) {
     return 0
   }
@@ -372,7 +372,7 @@ const calcVotingPower = (n, s, p) => {
 }
 
 const delegatorAccept = (delegator, validator, deleAmount) => {
-  let nonce = web3.cmt.getTransactionCount(delegator)
+  let nonce = web3.ec.getTransactionCount(delegator)
 
   let payload = {
     from: delegator,
@@ -381,7 +381,7 @@ const delegatorAccept = (delegator, validator, deleAmount) => {
     cubeBatch: Globals.CubeBatch,
     sig: cubeSign(delegator, nonce)
   }
-  let r = web3.cmt.stake.delegator.accept(payload)
+  let r = web3.ec.stake.delegator.accept(payload)
   expectTxSuccess(r)
 }
 

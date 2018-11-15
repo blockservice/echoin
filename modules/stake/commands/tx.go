@@ -2,8 +2,9 @@ package commands
 
 import (
 	"fmt"
-	"github.com/blockservice/echoin/utils"
 	"math/big"
+
+	"github.com/blockservice/echoin/utils"
 
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
@@ -22,16 +23,16 @@ The stake/declare tx allows a potential validator to declare its candidacy. Sign
 
 * Validator address
 
-The stake/slot/propose tx allows a potential validator to offer a slot of CMTs and corresponding ROI. It returns a tx ID. Signed by the validator.
+The stake/slot/propose tx allows a potential validator to offer a slot of ECs and corresponding ROI. It returns a tx ID. Signed by the validator.
 
 * Validator address
-* CMT amount
+* EC amount
 * Proposed ROI
 
-The stake/slot/accept tx is used by a delegator to accept and stake CMTs for an ID. Signed by the user.
+The stake/slot/accept tx is used by a delegator to accept and stake ECs for an ID. Signed by the user.
 
 * Slot ID
-* CMT amount
+* EC amount
 * Delegator address
 
 The stake/slot/cancel tx is to cancel all remianing amounts from an unaccepted slot by its creator using the ID. Signed by the validator.
@@ -127,10 +128,10 @@ func init() {
 	fsPk.String(FlagPubKey, "", "PubKey of the validator-candidate")
 
 	fsAmount := flag.NewFlagSet("", flag.ContinueOnError)
-	fsAmount.String(FlagAmount, "", "Amount of CMTs")
+	fsAmount.String(FlagAmount, "", "Amount of ECs")
 
 	fsCandidate := flag.NewFlagSet("", flag.ContinueOnError)
-	fsCandidate.String(FlagMaxAmount, "", "Max amount of CMTs to be staked")
+	fsCandidate.String(FlagMaxAmount, "", "Max amount of ECs to be staked")
 	fsCandidate.String(FlagName, "", "name")
 	fsCandidate.String(FlagWebsite, "", "website")
 	fsCandidate.String(FlagLocation, "", "location")

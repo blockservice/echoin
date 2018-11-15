@@ -8,18 +8,18 @@
 ## Installation
 
 ```bash
-# get latest version of web3-cmt
-git clone https://github.com/CyberMiles/web3-cmt.js /path_to/web3-cmt.js
-cd /path_to/web3-cmt.js
+# get latest version of web3-ec
+git clone https://github.com/CyberMiles/web3-ec.js /path_to/web3-ec.js
+cd /path_to/web3-ec.js
 git checkout master
 yarn install    # (or `npm install`)
-# prepare for web3-cmt package linking
+# prepare for web3-ec package linking
 yarn link       # (or `npm link`)
 
 # goes back to the test/integration directory
 cd -
-# link to local version of web3-cmt package(or `npm link "web3-cmt"`)
-yarn link "web3-cmt"
+# link to local version of web3-ec package(or `npm link "web3-ec"`)
+yarn link "web3-ec"
 # Install project dependencies(or `npm install`)
 yarn install
 ```

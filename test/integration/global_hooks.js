@@ -1,6 +1,6 @@
 const expect = require("chai").expect
 const fs = require("fs")
-const Web3 = require("web3-cmt")
+const Web3 = require("web3-ec")
 const logger = require("./logger")
 const { Settings } = require("./constants")
 const Utils = require("./utils")
@@ -19,17 +19,17 @@ logger.debug("test mode: ", Globals.TestMode)
 before("Set default account", function() {
   logger.info(this.test.fullTitle())
   // set default account
-  web3.cmt.defaultAccount = web3.cmt.accounts[0]
+  web3.ec.defaultAccount = web3.ec.accounts[0]
 })
 
 before("Prepare 4 accounts", function() {
   logger.info(this.test.fullTitle())
-  let count = web3.cmt.accounts.length
+  let count = web3.ec.accounts.length
   if (count > 2) {
     // get 3 accounts. skip first 2 accounts
-    Globals.Accounts = web3.cmt.accounts.slice(2, 5)
+    Globals.Accounts = web3.ec.accounts.slice(2, 5)
     // last account
-    if (count > 7) Globals.Accounts.push(web3.cmt.accounts[count - 1])
+    if (count > 7) Globals.Accounts.push(web3.ec.accounts[count - 1])
     logger.debug("use existing accounts: ", Globals.Accounts)
   } else {
     Globals.Accounts = []
@@ -46,7 +46,7 @@ before("Unlock all accounts", function() {
   logger.info(this.test.fullTitle())
   // unlock account
   web3.personal.unlockAccount(
-    web3.cmt.defaultAccount,
+    web3.ec.defaultAccount,
     Settings.Passphrase,
     3000
   )
@@ -56,7 +56,7 @@ before("Unlock all accounts", function() {
 })
 
 before("Load system parameters", function(done) {
-  web3.cmt.governance.getParams((err, res) => {
+  web3.ec.governance.getParams((err, res) => {
     if (err) {
       logger.error(err)
       done(err)
@@ -76,8 +76,8 @@ before("Setup a ERC20 Smart contract called ETH", function(done) {
   Globals.ETH.bytecode = tokenJSON["bytecode"]
 
   let first = Globals.ETH.contractAddress
-  if (web3.cmt.getCode(first) === "0x") {
-    let deployAddress = web3.cmt.accounts[0]
+  if (web3.ec.getCode(first) === "0x") {
+    let deployAddress = web3.ec.accounts[0]
     Utils.newContract(
       deployAddress,
       Globals.ETH.abi,
@@ -93,20 +93,20 @@ before("Setup a ERC20 Smart contract called ETH", function(done) {
   }
 })
 
-before("Transfer 5000000 CMT to A, B, C, D from defaultAccount", function(
+before("Transfer 5000000 EC to A, B, C, D from defaultAccount", function(
   done
 ) {
   logger.info(this.test.fullTitle())
   let balances = Utils.getBalance()
   let arrFund = []
   for (i = 0; i < 4; ++i) {
-    // 2000000 cmt should be far enough for the testing
-    if (web3.fromWei(balances[i], "cmt") > 2000000) continue
+    // 2000000 ec should be far enough for the testing
+    if (web3.fromWei(balances[i], "ec") > 2000000) continue
 
     let hash = Utils.transfer(
-      web3.cmt.defaultAccount,
+      web3.ec.defaultAccount,
       Globals.Accounts[i],
-      web3.toWei(5000000, "cmt"),
+      web3.toWei(5000000, "ec"),
       5 //gwei
     )
     arrFund.push(hash)

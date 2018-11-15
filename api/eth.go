@@ -13,7 +13,7 @@ import (
 	ttypes "github.com/tendermint/tendermint/types"
 )
 
-// CmtRPCService offers cmt related RPC methods
+// EcRPCService offers ec related RPC methods
 type EthRPCService struct {
 	backend   *Backend
 	am        *accounts.Manager
@@ -64,7 +64,7 @@ func (s *EthRPCService) SendTransaction(args SendTxArgs) (common.Hash, error) {
 	return signed.Hash(), nil
 }
 
-// SendTx is same as SendTransaction, but return cmt transaction hash
+// SendTx is same as SendTransaction, but return ec transaction hash
 func (s *EthRPCService) SendTx(args SendTxArgs) (string, error) {
 	signed, err := s.signAndBroadcastSync(args)
 	if err != nil {

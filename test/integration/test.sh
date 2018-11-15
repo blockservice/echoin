@@ -16,9 +16,9 @@ docker-compose up -d all
 sleep 3
 curl http://localhost:26657/status
 
-# web3-cmt
-git clone https://github.com/CyberMiles/web3-cmt.js ~/web3-cmt.js
-cd ~/web3-cmt.js
+# web3-ec
+git clone https://github.com/CyberMiles/web3-ec.js ~/web3-ec.js
+cd ~/web3-ec.js
 git checkout master
 yarn install
 yarn link
@@ -26,7 +26,7 @@ yarn link
 # integration test
 cd $BASEDIR
 yarn install
-yarn link "web3-cmt"
+yarn link "web3-ec"
 yarn test
 
 # cleanup

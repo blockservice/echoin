@@ -1,6 +1,6 @@
 let Wallet = require("ethereumjs-wallet")
 let async = require("async")
-let Web3 = require("web3-cmt")
+let Web3 = require("web3-ec")
 let config = require("config")
 let utils = require("./utils")
 
@@ -14,14 +14,14 @@ let destAddress = config.get("to")
 let value = config.get("value")
 let totalAccounts = config.get("concurrency")
 let txsPerAccount = parseInt(config.get("txs") / totalAccounts)
-console.log("Current block number:", web3.cmt.blockNumber)
+console.log("Current block number:", web3.ec.blockNumber)
 console.log(
   `Will send ${txsPerAccount} transactions from each account, total accounts: ${totalAccounts}`
 )
 
 // check balance
 let gasPrice = web3.toBigNumber(web3.toWei("5", "gwei"))
-let balance = web3.cmt.getBalance(walletAddress)
+let balance = web3.ec.getBalance(walletAddress)
 let costPerAccount = utils.calculateTransactionsPrice(
   gasPrice,
   value,
@@ -49,7 +49,7 @@ console.log(
 // generate fund transactions
 console.log("Generating wallets and sending funds")
 let wallets = []
-let nonce = web3.cmt.getTransactionCount(walletAddress)
+let nonce = web3.ec.getTransactionCount(walletAddress)
 let privKey = wallet.getPrivateKey()
 let transactions = []
 for (let i = 0; i < totalAccounts; i++) {
@@ -70,8 +70,8 @@ web3.personal.unlockAccount(walletAddress, config.get("password"))
 console.log("done.")
 
 // send fund transactions
-let startingBlock = web3.cmt.blockNumber
-let initialNonce = web3.cmt.getTransactionCount(walletAddress)
+let startingBlock = web3.ec.blockNumber
+let initialNonce = web3.ec.getTransactionCount(walletAddress)
 utils.sendTransactions(web3, transactions, (err, ms) => {
   if (err) {
     console.error("Couldn't send Transactions:")
@@ -103,7 +103,7 @@ utils.sendTransactions(web3, transactions, (err, ms) => {
       wallets.forEach(w => {
         let addr = w.getAddressString()
         accounts.push(addr)
-        initialNonces[addr] = web3.cmt.getTransactionCount(addr)
+        initialNonces[addr] = web3.ec.getTransactionCount(addr)
         let txs = []
         for (let i = 0; i < txsPerAccount; i++) {
           let tx = utils.generateRawTransaction(
@@ -125,7 +125,7 @@ utils.sendTransactions(web3, transactions, (err, ms) => {
 
       // send transactions
       console.log(`Starting to send transactions in parallel`)
-      startingBlock = web3.cmt.blockNumber
+      startingBlock = web3.ec.blockNumber
       let start = new Date()
       console.log(`start time: ${start.toISOString()}, block: ${startingBlock}`)
 
