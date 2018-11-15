@@ -7,12 +7,13 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	abci "github.com/tendermint/tendermint/abci/types"
 
+	"math"
+
 	"github.com/blockservice/echoin/sdk"
 	"github.com/blockservice/echoin/types"
 	"github.com/blockservice/echoin/utils"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 	"golang.org/x/crypto/ripemd160"
-	"math"
 )
 
 //_________________________________________________________________________
@@ -93,7 +94,7 @@ func (c *Candidate) CalcVotingPower(blockHeight int64) (res int64) {
 
 	for _, d := range delegations {
 		var vp int64
-		// if the amount of staked CMTs is less than 1000, no awards will be distributed.
+		// if the amount of staked ECs is less than 1000, no awards will be distributed.
 		if d.Shares().LT(minStakingAmount) {
 			vp = 0
 			d.ResetVotingPower()

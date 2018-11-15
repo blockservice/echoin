@@ -25,7 +25,7 @@ describe("Contract Test", function() {
       if (balances[i] > estimateCost) continue
 
       let hash = Utils.tokenTransfer(
-        web3.cmt.defaultAccount,
+        web3.ec.defaultAccount,
         Globals.Accounts[i],
         initialFund,
         gasPrice
@@ -278,7 +278,7 @@ describe("Contract Test", function() {
 
   describe("Destroy the contract", function() {
     it("expect all to succeed", function(done) {
-      let deployAdrress = web3.cmt.defaultAccount
+      let deployAdrress = web3.ec.defaultAccount
       let hash = Utils.tokenKill(deployAdrress)
 
       Utils.waitInterval(hash, (err, res) => {
@@ -291,7 +291,7 @@ describe("Contract Test", function() {
           expect(token_balance_new[i].toNumber()).to.eq(0)
         }
         // check code
-        expect(web3.cmt.getCode(Globals.ETH.contractAddress)).to.eq("0x")
+        expect(web3.ec.getCode(Globals.ETH.contractAddress)).to.eq("0x")
 
         done()
       })

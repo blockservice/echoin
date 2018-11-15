@@ -1,4 +1,4 @@
-let Web3 = require("web3-cmt")
+let Web3 = require("web3-ec")
 let config = require("config")
 let utils = require("./utils")
 
@@ -11,7 +11,7 @@ let value = config.get("value")
 const contractAddress = config.get("contractAddress")
 
 let totalTxs = config.get("txs")
-console.log("Current block number:", web3.cmt.blockNumber)
+console.log("Current block number:", web3.ec.blockNumber)
 console.log(
   `Will send ${totalTxs} token transactions from ${fromAddress} to ${destAddress}`
 )
@@ -19,7 +19,7 @@ console.log(
 // check balance
 let gasPrice = web3.toBigNumber(web3.toWei("5", "gwei"))
 let cost = utils.calculateTokenTransactionsPrice(gasPrice, totalTxs)
-let balance = web3.cmt.getBalance(fromAddress)
+let balance = web3.ec.getBalance(fromAddress)
 let endBalance = balance.minus(cost)
 console.log("balance after transfer will be(estimate): ", endBalance.toString())
 
@@ -63,9 +63,9 @@ console.log("done.")
 // token instance
 const fs = require("fs")
 const abi = JSON.parse(fs.readFileSync("TestToken.json").toString())["abi"]
-const tokenContract = web3.cmt.contract(abi)
+const tokenContract = web3.ec.contract(abi)
 const tokenInstance = tokenContract.at(contractAddress)
-web3.cmt.defaultAccount = fromAddress
+web3.ec.defaultAccount = fromAddress
 
 // unlock fromAddress
 console.log(`Unlock account ${fromAddress}`)
@@ -74,8 +74,8 @@ console.log("done.")
 
 // Send transactions
 console.log(`Starting to send transactions in parallel`)
-let startingBlock = web3.cmt.blockNumber
-let initialNonce = web3.cmt.getTransactionCount(fromAddress)
+let startingBlock = web3.ec.blockNumber
+let initialNonce = web3.ec.getTransactionCount(fromAddress)
 let start = new Date()
 console.log(`start time: ${start.toISOString()}, block: ${startingBlock}`)
 
@@ -101,7 +101,7 @@ utils.tokenTransfer(web3, tokenInstance, transactions, (err, ms) => {
       }
 
       let sent = transactions.length
-      let processed = web3.cmt.getTransactionCount(fromAddress) - initialNonce
+      let processed = web3.ec.getTransactionCount(fromAddress) - initialNonce
       let timePassed = (endDate - start) / 1000
       let perSecond = processed / timePassed
 

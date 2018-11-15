@@ -48,7 +48,7 @@ describe("API Input Parameter Test", function() {
     D = accounts[7]
   })
   after(function(done) {
-    web3.cmt.stake.validator.query(D.addr, 0, (err, res) => {
+    web3.ec.stake.validator.query(D.addr, 0, (err, res) => {
       if (!err) {
         sendTx(D, "withdrawCandidacy", [], Utils.expectTxSuccess, done)
       } else {
@@ -152,7 +152,7 @@ describe("API Input Parameter Test", function() {
   })
   describe("stake/withdraw", function() {
     before(function(done) {
-      let balance = web3.cmt.getBalance(D.addr)
+      let balance = web3.ec.getBalance(D.addr)
       if (balance < 1) Utils.transfer(A.addr, D.addr, 1)
       sendTx(D, "accept", [A.addr, "1", "01"], Utils.expectTxSuccess, done)
     })
@@ -237,7 +237,7 @@ describe("API Input Parameter Test", function() {
   })
   describe("gov/vote", function() {
     before(function() {
-      let r = web3.cmt.governance.listProposals()
+      let r = web3.ec.governance.listProposals()
       if (r.data && r.data.length > 0) {
         proposalId = r.data[r.data.length - 1].Id
       }
@@ -258,7 +258,7 @@ describe("API Input Parameter Test", function() {
 
 function sendTx(account, op, data, fnExpect, done) {
   const privateKey = new Buffer(account.pkey, "hex")
-  const nonce = web3.cmt.getTransactionCount(account.addr)
+  const nonce = web3.ec.getTransactionCount(account.addr)
   let txInner
   switch (op) {
     case "declare":
@@ -369,7 +369,7 @@ function sendTx(account, op, data, fnExpect, done) {
   tx.sign(privateKey)
   const signed = "0x" + tx.serialize().toString("hex")
 
-  web3.cmt.sendRawTx(signed, function(err, res) {
+  web3.ec.sendRawTx(signed, function(err, res) {
     fnExpect(res)
     done()
   })

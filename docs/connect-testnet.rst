@@ -131,7 +131,7 @@ To access the TestNet type the following in a seperte terminal console to get yo
   172.17.0.2
   docker run --rm -it blockservice/echoin:vTestnet attach http://172.17.0.2:8545
 
-Now, you should see the web3-cmt JavaScript console, you can now jump to the "Test transactions" section to send test transactions.
+Now, you should see the web3-ec JavaScript console, you can now jump to the "Test transactions" section to send test transactions.
 
 Build from source
 =================
@@ -173,12 +173,12 @@ To access the TestNet, type the following in a seperte terminal console (make su
 
   echoin attach http://localhost:8545
 
-You should now the see the web3-cmt JavaScript console and can now test some transactions.
+You should now the see the web3-ec JavaScript console and can now test some transactions.
 
 Test transactions
 =================
 
-In this section, we will use the ``echoin`` client's web3-cmt JavaScript console to send some transactions and verify that the system is set up properly. You can't test transactions untill you are completely in sync with the TestNet. It might take hours to sync.
+In this section, we will use the ``echoin`` client's web3-ec JavaScript console to send some transactions and verify that the system is set up properly. You can't test transactions untill you are completely in sync with the TestNet. It might take hours to sync.
 
 Create and fund a test account
 -------------------------------
@@ -191,7 +191,7 @@ Once you attach the ``echoin`` to the node as above, create two accounts on the 
   > personal.newAccount()
   ...
 
-Now you have created TWO accounts ``0x1234FROM`` and ``0x1234DEST`` on the Echoin TestNet. It is time to get some test CMTs. Please go visit the website below, and ask for 1000 TestNet CMTs for account ``0x1234FROM``. We will also send 1000 TEST tokens, issued by the TEST smart contract, to the account.
+Now you have created TWO accounts ``0x1234FROM`` and ``0x1234DEST`` on the Echoin TestNet. It is time to get some test ECs. Please go visit the website below, and ask for 1000 TestNet ECs for account ``0x1234FROM``. We will also send 1000 TEST tokens, issued by the TEST smart contract, to the account.
 
 http://echoin-faucet.echoin.io
  
@@ -206,9 +206,9 @@ You can test transactions between your two accounts. Remember to unlock both of 
   > personal.unlockAccount("0x1234FROM","password")
   true
   ...
-  > cmt.sendTransaction({from:"0x1234FROM", to:"0x1234DEST",value:1000})
+  > ec.sendTransaction({from:"0x1234FROM", to:"0x1234DEST",value:1000})
   ...
-  > cmt.getBalance("0x1234DEST")
+  > ec.getBalance("0x1234DEST")
   ...
   
 You can also test smart contract transactions for the TEST token as below.
@@ -216,7 +216,7 @@ You can also test smart contract transactions for the TEST token as below.
 ::
 
   > abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"INITIAL_SUPPLY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_subtractedValue","type":"uint256"}],"name":"decreaseApproval","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_addedValue","type":"uint256"}],"name":"increaseApproval","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[],"name":"Pause","type":"event"},{"anonymous":false,"inputs":[],"name":"Unpause","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}]
-  > tokenContract = web3.cmt.contract(abi)
+  > tokenContract = web3.ec.contract(abi)
   > tokenInstance = tokenContract.at("0xb6b29ef90120bec597939e0eda6b8a9164f75deb")
   > tokenInstance.transfer.sendTransaction("0x1234DEST", 1000, {from: "0x1234FROM"})
 
@@ -233,7 +233,7 @@ On CyberMiles blockchain, we have made most transactions (except for heavy users
 
 ::
 
-  > cmt.sendTransaction({from:"0x1234FROM", to:"0x1234DEST",value:1000,gasPrice:0})
+  > ec.sendTransaction({from:"0x1234FROM", to:"0x1234DEST",value:1000,gasPrice:0})
   ...
 
 To try a fee-free smart contract-based token transaction, use the following in the ``echoin`` client console.

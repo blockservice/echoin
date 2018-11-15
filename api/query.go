@@ -10,7 +10,7 @@ import (
 	"github.com/blockservice/echoin/types"
 )
 
-func (s *CmtRPCService) getParsedFromJson(path string, key []byte, ptr interface{}, height uint64) (int64, error) {
+func (s *EcRPCService) getParsedFromJson(path string, key []byte, ptr interface{}, height uint64) (int64, error) {
 	bs, h, err := s.get(path, key, cast.ToInt64(height))
 	if err != nil {
 		return 0, err
@@ -25,7 +25,7 @@ func (s *CmtRPCService) getParsedFromJson(path string, key []byte, ptr interface
 	return h, nil
 }
 
-func (s *CmtRPCService) getParsedFromCdc(path string, key []byte, ptr interface{}, height uint64) (int64, error) {
+func (s *EcRPCService) getParsedFromCdc(path string, key []byte, ptr interface{}, height uint64) (int64, error) {
 	bs, h, err := s.get(path, key, cast.ToInt64(height))
 	if err != nil {
 		return 0, err
@@ -40,7 +40,7 @@ func (s *CmtRPCService) getParsedFromCdc(path string, key []byte, ptr interface{
 	return h, nil
 }
 
-func (s *CmtRPCService) get(path string, key []byte, height int64) ([]byte, int64, error) {
+func (s *EcRPCService) get(path string, key []byte, height int64) ([]byte, int64, error) {
 	node := s.backend.GetLocalClient()
 	resp, err := node.ABCIQueryWithOptions(path, key,
 		rpcclient.ABCIQueryOptions{Trusted: true, Height: int64(height)})

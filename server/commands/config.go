@@ -76,7 +76,7 @@ func DefaultEthermintConfig() EthermintConfig {
 		RPCListenAddrFlag:   "0.0.0.0",
 		RPCPortFlag:         node.DefaultHTTPPort,
 		RPCCORSDomainFlag:   "*",
-		RPCApiFlag:          "cmt,eth,net,web3,personal",
+		RPCApiFlag:          "ec,eth,net,web3,personal",
 		RPCVirtualHostsFlag: "localhost",
 		WSEnabledFlag:       false,
 		WSListenAddrFlag:    node.DefaultWSHost,

@@ -56,7 +56,7 @@ after_failure:
   - >
     curl -X POST http://localhost:8545
     -H 'Content-Type: application/json'
-    -d '{"jsonrpc":"2.0","id":1,"method":"cmt_queryValidators", "params": [0]}'
+    -d '{"jsonrpc":"2.0","id":1,"method":"ec_queryValidators", "params": [0]}'
   - cd ~/volumes/testnet/echoin/scripts && docker-compose logs -t --tail 50
 
 before_deploy:

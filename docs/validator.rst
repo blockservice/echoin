@@ -5,7 +5,7 @@ Validator
 In this document, we will explain staking / unstaking transactions related to validator election, 
 as well as the recommended technical specifcations for validator operations.
 
-cmt_declareCandidacy
+ec_declareCandidacy
 -------- 
 Allow a potential validator to declare its candidacy. Signed by validator address.
 
@@ -14,7 +14,7 @@ Allow a potential validator to declare its candidacy. Signed by validator addres
 - pubKey: String - Validator node public key
 - from: String - An account address associated with this validator (for self-staking and getting block award)
 - nonce: Number - (optional) The number of transactions made by the sender prior to this one.
-- maxAmount: String - Max amount of CMTs in Wei to be staked.
+- maxAmount: String - Max amount of ECs in Wei to be staked.
 - compRate: String - Validator compensation rate - the percentage of block awards distributed to the validator
 - description: Object - Description of the candidacy
     - name: String - Name of candidate
@@ -41,7 +41,7 @@ Allow a potential validator to declare its candidacy. Signed by validator addres
 **Example**
 
   // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_declareCandidacy","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_declareCandidacy","params":[{see above}]}'
 
 // Result
 {
@@ -51,9 +51,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_declareCandidacy","params":[
     height: 271
 }
 
-cmt_declareCandidacy
+ec_declareCandidacy
 -------- 
-Allow a validator to withdraw. All staked tokens will be returned to delegator addresses. Self-staked CMTs will be returned to the validator address. Signed by validator address.
+Allow a validator to withdraw. All staked tokens will be returned to delegator addresses. Self-staked ECs will be returned to the validator address. Signed by validator address.
 
 **Parameters**
 
@@ -75,7 +75,7 @@ Allow a validator to withdraw. All staked tokens will be returned to delegator a
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_withdrawCandidacy","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_withdrawCandidacy","params":[{see above}]}'
 
 // Result
 {
@@ -85,7 +85,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_withdrawCandidacy","params":
     height: 271
 }
 
-cmt_updateCandidacy
+ec_updateCandidacy
 -------- 
 Allow a validator candidate to update its candidacy. Signed by validator address.
 
@@ -93,7 +93,7 @@ Allow a validator candidate to update its candidacy. Signed by validator address
 
 * from: String - An account address associated with this validator (for self-staking and getting block awards)
 * nonce: Number - (optional) The number of transactions made by the sender prior to this one.
-* maxAmount: String - Max amount of CMTs in Wei to be staked.
+* maxAmount: String - Max amount of ECs in Wei to be staked.
 * description: Object - Description of the candidacy.
     * name: String - Name
     * website: String - Web page link
@@ -104,7 +104,7 @@ Allow a validator candidate to update its candidacy. Signed by validator address
 params: {
   "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
   "nonce": 3,
-  "maxAmount": "1000000000000000000000", // 1000CMT
+  "maxAmount": "1000000000000000000000", // 1000EC
   "description": {"name": "xxx", "website": "https://yourdomain.com", "location": "CA, US", "email": "admin@email.com", "profile": "..."}
 }
 
@@ -118,7 +118,7 @@ params: {
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_updateCandidacy","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_updateCandidacy","params":[{see above}]}'
 
 // Result
 {
@@ -128,7 +128,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_updateCandidacy","params":[{
     height: 271
 }
 
-cmt_verifyCandidacy
+ec_verifyCandidacy
 -------- 
 
 **Parameters**
@@ -156,7 +156,7 @@ params: {
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_verifyCandidacy","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_verifyCandidacy","params":[{see above}]}'
 
 // Result
 {
@@ -166,7 +166,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_verifyCandidacy","params":[{
     height: 271
 }
 
-cmt_activateCandidacy
+ec_activateCandidacy
 -------- 
 Allow Foundation to verify a validator's information. It is signed by a special address Foundation owns. This tx can be called multiple times to update the verified status.
 
@@ -191,7 +191,7 @@ params: {
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_activateCandidacy","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_activateCandidacy","params":[{see above}]}'
 
 // Result
 {
@@ -201,22 +201,22 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_activateCandidacy","params":
     height: 271
 }
 
-cmt_delegate
+ec_delegate
 -------- 
-This tx is used when a delegator stakes CMTs to a validator. Signed by delegator address.
+This tx is used when a delegator stakes ECs to a validator. Signed by delegator address.
 
 **Parameters**
 
 * from: String - Delegator address.
 * nonce: Number - (optional) The number of transactions made by the sender prior to this one.
 * validatorAddress: String - Validator address
-* amount: String - Amount of CMTs in Wei to stake.
+* amount: String - Amount of ECs in Wei to stake.
 
 params: {
   "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
   "nonce": 5
   "validatorAddress": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc",
-  "amount": "200000000000000000000" // 200CMT
+  "amount": "200000000000000000000" // 200EC
 }
 
 **Returns**
@@ -230,7 +230,7 @@ params: {
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_delegate","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_delegate","params":[{see above}]}'
 
 // Result
 {
@@ -240,22 +240,22 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_delegate","params":[{see abo
     height: 271
 }
 
-cmt_withdraw
+ec_withdraw
 -------- 
-This tx is used when a delegator unstakes CMTs from a validator. It will free up some slots from the validator's allocation. Signed by the delegator.
+This tx is used when a delegator unstakes ECs from a validator. It will free up some slots from the validator's allocation. Signed by the delegator.
 
 **Parameters**
 
 * from: String - Delegator address
 * nonce: Number - (optional) The number of transactions made by the sender prior to this one.
 * validatorAddress: String - Validator address
-* amount: String - Amount of CMTs to unstake.
+* amount: String - Amount of ECs to unstake.
 
 params: {
   "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
   "nonce": 5
   "validatorAddress": "0x7eff122b94897ea5b0e2a9abf47b86337fafebdc",
-  "amount": "200000000000000000000" // 200CMT
+  "amount": "200000000000000000000" // 200EC
 }
 
 **Returns**
@@ -270,7 +270,7 @@ params: {
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_withdraw","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_withdraw","params":[{see above}]}'
 
 // Result
 {
@@ -280,9 +280,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_withdraw","params":[{see abo
     height: 271
 }
 
-cmt_queryValidators
+ec_queryValidators
 -------- 
-Get a list of all running validators, backup validators, and validator candidates, with the amount of CMT staked to each one. Not signed, and no parameter.
+Get a list of all running validators, backup validators, and validator candidates, with the amount of EC staked to each one. Not signed, and no parameter.
 
 **Parameters**
 
@@ -297,7 +297,7 @@ Get a list of all running validators, backup validators, and validator candidate
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_queryValidators"}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_queryValidators"}'
 
 // Result
 { 
@@ -331,7 +331,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_queryValidators"}'
   ]
 }
 
-cmt_queryValidator
+ec_queryValidator
 -------- 
 Query the current stake status of the validator. Not signed.
 
@@ -352,7 +352,7 @@ params: {
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_queryValidator","params":{see above}}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_queryValidator","params":{see above}}'
 
 // Result
 { 
@@ -384,7 +384,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_queryValidator","params":{se
   }
 }
 
-cmt_queryDelegator
+ec_queryDelegator
 -------- 
 Query the current stake status of a delegator. Not signed.
 
@@ -405,7 +405,7 @@ params: {
 **Example**
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"cmt_queryDelegator","params":[{see above}]}'
+curl -X POST --data '{"jsonrpc":"2.0","method":"ec_queryDelegator","params":[{see above}]}'
 
 // Result
 { 

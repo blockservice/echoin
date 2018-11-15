@@ -1,5 +1,5 @@
 const config = require("config")
-const Web3 = require("web3-cmt")
+const Web3 = require("web3-ec")
 const utils = require("./utils")
 
 const web3 = new Web3(new Web3.providers.HttpProvider(config.get("provider")))
@@ -10,14 +10,14 @@ let value = config.get("value")
 const totalTxs = config.get("txs")
 const blockTimeout = config.get("blockTimeout")
 
-console.log("Current block number:", web3.cmt.blockNumber)
+console.log("Current block number:", web3.ec.blockNumber)
 console.log(
   `Will send ${totalTxs} transactions and wait for ${blockTimeout} blocks`
 )
 
 let gasPrice = web3.toBigNumber(web3.toWei("5", "gwei"))
 let cost = utils.calculateTransactionsPrice(gasPrice, value, totalTxs)
-let balance = web3.cmt.getBalance(fromAddress)
+let balance = web3.ec.getBalance(fromAddress)
 let endBalance = balance.minus(cost)
 console.log("balance after transfer will be: ", endBalance.toString())
 
@@ -48,7 +48,7 @@ console.log("done.")
 
 // Send transactions
 console.log(`Starting to send transactions in parallel`)
-const initialNonce = web3.cmt.getTransactionCount(fromAddress)
+const initialNonce = web3.ec.getTransactionCount(fromAddress)
 const start = new Date()
 console.log("start time: ", start)
 utils.sendTransactions(web3, transactions, (err, ms) => {
@@ -72,7 +72,7 @@ utils.sendTransactions(web3, transactions, (err, ms) => {
       }
 
       let sent = transactions.length
-      let processed = web3.cmt.getTransactionCount(fromAddress) - initialNonce
+      let processed = web3.ec.getTransactionCount(fromAddress) - initialNonce
       let timePassed = (endDate - start) / 1000
       let perSecond = processed / timePassed
 

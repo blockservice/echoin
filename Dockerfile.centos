@@ -6,22 +6,13 @@
 # > docker run --rm -v $HOME/.echoin:/echoin -p 26657:26657 -p 8545:8545 blockservice/echoin:centos node start --home /echoin
 FROM blockservice/echoin-build:centos
 
-# libeni
-WORKDIR /app/lib
-ENV ENI_LIBRARY_PATH=/app/lib
-ENV LD_LIBRARY_PATH=/app/lib
-
-RUN mkdir -p libeni \
-  && wget https://github.com/CyberMiles/libeni/releases/download/v1.3.4/libeni-1.3.4_centos-7.tgz -P libeni \
-  && tar zxvf libeni/*.tgz -C libeni \
-  && cp libeni/*/lib/* .
 
 # echoin
 WORKDIR /go/src/github.com/blockservice/echoin
 # copy echoin source code from local
 ADD . .
 
-RUN ENI_LIB=$ENI_LIBRARY_PATH make build && cp build/echoin /app/
+RUN  make build && cp build/echoin /app/
 
 WORKDIR /app
 EXPOSE 8545 26656 26657

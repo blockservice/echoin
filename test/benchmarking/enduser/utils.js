@@ -41,7 +41,7 @@ exports.sendRawTransactions = (web3, transactions, cb) => {
   let start = new Date()
   async.parallelLimit(
     transactions.map(tx => {
-      return web3.cmt.sendRawTransaction.bind(null, tx)
+      return web3.ec.sendRawTransaction.bind(null, tx)
     }),
     config.get("concurrency"),
     err => {
@@ -58,7 +58,7 @@ exports.sendTransactions = (web3, transactions, cb) => {
   let start = new Date()
   async.parallelLimit(
     transactions.map(tx => {
-      return web3.cmt.sendTransaction.bind(null, tx)
+      return web3.ec.sendTransaction.bind(null, tx)
     }),
     config.get("concurrency"),
     err => {
@@ -96,22 +96,22 @@ exports.waitProcessedInterval = function(
   totalTxs,
   cb
 ) {
-  let startingBlock = web3.cmt.blockNumber
+  let startingBlock = web3.ec.blockNumber
 
   console.log("Starting block:", startingBlock)
   let interval = setInterval(() => {
-    let blocksGone = web3.cmt.blockNumber - startingBlock
+    let blocksGone = web3.ec.blockNumber - startingBlock
     if (blocksGone > blockTimeout) {
       clearInterval(interval)
       cb(new Error(`Pending full after ${blockTimeout} blocks`))
       return
     }
 
-    let balance = web3.cmt.getBalance(fromAddr)
+    let balance = web3.ec.getBalance(fromAddr)
     console.log(
       `Blocks Passed ${blocksGone}, current balance: ${balance.toString()}`
     )
-    let processed = web3.cmt.getTransactionCount(fromAddr) - initialNonce
+    let processed = web3.ec.getTransactionCount(fromAddr) - initialNonce
 
     if (processed >= totalTxs) {
       clearInterval(interval)
@@ -135,7 +135,7 @@ exports.getTokenBalance = function(web3, addr) {
   let contractAddress = config.get("contractAddress")
   let fs = require("fs")
   let abi = JSON.parse(fs.readFileSync("TestToken.json").toString())["abi"]
-  let tokenContract = web3.cmt.contract(abi)
+  let tokenContract = web3.ec.contract(abi)
   let tokenInstance = tokenContract.at(contractAddress)
 
   return tokenInstance.balanceOf(addr)

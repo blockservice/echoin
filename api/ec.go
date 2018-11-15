@@ -30,22 +30,22 @@ import (
 	"github.com/blockservice/echoin/utils"
 )
 
-// CmtRPCService offers cmt related RPC methods
-type CmtRPCService struct {
+// EcRPCService offers ec related RPC methods
+type EcRPCService struct {
 	backend   *Backend
 	am        *accounts.Manager
 	nonceLock *AddrLocker
 }
 
-func NewCmtRPCService(b *Backend, nonceLock *AddrLocker) *CmtRPCService {
-	return &CmtRPCService{
+func NewEcRPCService(b *Backend, nonceLock *AddrLocker) *EcRPCService {
+	return &EcRPCService{
 		backend:   b,
 		am:        b.ethereum.AccountManager(),
 		nonceLock: nonceLock,
 	}
 }
 
-func (s *CmtRPCService) makeEchoinTxArgs(tx sdk.Tx, address common.Address, nonce *hexutil.Uint64) (*SendTxArgs, error) {
+func (s *EcRPCService) makeEchoinTxArgs(tx sdk.Tx, address common.Address, nonce *hexutil.Uint64) (*SendTxArgs, error) {
 	data, err := tx.MarshalJSON()
 	if err != nil {
 		return nil, err
@@ -66,7 +66,7 @@ func (s *CmtRPCService) makeEchoinTxArgs(tx sdk.Tx, address common.Address, nonc
 }
 
 // sign tx and broadcast commit to tendermint.
-func (s *CmtRPCService) signAndBroadcastTxCommit(args *SendTxArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) signAndBroadcastTxCommit(args *SendTxArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	signTx := func(args *SendTxArgs) (*ethTypes.Transaction, error) {
 		if args.Nonce == nil {
 			// Hold the addresse's mutex around signing to prevent concurrent assignment of
@@ -88,7 +88,7 @@ func (s *CmtRPCService) signAndBroadcastTxCommit(args *SendTxArgs) (*ctypes.Resu
 
 // SendRawTx will broadcast the signed transaction to tendermint.
 // The sender is responsible for signing the transaction and using the correct nonce.
-func (s *CmtRPCService) SendRawTx(encodedTx hexutil.Bytes) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) SendRawTx(encodedTx hexutil.Bytes) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := new(ethTypes.Transaction)
 	if err := rlp.DecodeBytes(encodedTx, tx); err != nil {
 		return nil, err
@@ -112,7 +112,7 @@ func (s *CmtRPCService) SendRawTx(encodedTx hexutil.Bytes) (*ctypes.ResultBroadc
 }
 
 // GetBlockByNumber returns the requested block by height.
-func (s *CmtRPCService) GetBlockByNumber(height uint64) (*ctypes.ResultBlock, error) {
+func (s *EcRPCService) GetBlockByNumber(height uint64) (*ctypes.ResultBlock, error) {
 	h := cast.ToInt64(height)
 	return s.backend.GetLocalClient().Block(&h)
 }
@@ -124,9 +124,9 @@ type RPCTransaction struct {
 	Gas              hexutil.Uint64         `json:"gas"`
 	GasPrice         *hexutil.Big           `json:"gasPrice"`
 	Hash             common.Hash            `json:"hash"`
-	CmtHash          tmcmn.HexBytes         `json:"cmtHash"`
+	EcHash          tmcmn.HexBytes         `json:"ecHash"`
 	Input            hexutil.Bytes          `json:"input"`
-	CmtInput         interface{}            `json:"cmtInput"`
+	EcInput         interface{}            `json:"ecInput"`
 	Nonce            hexutil.Uint64         `json:"nonce"`
 	To               *common.Address        `json:"to"`
 	TransactionIndex hexutil.Uint           `json:"transactionIndex"`
@@ -162,9 +162,9 @@ func newRPCTransaction(res *ctypes.ResultTx) (*RPCTransaction, error) {
 		Gas:              hexutil.Uint64(tx.Gas()),
 		GasPrice:         (*hexutil.Big)(tx.GasPrice()),
 		Hash:             tx.Hash(),
-		CmtHash:          res.Hash,
+		EcHash:          res.Hash,
 		Input:            hexutil.Bytes(tx.Data()),
-		CmtInput:         echoinTx,
+		EcInput:         echoinTx,
 		Nonce:            hexutil.Uint64(tx.Nonce()),
 		To:               tx.To(),
 		TransactionIndex: hexutil.Uint(res.Index),
@@ -177,7 +177,7 @@ func newRPCTransaction(res *ctypes.ResultTx) (*RPCTransaction, error) {
 }
 
 // GetTransactionFromBlock returns the transaction for the given block number and index.
-func (s *CmtRPCService) GetTransactionFromBlock(height uint64, index uint64) (*RPCTransaction, error) {
+func (s *EcRPCService) GetTransactionFromBlock(height uint64, index uint64) (*RPCTransaction, error) {
 	// get block
 	h := cast.ToInt64(height)
 	block, err := s.backend.GetLocalClient().Block(&h)
@@ -194,7 +194,7 @@ func (s *CmtRPCService) GetTransactionFromBlock(height uint64, index uint64) (*R
 }
 
 // GetTransactionByHash returns the transaction for the given hash
-func (s *CmtRPCService) GetTransactionByHash(hash string) (*RPCTransaction, error) {
+func (s *EcRPCService) GetTransactionByHash(hash string) (*RPCTransaction, error) {
 	// bytes from hash string
 	bkey, err := hex.DecodeString(cmn.StripHex(hash))
 	if err != nil {
@@ -210,7 +210,7 @@ func (s *CmtRPCService) GetTransactionByHash(hash string) (*RPCTransaction, erro
 }
 
 // DecodeRawTxs returns the transactions from the raw tx array in the block data
-func (s *CmtRPCService) DecodeRawTxs(rawTxs []string) ([]*RPCTransaction, error) {
+func (s *EcRPCService) DecodeRawTxs(rawTxs []string) ([]*RPCTransaction, error) {
 	txs := make([]*RPCTransaction, len(rawTxs))
 	for index, raw := range rawTxs {
 		tx, err := base64.StdEncoding.DecodeString(raw)
@@ -227,7 +227,7 @@ func (s *CmtRPCService) DecodeRawTxs(rawTxs []string) ([]*RPCTransaction, error)
 }
 
 // Info about the node's syncing state
-func (s *CmtRPCService) Syncing() (*ctypes.SyncInfo, error) {
+func (s *EcRPCService) Syncing() (*ctypes.SyncInfo, error) {
 	status, err := s.backend.GetLocalClient().Status()
 	if err != nil {
 		return nil, err
@@ -245,7 +245,7 @@ type DeclareCandidacyArgs struct {
 	Description stake.Description `json:"description"`
 }
 
-func (s *CmtRPCService) DeclareCandidacy(args DeclareCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) DeclareCandidacy(args DeclareCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	pubKey, err := types.GetPubKey(args.PubKey)
 	if err != nil {
 		return nil, err
@@ -265,7 +265,7 @@ type WithdrawCandidacyArgs struct {
 	From  common.Address  `json:"from"`
 }
 
-func (s *CmtRPCService) WithdrawCandidacy(args WithdrawCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) WithdrawCandidacy(args WithdrawCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxWithdrawCandidacy()
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -285,7 +285,7 @@ type UpdateCandidacyArgs struct {
 	Description stake.Description `json:"description"`
 }
 
-func (s *CmtRPCService) UpdateCandidacy(args UpdateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) UpdateCandidacy(args UpdateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	maxAmount := ""
 	if args.MaxAmount != nil {
 		maxAmount = args.MaxAmount.ToInt().String()
@@ -315,7 +315,7 @@ type ActivateCandidacyArgs struct {
 	From  common.Address  `json:"from"`
 }
 
-func (s *CmtRPCService) ActivateCandidacy(args ActivateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) ActivateCandidacy(args ActivateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxActivateCandidacy()
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -331,7 +331,7 @@ type DeactivateCandidacyArgs struct {
 	From  common.Address  `json:"from"`
 }
 
-func (s *CmtRPCService) DeactivateCandidacy(args DeactivateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) DeactivateCandidacy(args DeactivateCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxDeactivateCandidacy()
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -349,7 +349,7 @@ type SetCompRateArgs struct {
 	CompRate         sdk.Rat         `json:"compRate"`
 }
 
-func (s *CmtRPCService) SetCompRate(args SetCompRateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) SetCompRate(args SetCompRateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxSetCompRate(args.DelegatorAddress, args.CompRate)
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -366,7 +366,7 @@ type UpdateCandidacyAccountArgs struct {
 	NewCandidateAddress common.Address  `json:"newCandidateAccount"`
 }
 
-func (s *CmtRPCService) UpdateCandidacyAccount(args UpdateCandidacyAccountArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) UpdateCandidacyAccount(args UpdateCandidacyAccountArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxUpdateCandidacyAccount(args.NewCandidateAddress)
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -383,7 +383,7 @@ type AcceptCandidacyAccountUpdateArgs struct {
 	AccountUpdateRequestId int64           `json:"accountUpdateRequestId"`
 }
 
-func (s *CmtRPCService) AcceptCandidacyAccountUpdate(args AcceptCandidacyAccountUpdateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) AcceptCandidacyAccountUpdate(args AcceptCandidacyAccountUpdateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxAcceptCandidacyAccountUpdate(args.AccountUpdateRequestId)
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -401,7 +401,7 @@ type VerifyCandidacyArgs struct {
 	Verified         bool            `json:"verified"`
 }
 
-func (s *CmtRPCService) VerifyCandidacy(args VerifyCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) VerifyCandidacy(args VerifyCandidacyArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxVerifyCandidacy(args.CandidateAddress, args.Verified)
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -421,7 +421,7 @@ type DelegateArgs struct {
 	Sig              string          `json:"sig"`
 }
 
-func (s *CmtRPCService) Delegate(args DelegateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) Delegate(args DelegateArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxDelegate(args.ValidatorAddress, args.Amount.ToInt().String(), args.CubeBatch, args.Sig)
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -439,7 +439,7 @@ type WithdrawArgs struct {
 	Amount           hexutil.Big     `json:"amount"`
 }
 
-func (s *CmtRPCService) Withdraw(args WithdrawArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) Withdraw(args WithdrawArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := stake.NewTxWithdraw(args.ValidatorAddress, args.Amount.ToInt().String())
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -455,7 +455,7 @@ type StakeQueryResult struct {
 	Data   interface{} `json:"data"`
 }
 
-func (s *CmtRPCService) QueryValidators(height uint64) (*StakeQueryResult, error) {
+func (s *EcRPCService) QueryValidators(height uint64) (*StakeQueryResult, error) {
 	var candidates stake.Candidates
 	h, err := s.getParsedFromJson("/validators", []byte{0}, &candidates, height)
 	if err != nil {
@@ -465,7 +465,7 @@ func (s *CmtRPCService) QueryValidators(height uint64) (*StakeQueryResult, error
 	return &StakeQueryResult{h, candidates}, nil
 }
 
-func (s *CmtRPCService) QueryValidator(address common.Address, height uint64) (*StakeQueryResult, error) {
+func (s *EcRPCService) QueryValidator(address common.Address, height uint64) (*StakeQueryResult, error) {
 	var candidate stake.Candidate
 	h, err := s.getParsedFromJson("/validator", []byte(address.Hex()), &candidate, height)
 	if err != nil {
@@ -475,7 +475,7 @@ func (s *CmtRPCService) QueryValidator(address common.Address, height uint64) (*
 	return &StakeQueryResult{h, &candidate}, nil
 }
 
-func (s *CmtRPCService) QueryDelegator(address common.Address, height uint64) (*StakeQueryResult, error) {
+func (s *EcRPCService) QueryDelegator(address common.Address, height uint64) (*StakeQueryResult, error) {
 	var slotDelegates []*stake.Delegation
 	h, err := s.getParsedFromJson("/delegator", []byte(address.Hex()), &slotDelegates, height)
 	if err != nil {
@@ -485,7 +485,7 @@ func (s *CmtRPCService) QueryDelegator(address common.Address, height uint64) (*
 	return &StakeQueryResult{h, slotDelegates}, nil
 }
 
-func (s *CmtRPCService) QueryAwardInfos(height uint64) (*StakeQueryResult, error) {
+func (s *EcRPCService) QueryAwardInfos(height uint64) (*StakeQueryResult, error) {
 	var awardInfos stake.AwardInfos
 	h, err := s.getParsedFromJson("/awardInfo", utils.AwardInfosKey, &awardInfos, height)
 	if err != nil {
@@ -495,7 +495,7 @@ func (s *CmtRPCService) QueryAwardInfos(height uint64) (*StakeQueryResult, error
 	return &StakeQueryResult{h, awardInfos}, nil
 }
 
-func (s *CmtRPCService) QueryAbsentValidatorsKey(height uint64) (*StakeQueryResult, error) {
+func (s *EcRPCService) QueryAbsentValidatorsKey(height uint64) (*StakeQueryResult, error) {
 	var absentValidators stake.AbsentValidators
 	h, err := s.getParsedFromJson("/key", utils.AbsentValidatorsKey, &absentValidators, height)
 	if err != nil {
@@ -516,7 +516,7 @@ type GovernanceTransferFundProposalArgs struct {
 	ExpireBlockHeight *int64          `json:"expireBlockHeight"`
 }
 
-func (s *CmtRPCService) ProposeTransferFund(args GovernanceTransferFundProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) ProposeTransferFund(args GovernanceTransferFundProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxTransferFundPropose(&args.TransferFrom, &args.TransferTo,
 		args.Amount.ToInt().String(), args.Reason,
 		args.ExpireTimestamp, args.ExpireBlockHeight)
@@ -539,7 +539,7 @@ type GovernanceChangeParamProposalArgs struct {
 	ExpireBlockHeight *int64          `json:"expireBlockHeight"`
 }
 
-func (s *CmtRPCService) ProposeChangeParam(args GovernanceChangeParamProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) ProposeChangeParam(args GovernanceChangeParamProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxChangeParamPropose(args.Name, args.Value, args.Reason,
 		args.ExpireTimestamp, args.ExpireBlockHeight)
 
@@ -563,7 +563,7 @@ type GovernanceDeployLibEniProposalArgs struct {
 	DeployBlockHeight *int64          `json:"deployBlockHeight"`
 }
 
-func (s *CmtRPCService) ProposeDeployLibEni(args GovernanceDeployLibEniProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) ProposeDeployLibEni(args GovernanceDeployLibEniProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxDeployLibEniPropose(args.Name, args.Version, args.FileUrl, args.Md5, args.Reason,
 		args.DeployTimestamp, args.DeployBlockHeight)
 
@@ -583,7 +583,7 @@ type GovernanceRetireProgramProposalArgs struct {
 	RetiredBlockHeight  *int64          `json:"retiredBlockHeight"`
 }
 
-func (s *CmtRPCService) ProposeRetireProgram(args GovernanceRetireProgramProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) ProposeRetireProgram(args GovernanceRetireProgramProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxRetireProgramPropose(args.PreservedValidators, args.Reason, args.RetiredBlockHeight)
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.From, args.Nonce)
@@ -605,7 +605,7 @@ type GovernanceUpgradeProgramProposalArgs struct {
 	UpgradeBlockHeight *int64          `json:"upgradeBlockHeight"`
 }
 
-func (s *CmtRPCService) ProposeUpgradeProgram(args GovernanceUpgradeProgramProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) ProposeUpgradeProgram(args GovernanceUpgradeProgramProposalArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxUpgradeProgramPropose(args.Name,
 		args.Version, args.FileUrl, args.Md5, args.Reason, args.UpgradeBlockHeight)
 
@@ -624,7 +624,7 @@ type GovernanceVoteArgs struct {
 	Answer     string          `json:"answer"`
 }
 
-func (s *CmtRPCService) Vote(args GovernanceVoteArgs) (*ctypes.ResultBroadcastTxCommit, error) {
+func (s *EcRPCService) Vote(args GovernanceVoteArgs) (*ctypes.ResultBroadcastTxCommit, error) {
 	tx := governance.NewTxVote(args.ProposalId, args.Answer)
 
 	txArgs, err := s.makeEchoinTxArgs(tx, args.Voter, args.Nonce)
@@ -635,7 +635,7 @@ func (s *CmtRPCService) Vote(args GovernanceVoteArgs) (*ctypes.ResultBroadcastTx
 	return s.signAndBroadcastTxCommit(txArgs)
 }
 
-func (s *CmtRPCService) QueryProposals() (*StakeQueryResult, error) {
+func (s *EcRPCService) QueryProposals() (*StakeQueryResult, error) {
 	var proposals []*governance.Proposal
 	h, err := s.getParsedFromJson("/governance/proposals", []byte{0}, &proposals, 0)
 	if err != nil {
@@ -645,7 +645,7 @@ func (s *CmtRPCService) QueryProposals() (*StakeQueryResult, error) {
 	return &StakeQueryResult{h, proposals}, nil
 }
 
-func (s *CmtRPCService) QueryParams(height uint64) (*StakeQueryResult, error) {
+func (s *EcRPCService) QueryParams(height uint64) (*StakeQueryResult, error) {
 	var params utils.Params
 	h, err := s.getParsedFromJson("/key", utils.ParamKey, &params, height)
 	if err != nil {

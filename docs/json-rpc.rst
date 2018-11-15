@@ -4,10 +4,10 @@ Echoin JSON-RPC
 
 As echoin is compatible with Ethereum so most methods especially the ones for normal transaction are the same with Ethereum. Please refer to Ethereum `JSON-RPC <https://github.com/ethereum/wiki/wiki/JSON-RPC>`_ for more information.
 
-CMT methods
+EC methods
 ===========
 
-cmt_syncing
+ec_syncing
 -----------
 
 Returns the sync object.
@@ -29,7 +29,7 @@ Returns the sync object.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_syncing","params":[],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_syncing","params":[],"id":1}'
 
 	// Result
 	{
@@ -44,7 +44,7 @@ Returns the sync object.
 		}
 	}
 
-cmt_getBlockByNumber
+ec_getBlockByNumber
 --------------------
 
 Returns a block matching the block number.
@@ -62,7 +62,7 @@ Returns a block matching the block number.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_getBlockByNumber","params":[78],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_getBlockByNumber","params":[78],"id":1}'
 
 	// Result
 	{
@@ -156,7 +156,7 @@ Returns a block matching the block number.
 		}
 	}
 
-cmt_getTransactionByHash
+ec_getTransactionByHash
 ------------------------
 
 Returns a transaction matching the given transaction hash.
@@ -174,7 +174,7 @@ Returns a transaction matching the given transaction hash.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_getTransactionByHash","params":["1F64261396674A1A7328B250EC3043E5512010D8"],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_getTransactionByHash","params":["1F64261396674A1A7328B250EC3043E5512010D8"],"id":1}'
 
     // Result
 	{
@@ -186,9 +186,9 @@ Returns a transaction matching the given transaction hash.
 			"gas": "0x0",
 			"gasPrice": "0x0",
 			"hash": "0xa73b917243b5d3fb810dfb5f1880daab71564aafbb183c5f1e1f40665832aad5",
-			"cmtHash": "1F64261396674A1A7328B250EC3043E5512010D8",
+			"ecHash": "1F64261396674A1A7328B250EC3043E5512010D8",
 			"input": "0x7b2274797065223a227374616b655c2f64656c6567617465222c2264617461223a7b2276616c696461746f725f61646472657373223a22307846394664333937343836414335353136656561323330346641373031634239373637633436354432222c22616d6f756e74223a223334333731303030303030303030303030303030303030222c22637562655f6261746368223a223032222c22736967223a2232356338393665316235303563643238626463633236656539306439333465356361313135383532663230393737356635636434336230636166393665613134643939623633653034343830383764353236383438313739626165626433616430353366643832663661386530626536326537326161366438633462316435303238623166383663656432353539363832376566623237393461346431343835306533383238653138336635623466326636383336303034666336303863323264353262326464323336336632343339633531623930373235613430613962653562623264323830376164356335636435383237623264643738366431623236227d7d",
-			"cmtInput": {
+			"ecInput": {
 				"type": "stake/delegate",
 				"data": {
 					"validator_address": "0xf9fd397486ac5516eea2304fa701cb9767c465d2",
@@ -210,7 +210,7 @@ Returns a transaction matching the given transaction hash.
 		}
 	}
 
-cmt_getTransactionFromBlock
+ec_getTransactionFromBlock
 ------------------------
 
 Returns a transaction based on a block hash or number and the transactions index position
@@ -229,7 +229,7 @@ Returns a transaction based on a block hash or number and the transactions index
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_getTransactionFromBlock","params":[116470, 0],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_getTransactionFromBlock","params":[116470, 0],"id":1}'
 
     // Result
 	{
@@ -241,9 +241,9 @@ Returns a transaction based on a block hash or number and the transactions index
 			"gas": "0x0",
 			"gasPrice": "0x0",
 			"hash": "0xa73b917243b5d3fb810dfb5f1880daab71564aafbb183c5f1e1f40665832aad5",
-			"cmtHash": "1F64261396674A1A7328B250EC3043E5512010D8",
+			"ecHash": "1F64261396674A1A7328B250EC3043E5512010D8",
 			"input": "0x7b2274797065223a227374616b655c2f64656c6567617465222c2264617461223a7b2276616c696461746f725f61646472657373223a22307846394664333937343836414335353136656561323330346641373031634239373637633436354432222c22616d6f756e74223a223334333731303030303030303030303030303030303030222c22637562655f6261746368223a223032222c22736967223a2232356338393665316235303563643238626463633236656539306439333465356361313135383532663230393737356635636434336230636166393665613134643939623633653034343830383764353236383438313739626165626433616430353366643832663661386530626536326537326161366438633462316435303238623166383663656432353539363832376566623237393461346431343835306533383238653138336635623466326636383336303034666336303863323264353262326464323336336632343339633531623930373235613430613962653562623264323830376164356335636435383237623264643738366431623236227d7d",
-			"cmtInput": {
+			"ecInput": {
 				"type": "stake/delegate",
 				"data": {
 					"validator_address": "0xf9fd397486ac5516eea2304fa701cb9767c465d2",
@@ -269,17 +269,17 @@ Returns a transaction based on a block hash or number and the transactions index
 Staking Validator methods
 =======================
 
-cmt_declareCandidacy
+ec_declareCandidacy
 --------------------
 
 Allows a potential validator declares its candidacy.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified. It will be associated with this validator (for self-staking and in order to get paid).
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified. It will be associated with this validator (for self-staking and in order to get paid).
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``pubKey`` String - Validator node public key.
-	* ``maxAmount`` String - Max amount of CMTs in Wei to be staked.
+	* ``maxAmount`` String - Max amount of ECs in Wei to be staked.
 	* ``compRate`` String - Validator compensation. That is the percentage of block awards to be distributed back to the validators.
 	* ``description`` Object - (optional) Description object as follows:
 		* ``name`` String - Validator name.
@@ -300,7 +300,7 @@ Allows a potential validator declares its candidacy.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_declareCandidacy","params":[{"from":"0xc4abd0339eb8d57087278718986382264244252f", "pubKey":"051FUvSNJmVL4UiFL7ucBr3TnGqG6a5JgUIgKf4UOIA=", "maxAmount":"0xF4240", "compRate":"0.2"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_declareCandidacy","params":[{"from":"0xc4abd0339eb8d57087278718986382264244252f", "pubKey":"051FUvSNJmVL4UiFL7ucBr3TnGqG6a5JgUIgKf4UOIA=", "maxAmount":"0xF4240", "compRate":"0.2"}],"id":1}'
 
     // Result
 	{
@@ -322,17 +322,17 @@ Allows a potential validator declares its candidacy.
 		}
 	}
 
-cmt_updateCandidacy
+ec_updateCandidacy
 -------------------
 
 Allows a validator candidate to change its candidacy.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``pubKey`` String - (optional) Validator node public key.
-	* ``maxAmount`` String - (optional) New max amount of CMTs in Wei to be staked.
+	* ``maxAmount`` String - (optional) New max amount of ECs in Wei to be staked.
 	* ``compRate`` String - (optional) Validator compensation. That is the percentage of block awards to be distributed back to the validators.
 	* ``description`` Object - (optional) When updated, the verified status will set to false:
 		* ``name`` String - Validator name.
@@ -353,7 +353,7 @@ Allows a validator candidate to change its candidacy.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_updateCandidacy","params":[{"from":"0xc4abd0339eb8d57087278718986382264244252f", "maxAmount":"0xF4240", "description": {"website": "https://www.example.com"}}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_updateCandidacy","params":[{"from":"0xc4abd0339eb8d57087278718986382264244252f", "maxAmount":"0xF4240", "description": {"website": "https://www.example.com"}}],"id":1}'
 
     // Result
 	{
@@ -375,14 +375,14 @@ Allows a validator candidate to change its candidacy.
 		}
 	}
 
-cmt_withdrawCandidacy
+ec_withdrawCandidacy
 ---------------------
 
 Allows a validator to withdraw.
 
 **Parameters**
 
-	* ``from`` String - The address for the validator. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the validator. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 
 **Returns**
@@ -397,7 +397,7 @@ Allows a validator to withdraw.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_withdrawCandidacy","params":[{"from":"0xc4abd0339eb8d57087278718986382264244252f"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_withdrawCandidacy","params":[{"from":"0xc4abd0339eb8d57087278718986382264244252f"}],"id":1}'
 
     // Result
 	{
@@ -415,14 +415,14 @@ Allows a validator to withdraw.
 		}
 	}
 
-cmt_verifyCandidacy
+ec_verifyCandidacy
 -------------------
 
 Allows the foundation to "verify" a validator's information.
 
 **Parameters**
 
-	* ``from`` String - A special address the foundation owns. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - A special address the foundation owns. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``candidateAddress`` String - The address of validator to verfify.
 	* ``verified`` Boolean - (optional) Verified true or false, default to false.
@@ -439,7 +439,7 @@ Allows the foundation to "verify" a validator's information.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_verifyCandidacy","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "candidateAddress":"0xc4abd0339eb8d57087278718986382264244252f", "verified":true}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_verifyCandidacy","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "candidateAddress":"0xc4abd0339eb8d57087278718986382264244252f", "verified":true}],"id":1}'
 
     // Result
 	{
@@ -457,14 +457,14 @@ Allows the foundation to "verify" a validator's information.
 		}
 	}
 
-cmt_activateCandidacy
+ec_activateCandidacy
 ---------------------
 
 Allows a "removed" validator to re-activate itself.
 
 **Parameters**
 
-	* ``from`` String - The address for the validator. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the validator. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 
 **Returns**
@@ -479,7 +479,7 @@ Allows a "removed" validator to re-activate itself.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_activateCandidacy","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_activateCandidacy","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc"}],"id":1}'
 
     // Result
 	{
@@ -497,14 +497,14 @@ Allows a "removed" validator to re-activate itself.
 		}
 	}
 
-cmt_deactivateCandidacy
+ec_deactivateCandidacy
 -----------------------
 
 Allows a validator to deactivate itself. 
 
 **Parameters**
 
-	* ``from`` String - The address for the validator. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the validator. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 
 **Returns**
@@ -519,7 +519,7 @@ Allows a validator to deactivate itself.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_deactivateCandidacy","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_deactivateCandidacy","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc"}],"id":1}'
 
     // Result
 	{
@@ -538,14 +538,14 @@ Allows a validator to deactivate itself.
 	}
 
 
-cmt_setCompRate
+ec_setCompRate
 ---------------
 
 Allows a validator to update the compensation rate for its delegators.
 
 **Parameters**
 
-	* ``from`` String - The address for the validator. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the validator. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``delegatorAddress`` String - The adddress of delegator.
 	* ``compRate`` String - New compensation rate to set for the delegator. Compensation rate is the percentage of block awards to be distributed back to the validators.
@@ -562,7 +562,7 @@ Allows a validator to update the compensation rate for its delegators.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_setCompRate","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "delegatorAddress":"0x38d7b32e7b5056b297baf1a1e950abbaa19ce949", "compRate":"0.3"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_setCompRate","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "delegatorAddress":"0x38d7b32e7b5056b297baf1a1e950abbaa19ce949", "compRate":"0.3"}],"id":1}'
 
     // Result
 	{
@@ -584,14 +584,14 @@ Allows a validator to update the compensation rate for its delegators.
 		}
 	}
 
-cmt_updateCandidacyAccount
+ec_updateCandidacyAccount
 --------------------------
 
 A validator requests to update its binding address.
 
 **Parameters**
 
-	* ``from`` String - The address for the validator. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the validator. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``newCandidateAccount`` String - The new adddress of the validator.
 
@@ -607,7 +607,7 @@ A validator requests to update its binding address.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_updateCandidacyAccount","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "newCandidateAccount":"0x283ED77f880D87dBdE8721259F80517A38ae5b4f"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_updateCandidacyAccount","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "newCandidateAccount":"0x283ED77f880D87dBdE8721259F80517A38ae5b4f"}],"id":1}'
 
     // Result
 	{
@@ -630,14 +630,14 @@ A validator requests to update its binding address.
 		}
 	}
 
-cmt_acceptCandidacyAccountUpdate
+ec_acceptCandidacyAccountUpdate
 --------------------------------
 
 A validator uses its new address to accept an account updating request.
 
 **Parameters**
 
-	* ``from`` String - The new address for the validator. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The new address for the validator. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``accountUpdateRequestId`` int64 - The account updating request id.
 
@@ -653,7 +653,7 @@ A validator uses its new address to accept an account updating request.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_acceptCandidacyAccountUpdate","params":[{"from":"0x283ed77f880d87dbde8721259f80517a38ae5b4f", "accountUpdateRequestId":1}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_acceptCandidacyAccountUpdate","params":[{"from":"0x283ed77f880d87dbde8721259f80517a38ae5b4f", "accountUpdateRequestId":1}],"id":1}'
 
     // Result
 	{
@@ -675,7 +675,7 @@ A validator uses its new address to accept an account updating request.
 		}
 	}
 
-cmt_queryValidator
+ec_queryValidator
 ------------------
 
 Query the current staking status of a specific validator.
@@ -695,7 +695,7 @@ Query the current staking status of a specific validator.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_queryValidator","params":["0x858578e81a0259338b4d897553afa7b9c363e769", 0],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_queryValidator","params":["0x858578e81a0259338b4d897553afa7b9c363e769", 0],"id":1}'
 
     // Result
 	{
@@ -737,7 +737,7 @@ Query the current staking status of a specific validator.
 		}
 	}
 
-cmt_queryValidators
+ec_queryValidators
 -------------------
 
 Returns a list of all current validators and validator candidates.
@@ -756,7 +756,7 @@ Returns a list of all current validators and validator candidates.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_queryValidators","params":[0],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_queryValidators","params":[0],"id":1}'
 
     // Result
 	{
@@ -798,7 +798,7 @@ Returns a list of all current validators and validator candidates.
 		}
 	}
 
-cmt_queryAwardInfos
+ec_queryAwardInfos
 -------------------
 
 Returns award information of all current validators and backup validators.
@@ -817,7 +817,7 @@ Returns award information of all current validators and backup validators.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_queryAwardInfos","params":[0],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_queryAwardInfos","params":[0],"id":1}'
 
     // Result
 	{
@@ -933,19 +933,19 @@ Returns award information of all current validators and backup validators.
 Staking Delegator methods
 =======================
 
-cmt_delegate
+ec_delegate
 ------------
 
-Used by a delegator to stake CMTs to a validator.
+Used by a delegator to stake ECs to a validator.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``validatorAddress`` String - The address of validator to delegate.
-	* ``amount`` String - Amount of CMTs in Wei to delegate.
-	* ``cubeBatch`` String - The batch number of the CMT cube. Use "01" for testing.
-	* ``sig`` String - delegator_address|nonce signed by the CMT cube. Check this for how to generate a signature for testing.
+	* ``amount`` String - Amount of ECs in Wei to delegate.
+	* ``cubeBatch`` String - The batch number of the EC cube. Use "01" for testing.
+	* ``sig`` String - delegator_address|nonce signed by the EC cube. Check this for how to generate a signature for testing.
 
 **Returns**
 
@@ -959,7 +959,7 @@ Used by a delegator to stake CMTs to a validator.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_delegate","params":[{"from":"0x38d7b32e7b5056b297baf1a1e950abbaa19ce949", "validatorAddress":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "amount":"0x186A0", "cubeBatch":"01", "sig":"036b6dddefdb1d798a9847121dde8c38713721869a24c77abe2249534f6d98622727720994f663ee9cc446c6e246781caa3a88b7bff78a4ffc9de7c7eded00caef61c2ea36be6a0763ed2bf5af4cf38e38bd6b257857f314c4bbb902d83c8b4413ba2f880d24bf0d6874e392807dfbc2bd03910c58989bc69a9090eddefe8e55"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_delegate","params":[{"from":"0x38d7b32e7b5056b297baf1a1e950abbaa19ce949", "validatorAddress":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "amount":"0x186A0", "cubeBatch":"01", "sig":"036b6dddefdb1d798a9847121dde8c38713721869a24c77abe2249534f6d98622727720994f663ee9cc446c6e246781caa3a88b7bff78a4ffc9de7c7eded00caef61c2ea36be6a0763ed2bf5af4cf38e38bd6b257857f314c4bbb902d83c8b4413ba2f880d24bf0d6874e392807dfbc2bd03910c58989bc69a9090eddefe8e55"}],"id":1}'
 
     // Result
 	{
@@ -977,17 +977,17 @@ Used by a delegator to stake CMTs to a validator.
 		}
 	}
 
-cmt_withdraw
+ec_withdraw
 ------------
 
-Used by a delegator to unbind staked CMTs from a validator.
+Used by a delegator to unbind staked ECs from a validator.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``validatorAddress`` String - The address of validator to withdraw.
-	* ``amount`` String - Amount of CMTs in Wei to withdraw.
+	* ``amount`` String - Amount of ECs in Wei to withdraw.
 
 **Returns**
 
@@ -1001,7 +1001,7 @@ Used by a delegator to unbind staked CMTs from a validator.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_withdraw","params":[{"from":"0x38d7b32e7b5056b297baf1a1e950abbaa19ce949", "validatorAddress":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "amount":"0x186A0"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_withdraw","params":[{"from":"0x38d7b32e7b5056b297baf1a1e950abbaa19ce949", "validatorAddress":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "amount":"0x186A0"}],"id":1}'
 
     // Result
 	{
@@ -1019,7 +1019,7 @@ Used by a delegator to unbind staked CMTs from a validator.
 		}
 	}
 
-cmt_queryDelegator
+ec_queryDelegator
 ------------------
 
 Query the current staking status of a specific delegator.
@@ -1039,7 +1039,7 @@ Query the current staking status of a specific delegator.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_queryDelegator","params":["0x3a436deae68b7d4c8ff9f1cb0498913a397472d7", 0],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_queryDelegator","params":["0x3a436deae68b7d4c8ff9f1cb0498913a397472d7", 0],"id":1}'
 
     // Result
 	{
@@ -1074,18 +1074,18 @@ Query the current staking status of a specific delegator.
 Governance methods
 ==================
 
-cmt_proposeTransferFund
+ec_proposeTransferFund
 -----------------------
 
 Propose a fund recovery proposal.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified. Must be a validator.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified. Must be a validator.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``transferFrom`` String - From account address.
 	* ``transferTo`` String - To account address.
-	* ``amount`` String - Amount of CMTs in Wei.
+	* ``amount`` String - Amount of ECs in Wei.
 	* ``reason`` String - (optional) Reason.
 	* ``expireBlockHeight`` Number - (optional) Expiration block height.
 	* ``expireTimestamp`` Number - (optional) Timestamp when the proposal will expire.
@@ -1104,7 +1104,7 @@ Propose a fund recovery proposal.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_proposeTransferFund","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "transferFrom":"0xc4abd0339eb8d57087278718986382264244252f", "transferTo":"0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "amount":"0x186A0"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_proposeTransferFund","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "transferFrom":"0xc4abd0339eb8d57087278718986382264244252f", "transferTo":"0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "amount":"0x186A0"}],"id":1}'
 
     // Result
 	{
@@ -1127,14 +1127,14 @@ Propose a fund recovery proposal.
 		}
 	}
 
-cmt_proposeChangeParam
+ec_proposeChangeParam
 ----------------------
 
 Propose a system parameter change.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified. Must be a validator.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified. Must be a validator.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``name`` String - The name of the parameter.
 	* ``value`` String - New value of the parameter.
@@ -1156,7 +1156,7 @@ Propose a system parameter change.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_proposeChangeParam","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "name":"gas_price", "value":"3000000000"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_proposeChangeParam","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "name":"gas_price", "value":"3000000000"}],"id":1}'
 
     // Result
 	{
@@ -1179,14 +1179,14 @@ Propose a system parameter change.
 		}
 	}
 
-cmt_proposeDeployLibEni
+ec_proposeDeployLibEni
 -----------------------
 
 Propose a new library for ENI.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified. Must be a validator.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified. Must be a validator.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``name`` String - The name of the library.
 	* ``version`` String - Version of the library, data format: vX.Y.Z, where X, Y, and Z are non-negative integers.
@@ -1210,7 +1210,7 @@ Propose a new library for ENI.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_proposeDeployLibEni","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "name":"reverse", "version":"v1.0.0", "fileUrl":"{\"ubuntu\": [\"<url1>\", \"<url2>\"], \"centos\": [\"<url1>\", \"<url2>\"]}", "md5":"{\"ubuntu\": \"<md5 text>\", \"centos\": \"<md5 text>\"}"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_proposeDeployLibEni","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "name":"reverse", "version":"v1.0.0", "fileUrl":"{\"ubuntu\": [\"<url1>\", \"<url2>\"], \"centos\": [\"<url1>\", \"<url2>\"]}", "md5":"{\"ubuntu\": \"<md5 text>\", \"centos\": \"<md5 text>\"}"}],"id":1}'
 
     // Result
 	{
@@ -1233,14 +1233,14 @@ Propose a new library for ENI.
 		}
 	}
 
-cmt_proposeRetireProgram
+ec_proposeRetireProgram
 ------------------------
 
 Propose to retire the program.
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified. Must be a validator.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified. Must be a validator.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``preservedValidators`` String - A comma seperated validator public key list. Valiators in this list will be preserved, other validators will be deactivated.
 	* ``reason`` String - (optional) Reason.
@@ -1258,7 +1258,7 @@ Propose to retire the program.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_proposeRetireProgram","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "preservedValidators":"Esdo0ZN+nHduoi/kNqjdQSNFmNyv2M3Tie/eZeC25gM=,X6qJkoWxW8YkEHquJQM7mZcfpt5r+l8V6C8rbg8dEHQ=", "reason":"System Upgrade"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_proposeRetireProgram","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "preservedValidators":"Esdo0ZN+nHduoi/kNqjdQSNFmNyv2M3Tie/eZeC25gM=,X6qJkoWxW8YkEHquJQM7mZcfpt5r+l8V6C8rbg8dEHQ=", "reason":"System Upgrade"}],"id":1}'
 
     // Result
 	{
@@ -1281,7 +1281,7 @@ Propose to retire the program.
 		}
 	}
 
-cmt_vote
+ec_vote
 --------
 
 Vote on proposals of making changes to the system state.
@@ -1294,7 +1294,7 @@ Here are some use cases:
 
 **Parameters**
 
-	* ``from`` String - The address for the sending account. Uses the web3.cmt.defaultAccount property, if not specified. Must be a validator.
+	* ``from`` String - The address for the sending account. Uses the web3.ec.defaultAccount property, if not specified. Must be a validator.
 	* ``nonce`` Number - (optional) The number of transactions made by the sender prior to this one.
 	* ``proposalId`` String - The Proposal ID to vote.
 	* ``answer`` String - Y or N.
@@ -1311,7 +1311,7 @@ Here are some use cases:
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_vote","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "proposalId":"JTUx+ODH0/OSdgfC0Sn66qjn2tX8LfvbiwnArzNpIus=", "answer":"Y"}],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_vote","params":[{"from":"0x7eff122b94897ea5b0e2a9abf47b86337fafebdc", "proposalId":"JTUx+ODH0/OSdgfC0Sn66qjn2tX8LfvbiwnArzNpIus=", "answer":"Y"}],"id":1}'
 
     // Result
 	{
@@ -1329,7 +1329,7 @@ Here are some use cases:
 		}
 	}
 
-cmt_queryProposals
+ec_queryProposals
 ------------------
 
 Returns a list of all proposals.
@@ -1348,7 +1348,7 @@ Returns a list of all proposals.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_queryProposals","params":[],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_queryProposals","params":[],"id":1}'
 
     // Result
 	{
@@ -1395,7 +1395,7 @@ Returns a list of all proposals.
 		}
 	}
 
-cmt_queryParams
+ec_queryParams
 ---------------
 
 Returns current settings of system parameters.
@@ -1414,7 +1414,7 @@ Returns current settings of system parameters.
 ::
 
 	// Request
-	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"cmt_queryParams","params":[0],"id":1}'
+	curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"ec_queryParams","params":[0],"id":1}'
 
     // Result
 	{
