@@ -16,6 +16,7 @@
 
 vendor
 .idea
+.vscode
 
 # sqlite db file
 *.db
