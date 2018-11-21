@@ -45,7 +45,7 @@ func DefaultGenesisBlock() *core.Genesis {
 	genesis := &core.Genesis{
 		Config: config,
 		Nonce:  66,
-		//Echoin for E-commerce
+		//Echoin for energy
 		ExtraData:  hexutil.MustDecode("0x43796265724d696c657320666f7220452d636f6d6d65726365"),
 		GasLimit:   uint64(0x1e8480000),
 		Difficulty: big.NewInt(17179869184),

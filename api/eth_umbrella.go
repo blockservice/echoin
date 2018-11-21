@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/blockservice/echoin/modules/stake"
 	"github.com/ethereum/go-ethereum/common"
-	um "github.com/ethereum/go-ethereum/core/vm/umbrella"
+	// um "github.com/ethereum/go-ethereum/core/vm/umbrella"
 )
 
 type EthUmbrella struct {
@@ -21,9 +21,9 @@ func (eu *EthUmbrella) GetValidators() []common.Address {
 	return vs
 }
 
-func (eu *EthUmbrella) EmitScheduleTx(stx um.ScheduleTx) {
-}
+// func (eu *EthUmbrella) EmitScheduleTx(stx um.ScheduleTx) {
+// }
 
-func (eu *EthUmbrella) GetDueTxs() []um.ScheduleTx {
-	return nil
-}
+// func (eu *EthUmbrella) GetDueTxs() []um.ScheduleTx {
+// 	return nil
+// }

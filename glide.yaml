@@ -20,8 +20,7 @@ import:
 - package: github.com/tendermint/iavl
   version: ~0.9.2
 - package: github.com/tendermint/tendermint
-#  version: 54c1af40c300adfa4ce57260f77cc624d672f748
-  repo: https://github.com/CyberMiles/tendermint.git
+  repo: https://github.com/blockservice/tendermint.git
   version: b97b46975ef8e830352c8c7f6248a436f185858a
   subpackages:
   - config
@@ -33,10 +32,16 @@ import:
   - rpc/lib/types
   - types
 - package: github.com/ethereum/go-ethereum
-  repo: https://github.com/CyberMiles/go-ethereum.git
-  version: cee13888bae1d0a3e94c80a00001742741c3ca24
+  repo: https://github.com/blockservice/go-ethereum.git
+  version: 73b994a921703b8d1cd60022064cb33601a8849c
 - package: gopkg.in/urfave/cli.v1
   version: 1.x
+- package: golang.org/x/sys
+  version: 0cf1ed9e522b7dbb416f080a5c8003de9b702bf4
+  subpackages:
+    - cpu
+    - unix
+    - windows
 - package: github.com/mattn/go-sqlite3
   version: v1.6.0
 - package: github.com/tendermint/go-amino

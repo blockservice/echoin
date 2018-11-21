@@ -4,12 +4,11 @@ import (
 	"io"
 	"os"
 
-	"gopkg.in/urfave/cli.v1"
-
 	colorable "github.com/mattn/go-colorable"
+	cli "gopkg.in/urfave/cli.v1"
 
 	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/log/term"
+	"github.com/mattn/go-isatty"
 
 	tmlog "github.com/tendermint/tendermint/libs/log"
 )
@@ -17,7 +16,7 @@ import (
 var glogger *log.GlogHandler
 
 func init() {
-	usecolor := term.IsTty(os.Stderr.Fd()) && os.Getenv("TERM") != "dumb"
+	usecolor := isatty.IsTerminal(os.Stderr.Fd()) && os.Getenv("TERM") != "dumb"
 	output := io.Writer(os.Stderr)
 	if usecolor {
 		output = colorable.NewColorableStderr()

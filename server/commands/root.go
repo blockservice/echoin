@@ -76,7 +76,7 @@ var (
 		ethUtils.GpoPercentileFlag,
 		emtUtils.TargetGasLimitFlag,
 		// Gas Price
-		ethUtils.GasPriceFlag,
+		ethUtils.MinerGasPriceFlag,
 		// Network Id
 		ethUtils.NetworkIdFlag,
 		ethUtils.ListenPortFlag,
