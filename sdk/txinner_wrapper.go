@@ -5,7 +5,7 @@
 package sdk
 
 import (
-	"github.com/blockservice/echoin/sdk/go-wire/data"
+	"github.com/tendermint/go-amino"
 )
 
 // Auto-generated adapters for happily unmarshaling interfaces
@@ -16,15 +16,16 @@ type Tx struct {
 	TxInner "json:\"unwrap\""
 }
 
-var TxMapper = data.NewMapper(Tx{})
+// var TxMapper = amino.NewMapper(Tx{})
+var TxCdc = amino.NewCodec()
 
 func (h Tx) MarshalJSON() ([]byte, error) {
-	return TxMapper.ToJSON(h.TxInner)
+	return TxCdc.MarshalJSON(h.TxInner)
 }
 
 func (h *Tx) UnmarshalJSON(data []byte) (err error) {
-	parsed, err := TxMapper.FromJSON(data)
-	if err == nil && parsed != nil {
+	parsed := h.TxInner
+	if err := TxCdc.UnmarshalJSON(data, parsed); err == nil && parsed != nil {
 		h.TxInner = parsed.(TxInner)
 	}
 	return err

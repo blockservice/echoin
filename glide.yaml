@@ -1,7 +1,6 @@
 package: github.com/blockservice/echoin
 import:
 - package: github.com/prometheus/client_golang
-#  version: v0.8.0
   version: ae27198cdd90bf12cd134ad79d1366a6cf49f632
 - package: github.com/prometheus/client_model
   version: 99fa1f4be8e564e8a6b613da7fa6f46c9edafc6c
@@ -11,7 +10,6 @@ import:
   version: 54d17b57dd7d4a3aa092476596b3f8a933bde349
 - package: github.com/prometheus/prometheus
   version: v2.0.0
-  
 - package: github.com/pkg/errors
   version: ^0.8.0
 - package: github.com/spf13/cobra
@@ -20,8 +18,8 @@ import:
 - package: github.com/tendermint/iavl
   version: ~0.9.2
 - package: github.com/tendermint/tendermint
-  repo: https://github.com/blockservice/tendermint.git
   version: b97b46975ef8e830352c8c7f6248a436f185858a
+  repo: https://github.com/blockservice/tendermint.git
   subpackages:
   - config
   - node
@@ -32,16 +30,16 @@ import:
   - rpc/lib/types
   - types
 - package: github.com/ethereum/go-ethereum
-  repo: https://github.com/blockservice/go-ethereum.git
   version: 73b994a921703b8d1cd60022064cb33601a8849c
+  repo: https://github.com/blockservice/go-ethereum.git
 - package: gopkg.in/urfave/cli.v1
   version: 1.x
 - package: golang.org/x/sys
   version: 0cf1ed9e522b7dbb416f080a5c8003de9b702bf4
   subpackages:
-    - cpu
-    - unix
-    - windows
+  - cpu
+  - unix
+  - windows
 - package: github.com/mattn/go-sqlite3
   version: v1.6.0
 - package: github.com/tendermint/go-amino

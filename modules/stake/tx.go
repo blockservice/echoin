@@ -14,17 +14,17 @@ import (
 // make sure to use the name of the handler as the prefix in the tx type,
 // so it gets routed properly
 const (
-	ByteTxDeclareCandidacy             = 0x55
-	ByteTxUpdateCandidacy              = 0x56
-	ByteTxWithdrawCandidacy            = 0x57
-	ByteTxVerifyCandidacy              = 0x58
-	ByteTxActivateCandidacy            = 0x59
-	ByteTxDelegate                     = 0x60
-	ByteTxWithdraw                     = 0x61
-	ByteTxSetCompRate                  = 0x62
-	ByteTxUpdateCandidacyAccount       = 0x63
-	ByteTxAcceptCandidacyAccountUpdate = 0x64
-	ByteTxDeactivateCandidacy          = 0x65
+	// ByteTxDeclareCandidacy             = 0x55
+	// ByteTxUpdateCandidacy              = 0x56
+	// ByteTxWithdrawCandidacy            = 0x57
+	// ByteTxVerifyCandidacy              = 0x58
+	// ByteTxActivateCandidacy            = 0x59
+	// ByteTxDelegate                     = 0x60
+	// ByteTxWithdraw                     = 0x61
+	// ByteTxSetCompRate                  = 0x62
+	// ByteTxUpdateCandidacyAccount       = 0x63
+	// ByteTxAcceptCandidacyAccountUpdate = 0x64
+	// ByteTxDeactivateCandidacy          = 0x65
 	TypeTxDeclareCandidacy             = "stake/declareCandidacy"
 	TypeTxUpdateCandidacy              = "stake/updateCandidacy"
 	TypeTxVerifyCandidacy              = "stake/verifyCandidacy"
@@ -39,17 +39,17 @@ const (
 )
 
 func init() {
-	sdk.TxMapper.RegisterImplementation(TxDeclareCandidacy{}, TypeTxDeclareCandidacy, ByteTxDeclareCandidacy)
-	sdk.TxMapper.RegisterImplementation(TxUpdateCandidacy{}, TypeTxUpdateCandidacy, ByteTxUpdateCandidacy)
-	sdk.TxMapper.RegisterImplementation(TxWithdrawCandidacy{}, TypeTxWithdrawCandidacy, ByteTxWithdrawCandidacy)
-	sdk.TxMapper.RegisterImplementation(TxVerifyCandidacy{}, TypeTxVerifyCandidacy, ByteTxVerifyCandidacy)
-	sdk.TxMapper.RegisterImplementation(TxActivateCandidacy{}, TypeTxActivateCandidacy, ByteTxActivateCandidacy)
-	sdk.TxMapper.RegisterImplementation(TxDeactivateCandidacy{}, TypeTxDeactivateCandidacy, ByteTxDeactivateCandidacy)
-	sdk.TxMapper.RegisterImplementation(TxDelegate{}, TypeTxDelegate, ByteTxDelegate)
-	sdk.TxMapper.RegisterImplementation(TxWithdraw{}, TypeTxWithdraw, ByteTxWithdraw)
-	sdk.TxMapper.RegisterImplementation(TxSetCompRate{}, TypeTxSetCompRate, ByteTxSetCompRate)
-	sdk.TxMapper.RegisterImplementation(TxUpdateCandidacyAccount{}, TypeTxUpdateCandidacyAccount, ByteTxUpdateCandidacyAccount)
-	sdk.TxMapper.RegisterImplementation(TxAcceptCandidacyAccountUpdate{}, TypeTxAcceptCandidacyAccountUpdate, ByteTxAcceptCandidacyAccountUpdate)
+	sdk.TxCdc.RegisterConcrete(TxDeclareCandidacy{}, TypeTxDeclareCandidacy, nil)
+	sdk.TxCdc.RegisterConcrete(TxUpdateCandidacy{}, TypeTxUpdateCandidacy, nil)
+	sdk.TxCdc.RegisterConcrete(TxWithdrawCandidacy{}, TypeTxWithdrawCandidacy, nil)
+	sdk.TxCdc.RegisterConcrete(TxVerifyCandidacy{}, TypeTxVerifyCandidacy, nil)
+	sdk.TxCdc.RegisterConcrete(TxActivateCandidacy{}, TypeTxActivateCandidacy, nil)
+	sdk.TxCdc.RegisterConcrete(TxDeactivateCandidacy{}, TypeTxDeactivateCandidacy, nil)
+	sdk.TxCdc.RegisterConcrete(TxDelegate{}, TypeTxDelegate, nil)
+	sdk.TxCdc.RegisterConcrete(TxWithdraw{}, TypeTxWithdraw, nil)
+	sdk.TxCdc.RegisterConcrete(TxSetCompRate{}, TypeTxSetCompRate, nil)
+	sdk.TxCdc.RegisterConcrete(TxUpdateCandidacyAccount{}, TypeTxUpdateCandidacyAccount, nil)
+	sdk.TxCdc.RegisterConcrete(TxAcceptCandidacyAccountUpdate{}, TypeTxAcceptCandidacyAccountUpdate, nil)
 }
 
 //Verify interface at compile time

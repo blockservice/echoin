@@ -1,5 +1,5 @@
-hash: 3fa139c77b3d6e3a97076ca8efb3f3fc13452a0055cc5880a2c2bbaa16e2a852
-updated: 2018-11-21T17:54:37.25135767+08:00
+hash: 7f565bb61508e3074a52522ac143e9e95600c590de9d5c353a3fe10fed83f624
+updated: 2018-11-22T14:34:31.636096615+08:00
 imports:
 - name: github.com/aristanetworks/goarista
   version: 5faa74ffbed7096292069fdcd0eae96146a3158a
@@ -123,7 +123,7 @@ imports:
   - metrics/internal/lv
   - metrics/prometheus
 - name: github.com/go-logfmt/logfmt
-  version: 390ab7935ee28ec6b286364bba9b4dd6410cb3d5
+  version: 07c9b44f60d7ffdfb7d8efe1ad539965737836dc
 - name: github.com/go-ole/go-ole
   version: 7a0fa49edf48165190530c675167e2f319a05268
   subpackages:
@@ -182,13 +182,13 @@ imports:
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/influxdata/influxdb
-  version: f2cf118473cb32c90da0b89218c9d3f8580fafb0
+  version: 7c37b6e30c7b3fee5f67b73221349ea28767253e
   subpackages:
   - client
   - models
   - pkg/escape
 - name: github.com/influxdata/platform
-  version: 096143977a507f67932cdff21aa797b6d372f9fb
+  version: 2cac5f30dca8cf28c3187dcba5d720ce1a01d2e9
   subpackages:
   - models
   - pkg/escape
@@ -475,9 +475,3 @@ testImports:
   subpackages:
   - assert
   - require
-- name: github.com/tendermint/tmlibs
-  version: 56f44670ebd5a4e99e55f3f7d6f4d360ef5f1973
-  subpackages:
-  - common
-  - db
-  - log
