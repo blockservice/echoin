@@ -1,4 +1,4 @@
-GOTOOLS = github.com/Masterminds/glide
+GOTOOLS = github.com/golang/dep/cmd/dep
 #ENI_LIB?=$(HOME)/.echoin/eni/lib
 #CGO_LDFLAGS = -L$(ENI_LIB) -Wl,-rpath,$(ENI_LIB)
 CGO_LDFLAGS_ALLOW = "-I.*"
@@ -7,10 +7,8 @@ UNAME = $(shell uname)
 all: get_vendor_deps install print_echoin_logo
 
 get_vendor_deps: tools
-	glide install
-	@# cannot use ctx (type *"gopkg.in/urfave/cli.v1".Context) as type
-	@# *"github.com/blockservice/echoin/vendor/github.com/ethereum/go-ethereum/vendor/gopkg.in/urfave/cli.v1".Context ...
-	@rm -rf vendor/github.com/ethereum/go-ethereum/vendor/gopkg.in/urfave
+	@echo "--> Running dep"
+	@dep ensure
 
 install:
 	@echo "\n--> Installing the Echoin TestNet\n"
