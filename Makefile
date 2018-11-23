@@ -8,7 +8,7 @@ all: get_vendor_deps install print_echoin_logo
 
 get_vendor_deps: tools
 	@echo "--> Running dep"
-	@dep ensure
+	@dep ensure -v
 
 install:
 	@echo "\n--> Installing the Echoin TestNet\n"

@@ -388,10 +388,10 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:d1ba92510c0233d4f56d658f68d6faab12cbaf595051e610c6a43c4d85465b37"
+  digest = "1:01f1325bf6f105bb633029a2d8b63f1a2357181e60af8dadabf14ad2e84398c5"
   name = "github.com/karalabe/hid"
   packages = ["."]
-  pruneopts = "UT"
+  pruneopts = "T"
   revision = "2b4488a37358b7283de4f9622553e85ebbe73125"
 
 [[projects]]
